@@ -14,6 +14,11 @@ class Test_TestMetalearningLoader(unittest.TestCase):
     Add more
     """
 
+    def test_fake2(self):
+        lmdb = LoadMetaDB().loadDatasetsInfo()
+        wm = lmdb.weighted_matrix()
+        print(wm.shape)
+
     def test_load_db_init(self):
         """Test initialization of the LoadMetaDB object.
 

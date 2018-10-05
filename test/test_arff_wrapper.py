@@ -15,9 +15,6 @@ class Test_TestARFFWrapper(unittest.TestCase):
     """
 
     def test_valid_keys_arff(self):
-        automl_path = os.path.dirname(os.path.dirname(__file__))
-        automl_path = os.path.join(automl_path, "metalearning", "db", "files", 
-            "features_costs.arff")
 
         with self.assertRaises(KeyError):
             ARFFWrapper({})
@@ -45,9 +42,6 @@ class Test_TestARFFWrapper(unittest.TestCase):
                 })
 
     def test_valid_values_arff(self):
-        automl_path = os.path.dirname(os.path.dirname(__file__))
-        automl_path = os.path.join(automl_path, "metalearning", "db", "files", 
-            "features_costs.arff")
 
         with self.assertRaises(TypeError):
             ARFFWrapper({
@@ -98,5 +92,24 @@ class Test_TestARFFWrapper(unittest.TestCase):
                 })
         self.assertIsInstance(obj, ARFFWrapper)
         
+    def test_fake(self):
+        automl_path = os.path.dirname(os.path.dirname(__file__))
+        automl_path = os.path.join(automl_path, "automl", "metalearning", "db", 
+            "files", "feature_costs.arff")
+
+        arff_wrapper = ARFFWrapper(arff_filepath = automl_path)
+
+        print(arff_wrapper.summary())
+        print(arff_wrapper.attribute_names())
+
+    def test_sorted_default(self):
+        automl_path = os.path.dirname(os.path.dirname(__file__))
+        automl_path = os.path.join(automl_path, "automl", "metalearning", "db", 
+            "files", "feature_costs.arff")
+
+        arff_wrapper = ARFFWrapper()
+        arff_wrapper.load_dataset(automl_path)
+        arff_wrapper.sort_attributes()
+
 if __name__ == '__main__':
     unittest.main()
