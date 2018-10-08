@@ -2,6 +2,9 @@
 #by unutbu
 
 def argsort_list(list = None, index = 0, backwards = False):
+    """Returns the sorted (alphabetically) indices of a list. Similar to argsort
+    for numpy.
+    """
     return sorted(
             range(len(list)), 
             key = list.__getitem__,
