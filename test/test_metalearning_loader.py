@@ -15,9 +15,8 @@ class Test_TestMetalearningLoader(unittest.TestCase):
     """
 
     def test_fake2(self):
-        lmdb = LoadMetaDB().loadDatasetsInfo()
-        wm = lmdb.weighted_matrix()
-        print(wm.shape)
+        lmdb = LoadMetaDB().load_datasets_info()
+        print(lmdb.costs.attribute_names())
 
     def test_load_db_init(self):
         """Test initialization of the LoadMetaDB object.
@@ -35,11 +34,10 @@ class Test_TestMetalearningLoader(unittest.TestCase):
             "List for features should be empty while initializing")
 
     def test_arrays(self):
-        lmdb = LoadMetaDB()
-        lmdb.loadDatasetsInfo()
+        lmdb = LoadMetaDB().load_datasets_info()
         
         # Check they have the same length
-        self.assertTrue(lmdb.costs.shape[0] == lmdb.features.shape[0])
+        self.assertTrue(lmdb.costs.shape()[0] == lmdb.features.shape()[0])
 
         # Check they are correctly sorted
         featuresIDs = list(lmdb.features[:, 0])
@@ -77,8 +75,7 @@ class Test_TestMetalearningLoader(unittest.TestCase):
         then: A - B = B - A = empty set.
         """
 
-        lmdb = LoadMetaDB()
-        lmdb.loadDatasetsInfo()
+        lmdb = LoadMetaDB().load_datasets_info()
 
         # Check they are not None after initialization
         self.assertIsNotNone(lmdb.features)
@@ -107,11 +104,11 @@ class Test_TestMetalearningLoader(unittest.TestCase):
         self.assertListEqual(checkList, [], 
             "Features/costs lists do not match IDs")
         
-    def test_weighted_vectors(self):
-        lmdb = LoadMetaDB()
-        lmdb.loadDatasetsInfo()
+    # def test_weighted_vectors(self):
+    #     lmdb = LoadMetaDB()
+    #     lmdb.loadDatasetsInfo()
 
-        lmdb.weightedVectors()
+    #     lmdb.weightedVectors()
 
 if __name__ == '__main__':
     unittest.main()

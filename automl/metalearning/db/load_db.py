@@ -41,7 +41,7 @@ class LoadMetaDB:
 
         Creates an ARFFWrapper object with the content of the costs file.
         """
-        return ARFFWrapper(arff_filepath = self._costsFile)
+        return ARFFWrapper(arff_filepath=self._costsFile)
 
     def _load_feature_values(self):
         """Load the feature values file.
