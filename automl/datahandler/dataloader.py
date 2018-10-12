@@ -1,56 +1,100 @@
+"""Module to expose classes to interact with the datasets.
+
+Here we abstract the dataset as a class to ease the interaction within the
+package. Namely, we provide the next classes:
+    - Dataset: To abstract a dataset together with the properties needed for
+               the different AutoML operations.
+    - DatasetLoader: To provided methods to obtain dataset from different
+                     sources.
+"""
 import random
 import string
 import pandas as pd
 import numpy as np
-
 import openml as oml
-from openml import tasks, runs, datasets
+from automl.metalearning.metafeatures.metafeatures_interaction \
+    import MetaFeaturesManager
 
 
 class Dataset:
+    """Class to abstract a dataset.
 
-    def __init__(self, id, X, y, categorical = None, problem_type = 0):
+    In this class we abstract a dataset as an object of features and a target,
+    together with categorical indicators for each of the features, and id to
+    identify the dataset and a problem type to solve: either classification or
+    regression.
+    """
 
+    def __init__(self, dataset_id, X, y, categorical=None, problem_type=0):
+        """Constructor.
+
+        Atrributes:
+            dataset_id      (str) or (int). The identifer for the dataset.
+            X               (pandas.DataFrame) The features object.
+            y               (pandas.DataFrame) The target object.
+            categorical     The categorical indicators for the features.
+            problem_type    (int). 0 for classification, 1 for regression.
+
+        """
         if not isinstance(X, pd.DataFrame) and not isinstance(y, pd.DataFrame):
             raise TypeError("X and y must be pandas Data Frames.")
 
         if y.shape[1] > 1:
             raise ValueError("y data frame should have one column only.")
-        
+
         self.X = X
         self.y = y
-        
+
         # Rename target column
         y.columns = ['target']
 
-        self.categorical_indicators = list(np.zeros(X.shape[1])) if categorical is None else categorical
+        if categorical is None:
+            self.categorical_indicators = list(np.zeros(X.shape[1]))
+        else:
+            self.categorical_indicators = categorical
 
-        self.id = id if id is not None else self._randomID()
+        self.dataset_id = self._random_id() if dataset_id is None \
+            else dataset_id
         self.problem_type = problem_type
 
     def is_regression_problem(self):
+        """Whether or not the dataset is registered as regression task."""
         return self.problem_type == 1
-    
+
     def is_classification_problem(self):
+        """Whether or not the dataset is registered as classification task."""
         return self.problem_type == 0
 
-    def _randomID(self):
-        N = 6
-        return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
-        
+    # TODO: Make it function in utl
+    def _random_id(self):
+        n_chars = 6
+        return ''.join(
+            random.choice(
+                string.ascii_uppercase + string.digits
+            ) for _ in range(n_chars)
+        )
+
+    def metafeatures_vector(self):
+        """Return the metafeatures of this dataset as a vector (ndarray)."""
+        return MetaFeaturesManager(self).metafeatures_as_numpy_array()
+
     # TODO: How to proceed with sparse values? Do we need to handle that?
     @property
     def n_labels(self):
+        """Return the number of different labels (target) for this dataset."""
         len(self.y['target'].unique())
 
-class DataLoader :
+
+class DataLoader:
+    """Class to load dataset as a Dataset class from different sources."""
 
     @staticmethod
-    def parse_dataset(dataset) :
-        if dataset is None: 
+    def parse_dataset(dataset):
+        """Parse a pandas data frame as a Dataset class."""
+        if dataset is None:
             raise ValueError("Dataset cannot be None")
-        else :
-            pass
+
+        # TODO: The rest
 
     @staticmethod
     def get_openml_dataset(openml_id, problem_type):
@@ -59,17 +103,22 @@ class DataLoader :
         Attributes:
             - int: openml_id. ID for the dataset, as stored in OpenML.
             - int: problem_type. Type of problem to solve in the dataset.
-                0 for classification, 1 for regression
+                0 for classification, 1 for regression.
+
         """
         openml_dataset = oml.datasets.get_dataset(openml_id)
-        X, y, categorical_indicators, attribute_names = \
-            openml_dataset.get_data(target = openml_dataset.default_target_attribute,
-            return_attribute_names = True, return_categorical_indicator = True)
+        features, target, categorical_indicators, attribute_names = \
+            openml_dataset.get_data(
+                target=openml_dataset.default_target_attribute,
+                return_attribute_names=True,
+                return_categorical_indicator=True
+            )
 
-        X = pd.DataFrame(X, columns = attribute_names)
-        y = pd.DataFrame(y, columns = ["target"])
-        
-        return Dataset(id="{}-{}".format(openml_dataset.dataset_id, openml_dataset.name),
-                        X=X, y = y, 
-                        categorical=categorical_indicators, 
-                        problem_type=problem_type)
+        features = pd.DataFrame(features, columns=attribute_names)
+        target = pd.DataFrame(target, columns=["target"])
+
+        return Dataset(dataset_id="{}-{}".format(openml_dataset.dataset_id,
+                                                 openml_dataset.name),
+                       X=features, y=target,
+                       categorical=categorical_indicators,
+                       problem_type=problem_type)
