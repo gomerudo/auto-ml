@@ -1,15 +1,26 @@
+"""Module to test the computation of the metafeatures."""
+
 import unittest
 
-from automl.datahandler.dataloader import Dataset, DataLoader
-from automl.metalearning.metafeatures.metafeatures_manager import DatasetMetaFeatures
+from automl.datahandler.dataloader import DataLoader
+from automl.metalearning.metafeatures.metafeatures_interaction \
+    import MetaFeaturesManager
 
-class Test_TestDatasetMetaFeatures(unittest.TestCase):  
+
+class TestMetaFeaturesManager(unittest.TestCase):
+    """Test the MetaFeaturesManager class.
+
+    We verify that the computation is performed correctly.
+    """
 
     def test_metafeatures_computation(self):
-        dataset = DataLoader.get_openml_dataset(openml_id = 46, problem_type = 0)
-        dataset_mf = DatasetMetaFeatures(dataset)
-        dataset_mf.get_metafeatures()
-        print(dataset_mf.get_metafeatures())
+        """Test that the metafeatures are computed."""
+        dataset = DataLoader.get_openml_dataset(openml_id=46, problem_type=0)
+        dataset_mf = MetaFeaturesManager(dataset)
+        dataset_mf.metafeatures_as_dict()
+        print(dataset_mf.metafeatures_as_dict())
+
+        # TODO: finish the test
         # print(dataset_mf.metafeatures_as_pandas_df())
         # print(dataset_mf.metafeatures_as_numpy_array())
 
