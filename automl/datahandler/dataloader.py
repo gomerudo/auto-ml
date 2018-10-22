@@ -10,6 +10,7 @@ package. Namely, we provide the next classes:
 import random
 import string
 import pandas as pd
+import scipy
 import numpy as np
 import openml as oml
 from automl.metalearning.metafeatures.metafeatures_interaction \
@@ -82,7 +83,11 @@ class Dataset:
     @property
     def n_labels(self):
         """Return the number of different labels (target) for this dataset."""
-        len(self.y['target'].unique())
+        return len(self.y['target'].unique())
+
+    def is_sparse(self):
+        """Return whether or not the X data is sparse or not."""
+        return scipy.sparse.issparse(self.X.values)
 
 
 class DataLoader:

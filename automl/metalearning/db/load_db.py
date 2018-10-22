@@ -9,18 +9,28 @@ In this implementation, we provide methods to retrieve the simple space and its
 weighted version.
 
 Classes defined here:
-    - MKDatabaseClient
-    - MetaKnowledge
+    - MKDatabaseClient: Interacts with the Meta-knwoledge database.
+    - MetaKnowledge: Defines the MetaKnowledge. This is, the abstraction of the
+                     meta-information as a class.
+    - LandmarkModelParser: Parses the models for the stored instances per
+                           accuracy.
+    - ConfigurationsFile: Represents a configurations.csv file.
+    - AlgorithmRunsFile: Represents an algorithm_runs.arff file.
 """
 
 
 import logging
+import os
+import os.path
+import re
 import pkg_resources
 import numpy as np
+import pandas as pd
 from sklearn.neighbors import NearestNeighbors
-import automl.globalvars
+from automl.globalvars import CONFIGURATIONS_CSV_NAME
 from automl.utl.arff_operations import ARFFWrapper
-
+from automl.errors.customerrors import CurrentlyNonSupportedError
+from automl.datahandler.dataloader import Dataset
 
 class MKDatabaseClient:
     """MKDatabase (Meta-Knowledge Database) to perform queries.
@@ -71,7 +81,7 @@ class MKDatabaseClient:
 
         """
         # For now, accept only Dataset objects
-        if not isinstance(automl.datahandler.dataloader.Dataset):
+        if not isinstance(Dataset):
             raise TypeError("dataset must be an instance of AutoML 'Dataset'")
 
         # Otherwise ...
@@ -86,9 +96,6 @@ class MKDatabaseClient:
             database.kneighbors(dataset.metafeatures_vector())
 
         return similarities, indices
-
-    # def plot_metaknowledge_space(self):
-    #     pass
 
 
 class MetaKnowledge:
@@ -238,3 +245,164 @@ class MetaKnowledge:
 
         # Return a tuple, with the id's and the weighted matrix.
         return f_instid, res
+
+
+class LandmarkModelParser:
+    """Class to interact with the models stored per instance (dataset)."""
+
+    @staticmethod
+    def model_by_metric(instances_ids=None, dataset=None,
+                        metric='accuracy'):
+        """Return the models for a list of instances by the given accuracy.
+
+        Attributes:
+            instances_ids   (list) List of integers with the ids of the
+                            instances (datasets).
+            dataset         The dataset to work with.
+            metric          (str) Name of the metric to use. It must be one of
+                            the metrics returned by
+                            LandmarkModelParser.metrics_available().
+        Results:
+            list: List of models. One element per instance.
+
+        """
+        # Validation of arguments
+        if instances_ids is None:
+            raise ValueError("A list of instances' ids must be specified.")
+
+        if dataset is None:
+            raise ValueError("Please provide a valid dataset.")
+
+        if not isinstance(dataset, Dataset):
+            raise TypeError("Dataset must be of type Dataset (automl pkg)")
+
+        if dataset.is_regression_problem():
+            raise CurrentlyNonSupportedError("Meta-learning for regression is \
+                                             not supported yet")
+
+        # Create helper variables
+        if dataset.is_classification_problem():
+            problem_type = "classification"
+            classif_type = "multiclass" if dataset.n_labels > 2 else "binary"
+
+        data_type = "sparse" if dataset.is_sparse() else "dense"
+
+        internal_metric = "{me}_{c_type}".format(me=metric,
+                                                 c_type=classif_type)
+        problem_desc = "{p_type}_{d_type}".format(p_type=problem_type,
+                                                  d_type=data_type)
+
+        basename_dir = \
+            "{metric}.{problem}".format(metric=internal_metric,
+                                        problem=problem_desc)
+
+        metrics_available = LandmarkModelParser.metrics_available()
+
+        if internal_metric not in metrics_available:
+            raise ValueError("Metric '{argument}' is not supported. Try any \
+                             of the following metrics: {available}".format(
+                                 argument=metric,
+                                 available=metrics_available
+                             ))
+
+        configs_csv = LandmarkModelParser._configs_file_by_metric(basename_dir)
+
+        if configs_csv is None:
+            return None
+
+
+        return basename_dir
+        # Actual computation
+
+        # Parse the file in the directory
+
+        # Return just the id of interest
+
+    @staticmethod
+    def _configs_file_by_metric(metric):
+        files_dir = pkg_resources.resource_filename(__name__, "files")
+        config_file = "{f_dir}/{m_name}/{c_file}".format(
+            f_dir=files_dir,
+            c_file=CONFIGURATIONS_CSV_NAME,
+            m_name=metric)
+
+        if os.path.exists(config_file):
+            return config_file
+        return None
+    
+    @staticmethod
+    def metrics_available():
+        """Return the metrics that are available in the meta-knowledge.
+
+        Returns:
+            list:   Metrics available in the package's local storage.
+
+        """
+        files_dir = pkg_resources.resource_filename(__name__, "files")
+        metric_pattern = re.compile("^(\w+)\..+$")  # pylint: disable=W1401
+
+        list_available = []
+        for directory in os.walk(files_dir):
+            dir_basename = os.path.basename(directory[0])
+            res_re = metric_pattern.match(dir_basename)
+            if res_re is None:
+                pass
+            else:
+                list_available.append(res_re.group(1))
+
+        return list_available
+
+
+class ConfigurationsFile:
+
+    def __init__(self, configs_file):
+        self.configs_file = configs_file
+        self._load_file()
+
+    def _load_file(self):
+        if os.path.exists(self.configs_file):
+            self._frame = pd.read_csv(self.configs_file, index_col = 0)
+        else:
+            raise ValueError("Invalid file path: File does not exist.")
+    
+    def get_configuration(self, algorithm_id):
+        elem = self._frame.loc[algorithm_id].dropna()
+        return elem
+        
+    def get_configurations(self, algorithms_ids):
+        results = []
+        for alg_id in algorithms_ids:
+            results.append(self.get_configuration(alg_id))
+
+
+class AlgorithmRunsFile:
+
+    def __init__(self, algruns_file):
+        self.algruns_file = algruns_file
+        self._load_file()
+
+    def _load_file(self):
+        if os.path.exists(self.algruns_file):
+            self._arrf_wrapper = ARFFWrapper(arff_filepath=self.algruns_file)
+            self._arrf_wrapper.change_attribute_type('instance_id', int)
+        else:
+            raise ValueError("Invalid file path: File does not exist.")
+
+    def get_associated_configuration(self, instance_id):
+        # TODO: Allow ARRF Wrapper to retrieve a row by id and check None
+        # values and errors.
+        aux_pandas = self._arrf_wrapper.as_pandas_df()
+        query = 'instance_id == {}'.format(instance_id)
+        res = aux_pandas.query(query)
+        return int(res['algorithm'])
+
+    def get_associated_configurations(self, instances_ids):
+        # TODO: Allow ARRF Wrapper to retrieve a column by id and check None
+        # values and errors.
+        result = []
+        aux_pandas = self._arrf_wrapper.as_pandas_df()
+        for instance_id in instances_ids:
+            query = 'instance_id == {}'.format(instance_id)
+            res = aux_pandas.query(query)
+            result.append(int(res['algorithm']))
+        return result

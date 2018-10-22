@@ -1,7 +1,10 @@
 """Module to test methods related to loading the MetaKnowledge."""
 
 import unittest
-from automl.metalearning.db.load_db import MetaKnowledge
+import os.path
+from automl.metalearning.db.load_db import MetaKnowledge, LandmarkModelParser,\
+    ConfigurationsFile, AlgorithmRunsFile
+from automl.datahandler.dataloader import DataLoader
 
 
 class TestMetaKnowledge(unittest.TestCase):
@@ -102,5 +105,63 @@ class TestMetaKnowledge(unittest.TestCase):
 
     #     lmdb.weightedVectors()
 
+
+class TestLandmarkModelParser(unittest.TestCase):
+    """Test the parsing of the landmark models by auto-sklearn."""
+
+    def test_metrics_available(self):
+        """Test that the metrics available are loaded correctly."""
+        assert LandmarkModelParser.metrics_available()
+
+    def test_non_supported_metric(self):
+        """Test that method error raises if no valid metric is passed."""
+        with self.assertRaises(ValueError):
+            LandmarkModelParser.model_by_metric('achmea_metric')
+
+    def test_model_by_metric(self):
+        """Test the behaviour of the model_by_metric method."""
+        dataset = DataLoader.get_openml_dataset(openml_id=46, problem_type=0)
+        print(LandmarkModelParser.model_by_metric([1, 2], dataset,
+                                                  'accuracy'))
+
+    # def test_fakemethod(self):
+    #     """Fake test."""
+    #     LandmarkModelParser.fake_method()
+
+
+class TestConfigurationsFile(unittest.TestCase):
+
+    def test_get_configuration(self):
+        automl_path = os.path.dirname(os.path.dirname(__file__))
+        automl_path = os.path.join(automl_path,
+                                   "automl",
+                                   "metalearning",
+                                   "db",
+                                   "files",
+                                   "accuracy_multiclass.classification_dense",
+                                   "configurations.csv")
+
+        cf = ConfigurationsFile(automl_path)
+        cf.get_configuration(32)
+        
+
+class TestAlgorithmRunsFile(unittest.TestCase):
+
+    def test_get_configuration(self):
+        automl_path = os.path.dirname(os.path.dirname(__file__))
+        automl_path = os.path.join(automl_path,
+                                   "automl",
+                                   "metalearning",
+                                   "db",
+                                   "files",
+                                   "accuracy_multiclass.classification_dense",
+                                   "algorithm_runs.arff")
+
+        arf = AlgorithmRunsFile(automl_path)
+        res = arf.get_associated_configuration(2117)
+        print("Associated algorithm is:", res)
+
 if __name__ == '__main__':
     unittest.main()
+
+
