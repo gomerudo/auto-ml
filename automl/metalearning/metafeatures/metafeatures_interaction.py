@@ -30,6 +30,7 @@ STATS_KURT_STD = 'KurtosisSTD'
 STATS_LANDMARK_1NN = 'Landmark1NN'
 STATS_LANDMARK_DNL = 'LandmarkDecisionNodeLearner'
 STATS_LANDMARK_DT = 'LandmarkDecisionTree'
+STATS_LANDMARK_LDA = 'LandmarkLDA'
 STATS_LANDMARK_NB = 'LandmarkNaiveBayes'
 STATS_LANDMARK_RNL = 'LandmarkRandomNodeLearner'
 
@@ -156,6 +157,9 @@ class MetaFeaturesHelper:
             STATS_LANDMARK_DT:
                 si.landmark_decision_tree(self.dataset.X.values,
                                           self.dataset.y.values),
+
+            STATS_LANDMARK_LDA:
+                si.landmark_lda(self.dataset.X.values, self.dataset.y.values),
 
             STATS_LANDMARK_NB:
                 si.landmark_naive_bayes(self.dataset.X.values,
@@ -294,6 +298,7 @@ class MetaFeaturesHelper:
         self._pca_statistics()
         self._percentage_statistics()
         self._ratio_statistics()
+        self._skewness_statistics()
         self._symbol_statistics()
 
         return self.metafeatures_map

@@ -22,7 +22,7 @@ class TestMetaModelBuilder(unittest.TestCase):
 
         c_f = ConfigurationsFile(automl_path)
         mmb = ConfigurationBuilder(c_f.get_configuration(32))
-        ml_suggestion = mmb.build_suggestion()
+        ml_suggestion = mmb.build_configuration()
 
         print("Summary: ")
         print("Imputations: ", ml_suggestion.imputations)

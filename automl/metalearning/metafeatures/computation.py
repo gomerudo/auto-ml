@@ -203,7 +203,7 @@ class StatisticalInformation:
         for train, test in kf.split(X, y):
             kNN = sklearn.neighbors.KNeighborsClassifier(n_neighbors=1)
             if len(y.shape) == 1 or y.shape[1] == 1:
-                kNN.fit(X[train], y[train])
+                kNN.fit(X[train], y[train].ravel())
             else:
                 kNN = OneVsRestClassifier(kNN)
                 kNN.fit(X[train], y[train])

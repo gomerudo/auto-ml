@@ -27,10 +27,12 @@ import pkg_resources
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
-from automl.globalvars import CONFIGURATIONS_CSV_NAME
+from automl.globalvars import CONFIGURATIONS_CSV_NAME, ALGORUNS_CSV_NAME
 from automl.utl.arff_operations import ARFFWrapper
-from automl.errors.customerrors import CurrentlyNonSupportedError
+from automl.errors.customerrors import CurrentlyNonSupportedError, AutoMLError
 from automl.datahandler.dataloader import Dataset
+from automl.metalearning.db.configurations_parsing \
+    import ConfigurationBuilder, mix_suggestions
 
 class MKDatabaseClient:
     """MKDatabase (Meta-Knowledge Database) to perform queries.
@@ -79,23 +81,43 @@ class MKDatabaseClient:
             distance_metric (string or sklearn callable): The distance metric
                             to use for the KNN algorithm.
 
+        Returns:
+            (np.array, np.array)    A tuple where the first element is a numpy
+                                    array of the similarity metrics for the
+                                    result datasets and the second element
+                                    contains the similar dataset's ids.
+
         """
         # For now, accept only Dataset objects
-        if not isinstance(Dataset):
+        if not isinstance(dataset, Dataset):
             raise TypeError("dataset must be an instance of AutoML 'Dataset'")
 
         # Otherwise ...
         nn_obj = NearestNeighbors(n_neighbors=k, metric=distance_metric)
 
         if weighted:
-            database = nn_obj.fit(self.metaknwoledge.weighted_matrix())
+            dataset_ids, matrix = self.metaknwoledge.weighted_matrix()
         else:
-            database = nn_obj.fit(self.metaknwoledge.simple_matrix())
+            dataset_ids, matrix = self.metaknwoledge.simple_matrix()
+
+        # Set nans to 0. TODO: Verify this makes sense and gives good results
+        matrix[np.isnan(matrix)] = 0.0
+        database = nn_obj.fit(matrix)
 
         similarities, indices = \
             database.kneighbors(dataset.metafeatures_vector())
 
-        return similarities, indices
+        return similarities, dataset_ids[indices]
+
+    def meta_suggestions(self, dataset=None, ids_list=None, metric='accuracy'):
+        configs = LandmarkModelParser.models_by_metric(ids_list, dataset,
+                                                       metric)
+
+        res = mix_suggestions(configs)
+        return res
+
+        # for dataset_id in ids_list:
+
 
 
 class MetaKnowledge:
@@ -251,7 +273,7 @@ class LandmarkModelParser:
     """Class to interact with the models stored per instance (dataset)."""
 
     @staticmethod
-    def model_by_metric(instances_ids=None, dataset=None,
+    def models_by_metric(instances_ids=None, dataset=None,
                         metric='accuracy'):
         """Return the models for a list of instances by the given accuracy.
 
@@ -306,17 +328,37 @@ class LandmarkModelParser:
                              ))
 
         configs_csv = LandmarkModelParser._configs_file_by_metric(basename_dir)
+        algoruns_arff = \
+            LandmarkModelParser._algorithm_runs_file_by_metric(basename_dir)
 
-        if configs_csv is None:
+        if configs_csv is None or algoruns_arff is None:
             return None
 
+        res = []
+        for instance_id in instances_ids:
+            algoruns_file = AlgorithmRunsFile(algoruns_arff)
+            config_id = algoruns_file.get_associated_configuration(instance_id)
 
-        return basename_dir
-        # Actual computation
+            config_file = ConfigurationsFile(configs_csv)
+            mmb = ConfigurationBuilder(
+                config_file.get_configuration(config_id)
+            )
+            res.append(mmb.build_configuration())
 
-        # Parse the file in the directory
+        return res
 
-        # Return just the id of interest
+
+    @staticmethod
+    def _algorithm_runs_file_by_metric(metric):
+        files_dir = pkg_resources.resource_filename(__name__, "files")
+        algoruns_file = "{f_dir}/{m_name}/{c_file}".format(
+            f_dir=files_dir,
+            c_file=ALGORUNS_CSV_NAME,
+            m_name=metric)
+
+        if os.path.exists(algoruns_file):
+            return algoruns_file
+        return None
 
     @staticmethod
     def _configs_file_by_metric(metric):

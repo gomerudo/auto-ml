@@ -1,9 +1,11 @@
 """Module to test the model builder."""
 
 import unittest
-import os.path
+import numpy as np
+from automl.discovery.assistant import Assistant
 from automl.metalearning.db.configurations_parsing import ConfigurationBuilder
 from automl.metalearning.db.load_db import ConfigurationsFile
+from automl.datahandler.dataloader import DataLoader
 
 
 class TestAssistant(unittest.TestCase):
@@ -11,22 +13,15 @@ class TestAssistant(unittest.TestCase):
 
     def test_workflow(self):
         """Test a workflow for the Assistant."""
-        automl_path = os.path.dirname(os.path.dirname(__file__))
-        automl_path = os.path.join(automl_path,
-                                   "automl",
-                                   "metalearning",
-                                   "db",
-                                   "files",
-                                   "accuracy_multiclass.classification_dense",
-                                   "configurations.csv")
+        dataset = DataLoader.get_openml_dataset(openml_id=46, problem_type=0)
+        assistant = Assistant(dataset)
+        assistant.compute_similar_datasets()
 
-        c_f = ConfigurationsFile(automl_path)
-        mmb = ConfigurationBuilder(c_f.get_configuration(32))
-        ml_suggestion = mmb.build_suggestion()
+        print("Similar datasets", assistant.similar_datasets)
+        red_ss = assistant.reduced_search_space
 
-        print("Summary: ")
-        print("Imputations: ", ml_suggestion.imputations)
-        print("Encoders: ", ml_suggestion.encoders)
-        print("Classifiers: ", ml_suggestion.classifiers)
-        print("Rescalers: ", ml_suggestion.rescalers)
-        print("Preprocessors: ", ml_suggestion.preprocessors)
+        print("classifiers:", red_ss.classifiers)
+        print("encoders:", red_ss.encoders)
+        print("rescalers:", red_ss.rescalers)
+        print("preprocessors:", red_ss.preprocessors)
+        print("imputations:", red_ss.imputations)

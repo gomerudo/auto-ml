@@ -105,7 +105,7 @@ class ConfigurationBuilder:
         self.model_row = model_row
         self._internal_list_loader()
 
-    def build_suggestion(self):
+    def build_configuration(self):
         """Build a ML Suggestion with the row passed at instaciation time."""
         imputation_col = _PF_IMPUTATION + _CSV_COL_SEP + _PF_STRATEGY
         classifier_choice_col = _PF_CLASSIFIER + _CSV_COL_SEP + _CSV_CHOICE
@@ -142,7 +142,6 @@ class ConfigurationBuilder:
             imputations=suggestions_dict[_PF_IMPUTATION],
         )
 
-        print(suggestions_dict)
         return mlsuggestion
 
     def _from_internal_list(self, element_type):
@@ -368,6 +367,17 @@ class MLSuggestion:
         self._encoders = encoders
         self._imputations = imputations
 
+        if self._classifiers is None:
+            self._classifiers = set()
+        if self._rescalers is None:
+            self._rescalers = set()
+        if self._preprocessors is None:
+            self._preprocessors = set()
+        if self._encoders is None:
+            self._encoders = set()
+        if self._imputations is None:
+            self._imputations = set()
+
         if isinstance(self._classifiers, list):
             self._classifiers = set(self._classifiers)
         if isinstance(self._rescalers, list):
@@ -431,9 +441,6 @@ class MLSuggestion:
 
     @staticmethod
     def _add_to_list(input_list, element):
-        if not isinstance(input_list, set):
-            input_list = set()
-
         if isinstance(element, set):
             input_list.update(element)
         else:
