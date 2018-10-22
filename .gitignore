@@ -8,3 +8,7 @@
 # VS code
 
 .vscode/**
+
+# Python
+
+**/__pycache__/**
