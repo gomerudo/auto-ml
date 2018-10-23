@@ -25,3 +25,6 @@ class TestAssistant(unittest.TestCase):
         print("rescalers:", red_ss.rescalers)
         print("preprocessors:", red_ss.preprocessors)
         print("imputations:", red_ss.imputations)
+
+        pipeline_obj = assistant.generate_pipeline()
+

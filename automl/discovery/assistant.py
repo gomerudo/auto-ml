@@ -5,6 +5,7 @@ from automl.errors.customerrors import AutoMLError
 from automl.metalearning.metafeatures.metafeatures_interaction \
     import MetaFeaturesManager
 from automl.metalearning.db.load_db import MKDatabaseClient
+from automl.discovery.pipeline_generation import PipelineDiscovery
 
 class Assistant:
 
@@ -16,6 +17,7 @@ class Assistant:
         self._neighbors = None
         self._neighbors_metrics = None
         self._search_space = None
+        self._pipeline_discovery = None
 
     @property
     def metafeatures(self):
@@ -60,5 +62,19 @@ class Assistant:
     def generate_pipeline(self):
         # Call TPOT
         # Returns a pipeline
-        pass
+        dict_suggestions = self.reduced_search_space.classifiers
+        
+        try:
+            search_space = dict()
+            for classifier in dict_suggestions:
+                search_space[classifier] = {}
+            # search_space =
+        except AutoMLError:
+            search_space = None
 
+        p_disc = PipelineDiscovery(self.dataset,search_space=search_space)
+        pipeline = p_disc.discover()
+
+        print(pipeline)
+        print(p_disc.validation_score)
+        return p_disc

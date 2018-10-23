@@ -13,6 +13,7 @@ import pandas as pd
 import scipy
 import numpy as np
 import openml as oml
+from sklearn.model_selection import train_test_split
 from automl.metalearning.metafeatures.metafeatures_interaction \
     import MetaFeaturesManager
 
@@ -89,6 +90,9 @@ class Dataset:
         """Return whether or not the X data is sparse or not."""
         return scipy.sparse.issparse(self.X.values)
 
+    def train_test_split(self, random_state=42, test_size=0.33):
+        return train_test_split(self.X, self.y, test_size=test_size,
+                                random_state=random_state)
 
 class DataLoader:
     """Class to load dataset as a Dataset class from different sources."""
