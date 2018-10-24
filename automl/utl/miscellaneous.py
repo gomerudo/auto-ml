@@ -6,8 +6,8 @@ def argsort_list(src_list=None, backwards=False):
 
     Similar to argsort for numpy arrays. It is base on unutbu's answer in
     StackOverflow:
-        http://stackoverflow.com/questions/3382352/equivalent-of-numpy-argsort
-        -in-basic-python/3382369#3382369
+    http://stackoverflow.com/questions/3382352/equivalent-of-numpy-argsort
+    -in-basic-python/3382369#3382369
 
     Attributes:
         src_list        (src_list) The src_list to sort. Default is None.

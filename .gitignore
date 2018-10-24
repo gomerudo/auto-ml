@@ -12,3 +12,7 @@
 # Python
 
 **/__pycache__/**
+
+# sphink
+**/source/**
+**/build/**

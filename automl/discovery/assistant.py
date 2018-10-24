@@ -54,8 +54,7 @@ class Assistant:
 
         Returns:
             list    List of neighbors ordered by similarity.
-            list    List of the metrics for each of the neighbors. Ordered from
-                    most similar to least similar.
+            list    List of the metrics for each of the neighbors.
 
         """
         mk_dc = MKDatabaseClient()

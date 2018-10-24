@@ -2,8 +2,8 @@
 
 This module includes the global variables to refer the meta-features and the
 next classes:
-    - MetaFeaturesHelper: To perform the opearations.
-    - MetaFeaturesManager: To expose the metafeatures for a given dataset.
+- MetaFeaturesHelper: To perform the opearations.
+- MetaFeaturesManager: To expose the metafeatures for a given dataset.
 """
 
 import pandas as pd

@@ -2,10 +2,10 @@
 
 Here we abstract the dataset as a class to ease the interaction within the
 package. Namely, we provide the next classes:
-    - Dataset: To abstract a dataset together with the properties needed for
-               the different AutoML operations.
-    - DatasetLoader: To provided methods to obtain dataset from different
-                     sources.
+- Dataset: To abstract a dataset together with the properties needed for
+the different AutoML operations.
+- DatasetLoader: To provided methods to obtain dataset from different
+sources.
 """
 import random
 import string
