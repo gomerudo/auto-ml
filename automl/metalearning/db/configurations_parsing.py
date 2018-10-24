@@ -287,7 +287,8 @@ class _ConfigurationBuilderHelper:
                 name
             )
         if choice_type == _PF_CATEGORICAL_ENCODING:
-            return _ConfigurationBuilderHelper._resolve_encoder(dictionary, name)
+            return _ConfigurationBuilderHelper._resolve_encoder(dictionary,
+                                                                name)
         if choice_type == _PF_PREPROCESSOR:
             return _ConfigurationBuilderHelper._resolve_preprocessor(
                 dictionary,

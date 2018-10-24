@@ -29,10 +29,11 @@ import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 from automl.globalvars import CONFIGURATIONS_CSV_NAME, ALGORUNS_CSV_NAME
 from automl.utl.arff_operations import ARFFWrapper
-from automl.errors.customerrors import CurrentlyNonSupportedError, AutoMLError
+from automl.errors.customerrors import CurrentlyNonSupportedError
 from automl.datahandler.dataloader import Dataset
 from automl.metalearning.db.configurations_parsing \
     import ConfigurationBuilder, mix_suggestions
+
 
 class MKDatabaseClient:
     """MKDatabase (Meta-Knowledge Database) to perform queries.
@@ -110,6 +111,20 @@ class MKDatabaseClient:
         return similarities, dataset_ids[indices]
 
     def meta_suggestions(self, dataset=None, ids_list=None, metric='accuracy'):
+        """Retrieve the Model Suggestions for a set of ids, based on a dataset.
+
+        Using a given metric, retrieve the models suggested.
+
+        Attributes:
+            dataset     (Dataset) The dataset to use as areference.
+            ids_list    (list) The list of ids to retrieve information about.
+            metric      (str) A Metalearning metric.
+
+        Returns:
+            list    A list of MLSuggestions.
+
+        """
+        # TODO: Try to remove dependency on 'dataset'
         configs = LandmarkModelParser.models_by_metric(ids_list, dataset,
                                                        metric)
 
@@ -117,7 +132,6 @@ class MKDatabaseClient:
         return res
 
         # for dataset_id in ids_list:
-
 
 
 class MetaKnowledge:
@@ -274,7 +288,7 @@ class LandmarkModelParser:
 
     @staticmethod
     def models_by_metric(instances_ids=None, dataset=None,
-                        metric='accuracy'):
+                         metric='accuracy'):
         """Return the models for a list of instances by the given accuracy.
 
         Attributes:
@@ -347,7 +361,6 @@ class LandmarkModelParser:
 
         return res
 
-
     @staticmethod
     def _algorithm_runs_file_by_metric(metric):
         files_dir = pkg_resources.resource_filename(__name__, "files")
@@ -371,7 +384,7 @@ class LandmarkModelParser:
         if os.path.exists(config_file):
             return config_file
         return None
-    
+
     @staticmethod
     def metrics_available():
         """Return the metrics that are available in the meta-knowledge.
@@ -396,30 +409,63 @@ class LandmarkModelParser:
 
 
 class ConfigurationsFile:
+    """Abstract a configurations.csv file.
+
+    This class represents a configurations.csv file for our meta-knowledge. It
+    also provides some useful methods to interact with the file.
+    """
 
     def __init__(self, configs_file):
+        """Constructor.
+
+        Attributes:
+            configs_file    (str): The configuration's file path.
+
+        """
         self.configs_file = configs_file
         self._load_file()
 
     def _load_file(self):
         if os.path.exists(self.configs_file):
-            self._frame = pd.read_csv(self.configs_file, index_col = 0)
+            self._frame = pd.read_csv(self.configs_file, index_col=0)
         else:
             raise ValueError("Invalid file path: File does not exist.")
-    
+
     def get_configuration(self, algorithm_id):
+        """Get the configurations for a given algorithm id.
+
+        Attributes:
+            algorithm_id    (int): The id for the algorithm. This should come
+                            from the results in algorithm_runs.arff.
+
+        """
+        # TODO: Handle non available ids with exception.
         elem = self._frame.loc[algorithm_id].dropna()
         return elem
-        
+
     def get_configurations(self, algorithms_ids):
+        """Get the configurations for a given set of algorithm ids.
+
+        Attributes:
+            algorithm_ids   (list): The ids for the algorithms. These should
+                            come from the results in algorithm_runs.arff
+
+        """
         results = []
         for alg_id in algorithms_ids:
             results.append(self.get_configuration(alg_id))
 
 
 class AlgorithmRunsFile:
+    """Abstract the algorithm_runs.arff file."""
 
     def __init__(self, algruns_file):
+        """Constructor.
+
+        Arguments:
+            algruns_file    (str): The algorithm_runs.arff file path.
+
+        """
         self.algruns_file = algruns_file
         self._load_file()
 
@@ -431,6 +477,20 @@ class AlgorithmRunsFile:
             raise ValueError("Invalid file path: File does not exist.")
 
     def get_associated_configuration(self, instance_id):
+        """Get the associated configuration for a given instance id.
+
+        A configuration is a solution for the dataset (instance). This returns
+        the id for that solution, not the solution itself.
+
+        Attributes:
+            instance_id (int): The id of the dataset (instance) to search for.
+
+        Returns:
+            int:    The id of the configuration solving the instance_id problem
+                    (dataset).
+
+        """
+        # TODO: Rename to clarify that the id is returned.
         # TODO: Allow ARRF Wrapper to retrieve a row by id and check None
         # values and errors.
         aux_pandas = self._arrf_wrapper.as_pandas_df()
@@ -439,6 +499,20 @@ class AlgorithmRunsFile:
         return int(res['algorithm'])
 
     def get_associated_configurations(self, instances_ids):
+        """Get the associated configuration for a given set of instance ids.
+
+        A configuration is a solution for the dataset (instance). This returns
+        the ids for the solutions, not the solutions themselves.
+
+        Attributes:
+            instances_ids   (list): The ids of the datasets (instances) to
+                            search for.
+
+        Returns:
+            list(int):  The ids of the configurations solving the instance_id's
+                        (datasets) problems.
+
+        """
         # TODO: Allow ARRF Wrapper to retrieve a column by id and check None
         # values and errors.
         result = []

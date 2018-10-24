@@ -44,8 +44,8 @@ class Dataset:
         if y.shape[1] > 1:
             raise ValueError("y data frame should have one column only.")
 
-        self.X = X
-        self.y = y
+        self.X = X  # pylint: disable=C0103
+        self.y = y  # pylint: disable=C0103
 
         # Rename target column
         y.columns = ['target']
@@ -91,8 +91,23 @@ class Dataset:
         return scipy.sparse.issparse(self.X.values)
 
     def train_test_split(self, random_state=42, test_size=0.33):
+        """Make a train-test split as defined in scikit-learn for the dataset.
+
+        Attributes:
+            random_state    (int) The random_state to initialize with so that
+                            the results can be reproduced.
+            test_size       (float) Proportion of split for the test set.
+
+        Returns:
+            np.array        The train set for the features.
+            np.array        The train set for target.
+            np.array        The test set for the features.
+            np.array        The test set for target.
+
+        """
         return train_test_split(self.X, self.y, test_size=test_size,
                                 random_state=random_state)
+
 
 class DataLoader:
     """Class to load dataset as a Dataset class from different sources."""
