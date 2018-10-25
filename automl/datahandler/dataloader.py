@@ -1,12 +1,10 @@
-"""Module to expose classes to interact with the datasets.
+"""Module to expose classes to interact with a given dataset.
 
-Here we abstract the dataset as a class to ease the interaction within the
-package. Namely, we provide the next classes:
-- Dataset: To abstract a dataset together with the properties needed for
-the different AutoML operations.
-- DatasetLoader: To provided methods to obtain dataset from different
-sources.
+Here we abstract any dataset as a class to ease the interaction within the
+package's modules. Additionally, we provide a class to load datasets in this
+new format.
 """
+
 import random
 import string
 import pandas as pd
@@ -19,12 +17,28 @@ from automl.metalearning.metafeatures.metafeatures_interaction \
 
 
 class Dataset:
-    """Class to abstract a dataset.
+    """Class abstracting a dataset.
 
-    In this class we abstract a dataset as an object of features and a target,
-    together with categorical indicators for each of the features, and id to
-    identify the dataset and a problem type to solve: either classification or
-    regression.
+    In this class we abstract a dataset as an object composed of a features
+    pandas.DataFrame and a target pandas.DataFrame (with the name 'target').
+    Additionally, a Dataset contains categorical indicators for each of the
+    feature columns, and ID and a problem type to solve (either classification
+    or regression).
+
+    Attributes:
+        X (pandas.DataFrame): The Data Frame containing the features of the
+            dataset. Shape is `(n, m)`.
+        y (pandas.DataFrame): The Data Frame containing the target value (e.g.
+            the label for a class). It should be of shape `(n, 1)`.
+        categorical_indicators (list): A list of `m` booleans following a
+            1-to-1 relation with the features' columns that indicate whether or
+            not the feature is categorical.
+        dataset_id (str): An string identifying the dataset.
+        problem_type (int): 0 indicates classification, 1 indicates regression.
+
+    Raises:
+        TypeError: If X, y are not pandas Data Frames.
+        ValueError: If X are not of shape `(n, m)`, `(n, 1)` respectively.
     """
 
     def __init__(self, dataset_id, X, y, categorical=None, problem_type=0):
@@ -56,7 +70,7 @@ class Dataset:
             self.categorical_indicators = categorical
 
         self.dataset_id = self._random_id() if dataset_id is None \
-            else dataset_id
+            else str(dataset_id)
         self.problem_type = problem_type
 
     def is_regression_problem(self):
@@ -110,7 +124,10 @@ class Dataset:
 
 
 class DataLoader:
-    """Class to load dataset as a Dataset class from different sources."""
+    """Class to load dataset as a Dataset class from different sources.
+    
+    It exposes static methods only.
+    """
 
     @staticmethod
     def parse_dataset(dataset):

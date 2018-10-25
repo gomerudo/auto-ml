@@ -27,12 +27,13 @@ import pkg_resources
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
-from automl.globalvars import CONFIGURATIONS_CSV_NAME, ALGORUNS_CSV_NAME
+from automl.globalvars import CONFIGURATIONS_CSV_NAME
+from automl.globalvars import ALGORUNS_CSV_NAME
 from automl.utl.arff_operations import ARFFWrapper
 from automl.errors.customerrors import CurrentlyNonSupportedError
 from automl.datahandler.dataloader import Dataset
-from automl.metalearning.db.configurations_parsing \
-    import ConfigurationBuilder, mix_suggestions
+from automl.metalearning.db.configurations_parsing import ConfigurationBuilder
+from automl.metalearning.db.configurations_parsing import mix_suggestions
 
 
 class MKDatabaseClient:
