@@ -3,7 +3,7 @@
 from automl.errors.customerrors import AutoMLError
 from automl.metalearning.metafeatures.metafeatures_interaction \
     import MetaFeaturesManager
-from automl.metalearning.db.load_db import MKDatabaseClient
+from automl.metalearning.database.load_db import MKDatabaseClient
 from automl.discovery.pipeline_generation import PipelineDiscovery
 
 

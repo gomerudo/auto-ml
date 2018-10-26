@@ -7,7 +7,7 @@ from automl.datahandler.dataloader import Dataset
 
 class PipelineDiscovery:
     """Discover a pipeline for a given dataset, using a given metric.
-    
+
     Args:
         dataset (Dataset): The dataset to work with. Defaults to None.
         search_space (str or dict): The search space to use for the discovery
@@ -52,26 +52,26 @@ class PipelineDiscovery:
             raise TypeError("search-space must be an string or dict")
 
     # TODO: use or drop the limit_time
-    def discover(self, limit_time=0, random_state=42):
+    def discover(self, limit_time=None, random_state=42):
         """Perform the discovery of a pipeline.
 
         Args:
-            limit_time (int): In seconds, the maximum time to wait for the
-            generation of the pipeline.
+            limit_time (int): In minutes, the maximum time to wait for the
+                generation of the pipeline. If None, ignored.
             random-state (int): The number to seed the random state with.
 
         Returns:
             sklearn.pipeline.Pipeline: The resulting pipeline.
 
         """
-
         # Define the arguments as a dictionary
         arguments = {
             "generations": 5,
             "population_size": 20,
             "cv": 5,
             "random_state": random_state,
-            "verbosity": 2
+            "verbosity": 2,
+            "max_time_mins": limit_time,
         }
 
         # If the search space is defined, then use it

@@ -404,7 +404,7 @@ class MLSuggestion:
 
     Attributes:
         None.
-    
+
     """
 
     # pylint: disable=R0913
@@ -483,7 +483,7 @@ class MLSuggestion:
         """Add a new imputation or set of imputation methods.
 
         Attributes:
-            imputation (str or list): If str, then the element is added. If 
+            imputation (str or list): If str, then the element is added. If
                 list, then all elements in the list are added.
 
         """
@@ -504,6 +504,7 @@ class MLSuggestion:
 
         Returns:
             list: The classifiers.
+
         """
         self._clean_set(self._classifiers)
         return self._classifiers
@@ -513,9 +514,10 @@ class MLSuggestion:
         """Return the valid rescalers.
 
         None values are considered invalid, and hence not included.
-        
+
         Returns:
             list: The rescalers.
+
         """
         self._clean_set(self._rescalers)
         return self._rescalers
@@ -525,9 +527,10 @@ class MLSuggestion:
         """Return the valid preprocessors.
 
         None values are considered invalid, and hence not included.
-        
+
         Returns:
             list: The preprocessors.
+
         """
         self._clean_set(self._preprocessors)
         return self._preprocessors
@@ -537,9 +540,10 @@ class MLSuggestion:
         """Return the valid _encoders.
 
         None values are considered invalid, and hence not included.
-        
+
         Returns:
             list: The encoders.
+
         """
         self._clean_set(self._encoders)
         return self._encoders
@@ -549,9 +553,10 @@ class MLSuggestion:
         """Return the valid imputations.
 
         None values are considered invalid, and hence not included.
-        
+
         Returns:
             list: The imputations.
+
         """
         self._clean_set(self._imputations)
         return self._imputations
@@ -566,7 +571,7 @@ class MLSuggestion:
         """Return all elements.
 
         Returns:
-            list: A single list with all classifiers, rescalers, 
+            list: A single list with all classifiers, rescalers,
                 pre-processors, encoders and imputation methods.
 
         """

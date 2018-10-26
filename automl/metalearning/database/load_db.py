@@ -23,8 +23,9 @@ from automl.metalearning import ALGORUNS_CSV_NAME
 from automl.utl.arff_operations import ARFFWrapper
 from automl.errors.customerrors import CurrentlyNonSupportedError
 from automl.datahandler.dataloader import Dataset
-from automl.metalearning.db.configurations_parsing import ConfigurationBuilder
-from automl.metalearning.db.configurations_parsing import mix_suggestions
+from automl.metalearning.database.configurations_parsing \
+    import ConfigurationBuilder
+from automl.metalearning.database.configurations_parsing import mix_suggestions
 
 
 class MKDatabaseClient:

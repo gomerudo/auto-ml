@@ -13,6 +13,7 @@ import pandas as pd
 import arff
 import automl
 
+
 class ARFFWrapper:
     """Class to perform operations on a ARFF dataset.
 
