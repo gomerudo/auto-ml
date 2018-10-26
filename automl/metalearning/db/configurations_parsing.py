@@ -1,14 +1,12 @@
-"""Module containing methods, classes and private variables to build spaces.
+"""Provide functions, classes and private variables to build configurations.
 
-We define a space (or operators space) as a set of
-classifiers/imputation-methods/rescalers/preprocessors for a given problem.
-Here, we define the next classes:
-    - MLSuggestion: representing our abstraction of a Machine Learning
-                    suggestion.
-    - SearchSpaceBuilder: Builds a search space out of an auto-sklearn ML row.
-    - SearchSpaceBuilderHelper: Helper methods for the SearchSpaceBuilder.
+We define a configuration as a set of classifiers / imputation-methods /
+rescalers / preprocessors for a given problem. The set of these configurations
+can be understood as The Search Space for a problem.
 """
 
+import pandas as pd
+import automl
 from automl.errors.customerrors import CurrentlyNonSupportedError
 
 # CONSTANTS (PRIVATE SCOPE)
@@ -70,16 +68,25 @@ _CSV_COL_SEP = ":"
 def mix_suggestions(suggestion_list):
     """Mix a list of MLSuggestion's into a single one.
 
-    Attributes:
+    Args:
         suggestion_list     (list). List of MLSuggestion objects.
+
+    Raises:
+        TypeError: If the argument is not a list or any of the elements in the
+            list is not an instance of MLSuggestion.
 
     Returns:
         MLSuggestion        The resulting MLSuggestion.
 
     """
-    # TODO: Check types
+    if isinstance(suggestion_list, list):
+        raise TypeError("Argument must be a list")
+
     result = MLSuggestion()
     for suggestion in suggestion_list:
+        if not isinstance(suggestion, MLSuggestion):
+            raise TypeError("Invalide type. Not a MLSuggestion")
+
         result.add_classifier(suggestion.classifiers)
         result.add_encoder(suggestion.encoders)
         result.add_imputation(suggestion.imputations)
@@ -89,19 +96,30 @@ def mix_suggestions(suggestion_list):
 
 
 class ConfigurationBuilder:
-    """Build a Search Space: models/pre-processors/encoders/scalers/imputation.
+    """Build a configuration: model/pre-processor/encoder/scaler/imputation.
 
-    The search space can be used to feed TPOT with.
+    A set of configurations can be used to feed TPOT with.
+
+    Args:
+        model_row (pandas.Series or pandas.DataFrame): Represents a row
+            coming from a configurations.csv file. Defaults to None
+
+    Attributes:
+        model_row (pandas.Series or pandas.DataFrame): Represents a row
+            coming from a configurations.csv file.
+
+    Raises:
+        TypeError: If no pandas Series or DataFrame is passed as argument.
+
     """
 
-    def __init__(self, model_row):
-        """Constructor.
+    def __init__(self, model_row=None):
+        """Constructor."""
+        if not isinstance(model_row, pd.DataFrame) and \
+                not isinstance(model_row, pd.Series):
+            raise TypeError("Only pandas DataFrame or pandas Series are \
+                            accepted")
 
-        Attributes:
-            model_row   (pd.Series) or (pd.DataFrame). A single row with the
-                        information to map into a MLSuggestion.
-
-        """
         self.model_row = model_row
         self._internal_list_loader()
 
@@ -130,9 +148,9 @@ class ConfigurationBuilder:
                 suggestion = self._from_internal_list(attribute)
                 suggestions_dict[list_name].append(suggestion)
             else:
-                # TODO: make it logging
-                print("No attribute '{attr}' in \
-                      current element".format(attr=attribute))
+                msg = "No attribute '{attr}' in current element\
+                      ".format(attr=attribute)
+                automl.automl_log(msg, 'WARNING')
 
         mlsuggestion = MLSuggestion(
             classifiers=suggestions_dict[_PF_CLASSIFIER],
@@ -227,7 +245,7 @@ class ConfigurationBuilder:
 
     def _add_preprocessors(self):
         preprocessors_map = {
-            # TODO: Check this one, that apparently comes fro auto-sklearn
+            # We ignore the next two that come from auto-sklearn
             # _PP_EXTRA_TREES_FOR_CL: "extra_trees_preproc_for_classification",
             # _PP_LIBLINEAR_SVC_PREPROCESSOR: "liblinear_svc_preprocessor",
             _PP_FAST_ICA: "sklearn.decomposition.FastICA",
@@ -272,10 +290,13 @@ class _ConfigurationBuilderHelper:
 
         Resolving means to map the value in the CSV into a scikit-learn class.
 
-        Attributes:
-            dictionary  (dict) The dictionary to resolve the values from.
-            choice_type (str) The prefix of the __choice__ field.
-            name        (str) The name to resolve.
+        Args:
+            dictionary (dict): The dictionary to resolve the values from.
+            choice_type (str): The prefix of the __choice__ field.
+            name (str): The name to resolve.
+
+        Raises:
+            ValueError: If the choice_type is not recognized.
 
         Returns:
             str:        The auto-sklearn class name to use for 'name'.
@@ -299,8 +320,8 @@ class _ConfigurationBuilderHelper:
                 dictionary, name
             )
 
-        # TODO: Raise an exception maybe
-        return None
+        raise ValueError("Unknown choice type: '{choice}'\
+                         ".format(choice=choice_type))
 
     @staticmethod
     def resolve_strategy(dictionary, strategy_type):
@@ -308,10 +329,16 @@ class _ConfigurationBuilderHelper:
 
         Resolving means to map the value in the CSV into a scikit-learn class.
 
-        Attributes:
+        Args:
+            dictionary (dict): The dictionary to resolve from.
+            strategy_type (str): The type of strategy to support.
+
+        Raises:
+            CurrentlyNonSupportedError: If the strategy_type indicated is not
+                supported yet.
 
         Returns:
-
+            str: The value of the strategy.
 
         """
         if strategy_type == _PF_IMPUTATION:
@@ -330,18 +357,24 @@ class _ConfigurationBuilderHelper:
 
     @staticmethod
     def _resolve_rescaler(dictionary, name):
+        # This does not raise exceptions because 'none' is a possible value
+        # in configurations.csv
         if name == 'none':
             return None
         return dictionary[_PF_RESCALING][name]
 
     @staticmethod
     def _resolve_preprocessor(dictionary, name):
+        # This does not raise exceptions because 'none' is a possible value
+        # in configurations.csv
         if name == 'no_preprocessing':
             return None
         return dictionary[_PF_PREPROCESSOR][name]
 
     @staticmethod
     def _resolve_encoder(dictionary, name):
+        # This does not raise exceptions because 'none' is a possible value
+        # in configurations.csv
         if name == 'no_encoding':
             return None
         return dictionary[_PF_CATEGORICAL_ENCODING][name]
@@ -356,6 +389,22 @@ class MLSuggestion:
 
     Please note that in principle we are restricted to the scikit-learn
     classes available and moreover to the auto-sklearn results.
+
+    Args:
+        classifiers (list): A list of strings defining the full class path of
+            the classifiers (e.g. [sklearn.subgroup.MyClass]).
+        rescalers (list): A list of strings defining the full class path of the
+            rescalers (e.g. [sklearn.subgroup.MyClass]).
+        preprocessors (list):A list of strings defining the full class path of
+            the preprocessors (e.g. [sklearn.subgroup.MyClass]).
+        encoders (list): A list of strings defining the full class path of the
+            encoders (e.g. [sklearn.subgroup.MyClass]).
+        imputations (list): A list of strings defining the full class path of
+            the imputations (e.g. [sklearn.subgroup.MyClass]).
+
+    Attributes:
+        None.
+    
     """
 
     # pylint: disable=R0913
@@ -394,8 +443,8 @@ class MLSuggestion:
         """Add a new classifier or set of classifiers.
 
         Attributes:
-            classifier  (str) or (list). If str, then the element is added. If
-                        list, then all elements in the list are added.
+            classifier (str or list): If str, then the element is added. If
+                list, then all elements in the list are added.
 
         """
         self._add_to_list(self._classifiers, classifier)
@@ -404,8 +453,8 @@ class MLSuggestion:
         """Add a new pre-processor or set of pre-processors.
 
         Attributes:
-            preprocessor    (str) or (list). If str, then the element is added.
-                            If list, then all elements in the list are added.
+            preprocessor (str or list): If str, then the element is added. If
+                list, then all elements in the list are added.
 
         """
         self._add_to_list(self._preprocessors, preprocessor)
@@ -414,8 +463,8 @@ class MLSuggestion:
         """Add a new rescaler or set of rescalers.
 
         Attributes:
-            rescaler    (str) or (list). If str, then the element is added.
-                        If list, then all elements in the list are added.
+            rescaler (str or list): If str, then the element is added. If list,
+                then all elements in the list are added.
 
         """
         self._add_to_list(self._rescalers, rescaler)
@@ -424,8 +473,8 @@ class MLSuggestion:
         """Add a new encoder or set of encoders.
 
         Attributes:
-            encoder (str) or (list). If str, then the element is added. If
-                    list, then all elements in the list are added.
+            encoder (str or list): If str, then the element is added. If list,
+                then all elements in the list are added.
 
         """
         self._add_to_list(self._encoders, encoder)
@@ -434,8 +483,8 @@ class MLSuggestion:
         """Add a new imputation or set of imputation methods.
 
         Attributes:
-            imputation  (str) or (list). If str, then the element is added. If
-                        list, then all elements in the list are added.
+            imputation (str or list): If str, then the element is added. If 
+                list, then all elements in the list are added.
 
         """
         self._add_to_list(self._imputations, imputation)
@@ -451,7 +500,10 @@ class MLSuggestion:
     def classifiers(self):
         """Return the valid classifiers.
 
-        None values are considered invalid.
+        None values are considered invalid, and hence not included.
+
+        Returns:
+            list: The classifiers.
         """
         self._clean_set(self._classifiers)
         return self._classifiers
@@ -460,7 +512,10 @@ class MLSuggestion:
     def rescalers(self):
         """Return the valid rescalers.
 
-        None values are considered invalid.
+        None values are considered invalid, and hence not included.
+        
+        Returns:
+            list: The rescalers.
         """
         self._clean_set(self._rescalers)
         return self._rescalers
@@ -469,7 +524,10 @@ class MLSuggestion:
     def preprocessors(self):
         """Return the valid preprocessors.
 
-        None values are considered invalid.
+        None values are considered invalid, and hence not included.
+        
+        Returns:
+            list: The preprocessors.
         """
         self._clean_set(self._preprocessors)
         return self._preprocessors
@@ -478,7 +536,10 @@ class MLSuggestion:
     def encoders(self):
         """Return the valid _encoders.
 
-        None values are considered invalid.
+        None values are considered invalid, and hence not included.
+        
+        Returns:
+            list: The encoders.
         """
         self._clean_set(self._encoders)
         return self._encoders
@@ -487,7 +548,10 @@ class MLSuggestion:
     def imputations(self):
         """Return the valid imputations.
 
-        None values are considered invalid.
+        None values are considered invalid, and hence not included.
+        
+        Returns:
+            list: The imputations.
         """
         self._clean_set(self._imputations)
         return self._imputations
@@ -502,8 +566,8 @@ class MLSuggestion:
         """Return all elements.
 
         Returns:
-            list:   A single list with all classifiers, rescalers,
-                    pre-processors, encoders and imputation methods.
+            list: A single list with all classifiers, rescalers, 
+                pre-processors, encoders and imputation methods.
 
         """
         result = []

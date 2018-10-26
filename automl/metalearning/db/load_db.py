@@ -7,15 +7,6 @@ to work with in a given dataset.
 
 In this implementation, we provide methods to retrieve the simple space and its
 weighted version.
-
-Classes defined here:
-    - MKDatabaseClient: Interacts with the Meta-knwoledge database.
-    - MetaKnowledge: Defines the MetaKnowledge. This is, the abstraction of the
-                     meta-information as a class.
-    - LandmarkModelParser: Parses the models for the stored instances per
-                           accuracy.
-    - ConfigurationsFile: Represents a configurations.csv file.
-    - AlgorithmRunsFile: Represents an algorithm_runs.arff file.
 """
 
 
@@ -27,8 +18,8 @@ import pkg_resources
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
-from automl.globalvars import CONFIGURATIONS_CSV_NAME
-from automl.globalvars import ALGORUNS_CSV_NAME
+from automl.metalearning import CONFIGURATIONS_CSV_NAME
+from automl.metalearning import ALGORUNS_CSV_NAME
 from automl.utl.arff_operations import ARFFWrapper
 from automl.errors.customerrors import CurrentlyNonSupportedError
 from automl.datahandler.dataloader import Dataset

@@ -1,8 +1,5 @@
-"""Module that exposes the classes to compute statistics on a dataset.
+"""Module that exposes the classes to compute statistics on a dataset."""
 
-It exposes the classes:
-    - StatisticalInformation: To compute statistics.
-"""
 from collections import defaultdict
 import logging
 import scipy.stats

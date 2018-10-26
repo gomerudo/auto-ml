@@ -24,3 +24,41 @@ Points of contact at Achmea:
 - leon.vink@achmea.nl
 - cyril.cleven@achmea.nl
 """
+
+import logging
+from .globalvars import LOGGER_IDENTIFIER
+
+
+def automl_log(message=None, level=logging.DEBUG):
+    """Print a generic AutoML log messages, based on the level.
+
+    Args:
+        level (str): The log level as in python's `logging` package.
+
+    """
+    if message is None:
+        return  # Do nothing
+
+    log_message = "{logid} := {message}".format(logid=LOGGER_IDENTIFIER,
+                                                message=message)
+    if level == logging.DEBUG:
+        logging.debug(log_message)
+        return
+
+    if level == logging.INFO:
+        logging.info(log_message)
+        return
+
+    if level == logging.WARNING:
+        logging.warning(log_message)
+        return
+
+    if level == logging.ERROR:
+        logging.error(log_message)
+        return
+
+    if level == logging.CRITICAL:
+        logging.critical(log_message)
+        return
+
+    raise ValueError("Invalid log level")

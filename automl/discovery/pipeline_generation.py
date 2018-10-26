@@ -6,23 +6,36 @@ from automl.datahandler.dataloader import Dataset
 
 
 class PipelineDiscovery:
-    """Discover a pipeline for a given dataset, using a given metric."""
+    """Discover a pipeline for a given dataset, using a given metric.
+    
+    Args:
+        dataset (Dataset): The dataset to work with. Defaults to None.
+        search_space (str or dict): The search space to use for the discovery
+            operation. If string, it should be any of the following:
+            'scikit-learn'. If dict, it must comply with the TPOT config_dict
+            format. Defaults to 'scikit-learn'.
+        tpot_params (dict): The extra parameters to pass to the TPOT object
+            (either a TPOTClassifier or a TPOTRegressor). Defaults to None.
+
+    Raises:
+        TypeError: If any of the arguments do not satisfies the type
+            constraints described above.
+
+    Attributes:
+        dataset (Dataset): The dataset to work with.
+        search_space: (str or dict) The search space to use for the discovery
+            operation. If string, it should be any of the following:
+            'scikit-learn'. If dict, it must comply with the TPOT config_dict
+            format.
+        validation_score (dict): The extra parameters to pass to the TPOT
+            object (either a TPOTClassifier or a TPOTRegressor).
+
+    """
 
     # TODO: accept a metric
     def __init__(self, dataset=None, search_space='scikit-learn',
                  tpot_params=None):
-        """Constructor.
-
-        Attributes:
-            dataset         (Dataset) The dataset to work with.
-            search_space    (str) or (dict) The search space to use for the
-                            discovery operation. If string, it should be any of
-                            the following: 'scikit-learn'. If dict, it must
-                            comply with the TPOT config_dict format.
-            tpot_params     (dict)  The extra parameters to pass to the TPOT
-                            object (either a TPOTClassifier or a TPOTRegressor)
-
-        """
+        """Constructor."""
         self.dataset = dataset
         self.search_space = search_space
         self.validation_score = None
@@ -38,16 +51,19 @@ class PipelineDiscovery:
         elif not isinstance(search_space, dict):
             raise TypeError("search-space must be an string or dict")
 
+    # TODO: use or drop the limit_time
     def discover(self, limit_time=0, random_state=42):
         """Perform the discovery of a pipeline.
 
-        Attributes:
-            limit_time      (int) In seconds, the maximum time to wait for the
-                            generation of the pipeline.
-            random-state    (int) The number to seed the random state with.
+        Args:
+            limit_time (int): In seconds, the maximum time to wait for the
+            generation of the pipeline.
+            random-state (int): The number to seed the random state with.
+
+        Returns:
+            sklearn.pipeline.Pipeline: The resulting pipeline.
 
         """
-        # TODO: Handle train_test_split in a different way to allow for argvals
 
         # Define the arguments as a dictionary
         arguments = {
@@ -90,12 +106,12 @@ class PipelineDiscovery:
     def score(self, x_val, y_val):
         """Score a validation set against the discovered pipeline.
 
-        Attributes:
-            x_val   (np.array)  The validation set for the features.
-            y_val   (np.array)  The validation set for the target.
+        Args:
+            x_val (numpy.array): The validation set for the features.
+            y_val (numpy.array): The validation set for the target.
 
         Returns:
-            float   The score given by the pipeline for the passed set.
+            float: The score given by the pipeline for the passed set.
 
         """
         # TODO: Handle None values
@@ -105,15 +121,13 @@ class PipelineDiscovery:
     def save_pipeline(self, target_dir=None, file_name=None):
         """Save the discovered pipeline into a file, as python code.
 
-        Arguments:
-            target_dir  (string). If not none, use it as parent dir for the
-                        resulting file. Default is None.
-            file_name   (string). The name to use for the resulting file.
+        Args:
+            target_dir (string): If not none, use it as parent dir for the
+                resulting file. Defaults to None.
+            file_name (string): The name to use for the resulting file.
+                Defaults to None.
 
         """
-        # Call the save pipeline object
-        # TODO: Export with tpot built-in exporter.
-
         if file_name is None:
             file_name = "{data_id}.py".format(data_id=self.dataset.dataset_id)
 
@@ -128,8 +142,7 @@ class PipelineDiscovery:
         """Return the TPOT object used in the discovery process.
 
         Returns:
-            TPOTBase    The TPOTBase class: either TPOTClassifier or
-                        TPOTRegressor.
+            TPOTBase: The TPOTBase class (TPOTClassifier or TPOTRegressor).
 
         """
         return self._tpot_optimizer
@@ -139,7 +152,7 @@ class PipelineDiscovery:
         """Return the resulting pipeline from the discovery process.
 
         Returns:
-            Pipeline    scikit-learn pipeline object.
+            sklearn.pipeline.Pipeline: The discovered pipeline if any.
 
         """
         if self._tpot_optimizer is None:

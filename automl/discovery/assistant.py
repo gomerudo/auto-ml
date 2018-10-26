@@ -12,17 +12,20 @@ class Assistant:
 
     This class can compute the metafeatures, similar datasets and discover
     pipelines. For this, a metric and a dataset are required.
+
+    Args:
+        dataset (Dataset): A dataset object to work with. Defaults to None.
+        metric (string or callable): A metric to evalate the pipeline against.
+            Defaults to 'accuracy'.
+
+    Attributes:
+        dataset (Dataset): A dataset object to work with.
+        metric (string or callable): A metric to evalate the pipeline against.
+
     """
 
     def __init__(self, dataset=None, metric="accuracy"):
-        """Constructor.
-
-        Attributes:
-            dataset (Dataset) A dataset object to work with.
-            metric  (string or callable) A metric to evalate the pipeline
-                    against to.
-
-        """
+        """Constructor."""
         self.dataset = dataset
         # TODO: Use the metric
         self.metric = metric
@@ -38,8 +41,8 @@ class Assistant:
         """Return the metafeatures for the dataset attribute of the class.
 
         Returns
-            np.array    The metafeatures computed in the form of an array. They
-                        are sorted alphabetically by its name.
+            numpy.array: The metafeatures computed in the form of an array.
+                They are sorted alphabetically by its name.
 
         """
         metafeat_manager = MetaFeaturesManager(self.dataset)
@@ -49,12 +52,12 @@ class Assistant:
     def compute_similar_datasets(self, k=5):
         """Compute the similar datasets based on the dataset's metafeatures.
 
-        Attributes:
-            k   (int) The number of similar datasets to retrieve.
+        Args:
+            k (int): The number of similar datasets to retrieve. Defaults to 5.
 
         Returns:
-            list    List of neighbors ordered by similarity.
-            list    List of the metrics for each of the neighbors.
+            list: List of neighbors ordered by similarity.
+            list: List of the metrics for each of the neighbors.
 
         """
         mk_dc = MKDatabaseClient()
@@ -73,8 +76,13 @@ class Assistant:
         """Retrieve the similar datasets, without recomputing.
 
         AutoMLError is thrown if no neighbors have been computed yet.
+
+        Returns:
+            tuple: A 2-tuple where the first element is the set of similar
+                datasets and the second is the metric (distance) between our
+                dataset and the similar ones.
+
         """
-        # TODO: Log a warning or raise a warning if none
         if self._neighbors is None:
             raise AutoMLError("No neighbors available. Call the \
                                compute_similar_datasets method first")
@@ -87,9 +95,11 @@ class Assistant:
 
         The similar datasets should have been computed already. AutoMLError is
         thrown if no neighbors have been computed yet.
+
+        Returns:
+            list: List of MLSuggestions.
+
         """
-        # TODO: if no neighbors, then exception, otherwise, provide the reduced
-        # search space by combining the MLSuggestions
         if self._neighbors is None:
             raise AutoMLError("No neighbors available. Call the \
                                compute_similar_datasets method first")
@@ -107,13 +117,13 @@ class Assistant:
         value of ignore_similar_datasets is kept, then the search space of
         classifiers is reduced to the suggestions for the similar datasets.
 
-        Attributes:
-            ignore_similar_datasets (bool) Whether to ignore the suggested
-                                    models for the similar datasets or not.
+        Args:
+            ignore_similar_datasets (bool): Whether to ignore the suggested
+                models for the similar datasets or not. Defaults to False.
 
         Returns:
-            PipelineDiscovery   The PipelineDiscoverObject used to find out
-                                the dataset.
+            PipelineDiscovery: The PipelineDiscoverObject used to find out the
+                dataset.
 
         """
         # Call TPOT
@@ -124,7 +134,6 @@ class Assistant:
             search_space = dict()
             for classifier in dict_suggestions:
                 search_space[classifier] = {}
-            # search_space =
         except AutoMLError:
             search_space = None
 
@@ -135,6 +144,7 @@ class Assistant:
 
         pipeline = p_disc.discover()
 
+        # TODO: Think of print options.
         print(pipeline)
         print(p_disc.validation_score)
         return p_disc

@@ -1,9 +1,6 @@
 """Module intented to expose the classes to provide dataset metafeatures.
 
-This module includes the global variables to refer the meta-features and the
-next classes:
-- MetaFeaturesHelper: To perform the opearations.
-- MetaFeaturesManager: To expose the metafeatures for a given dataset.
+This module includes the global variables to refer the meta-features.
 """
 
 import pandas as pd
@@ -71,7 +68,7 @@ STATS_SYM_STD = 'SymbolsSTD'
 STATS_SYM_SUM = 'SymbolsSum'
 
 
-class MetaFeaturesHelper:
+class _MetaFeaturesHelper:
     """Helper to obtain the metafeatures without exposing the logic behind.
 
     This class interacts with the StatisticalInformation class to compute and
@@ -305,32 +302,32 @@ class MetaFeaturesHelper:
 
 
 class MetaFeaturesManager:
-    """Class to obtain/interact with the metafeatures for a given dataset."""
+    """Class to obtain/interact with the metafeatures for a given dataset.
+
+    Args:
+        dataset (Dataset): The dataset to work with. Defaults to None.
+
+    Attributes:
+        dataset (Dataset): The dataset to work with.
+
+    """
 
     def __init__(self, dataset=None):
-        """Constructor.
-
-        This constructor initializes the attributes.
-
-        Attributes:
-            dataset (automl.datahandler.data_loader.Dataset). The dataset to
-                    work with.
-
-        """
+        """Constructor."""
         self.dataset = dataset
         self._metafeatures = None
 
     def metafeatures_as_dict(self, recompute=False):
         """Get the dataset's metafeatures in the form of a dictionary.
 
-        Attributes:
-            recompute   (bool). Whether or not to force the recomputing of the
-                        metafeatures even if they were already computed.
-                        Default is value is False.
+        Args:
+            recompute (bool): Whether or not to force the recomputing of the
+                metafeatures even if they were already computed. Defaults to
+                False.
 
         """
         if self._metafeatures is None or recompute:
-            helper = MetaFeaturesHelper(self.dataset)
+            helper = _MetaFeaturesHelper(self.dataset)
             self._metafeatures = helper.compute_metafeatures()
 
         return self._metafeatures
@@ -338,10 +335,10 @@ class MetaFeaturesManager:
     def metafeatures_as_pandas_df(self, recompute=False):
         """Get the dataset's metafeatures in the form of a pandas data frame.
 
-        Attributes:
-            recompute   (bool). Whether or not to force the recomputing of the
-                        metafeatures even if they were already computed.
-                        Default is value is False.
+        Args:
+            recompute (bool): Whether or not to force the recomputing of the
+                metafeatures even if they were already computed. Defaults to
+                False.
 
         """
         headers = []
@@ -359,10 +356,10 @@ class MetaFeaturesManager:
     def metafeatures_as_numpy_array(self, recompute=False):
         """Get the dataset's metafeatures in the form of a numpy darray.
 
-        Attributes:
-            recompute   (bool). Whether or not to force the recomputing of the
-                        metafeatures even if they were already computed.
-                        Default is value is False.
+        Args:
+            recompute (bool): Whether or not to force the recomputing of the
+                metafeatures even if they were already computed. Defaults to
+                False.
 
         """
         return self.metafeatures_as_pandas_df(recompute).values
