@@ -33,12 +33,12 @@ class MKDatabaseClient:
 
     This class serves as a facade to interact with the Meta Knowledge. We would
     like to expose the next features:
-        - Ability to find the nearest datasets given a metric
-        - Reload the database (in case of any change at running time in the
-          arff files).
+    - Ability to find the nearest datasets given a metric
+    - Reload the database (in case of any change at running time in the arff
+    files).
     TODO // To consider (future implementation):
-        - Ability to add observations into the database at running time, e.g.
-          MKDatabase().add_dataset_metaknowledge()
+    - Ability to add observations into the database at running time, e.g.
+    MKDatabase().add_dataset_metaknowledge()
     """
 
     def __init__(self):
