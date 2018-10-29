@@ -121,7 +121,21 @@ class ARFFWrapper:
         self.description = arff_dataset['description']
         self.name = arff_dataset['relation']
         self.data = self._parse_data(arff_dataset)
-        self.key_attributes = [arff_dataset['attributes'][0][0]]
+        if arff_dataset['attributes']:
+            if isinstance(arff_dataset['attributes'][0], tuple):
+                self.key_attributes = [arff_dataset['attributes'][0][0]]
+            else:
+                automl.automl_log(
+                    "First element in 'attributes' is not a tuple'. Skipping \
+'key_attributes' assignment.",
+                    'WARNING'
+                )
+        else:
+            automl.automl_log(
+                "'attributes' field is an empty list. Errors may occur. \
+Skipping 'key_attributes' assignment.",
+                'WARNING'
+            )
 
     def _parse_data(self, arff_dataset):
         """Get the arff data as a pandas dataframe for internal usage."""
@@ -168,7 +182,7 @@ is '{type}'".format(key=key, type=expected_type))
 
         """
         result = dict()
-        # TODO: Fix attributes if they have been renamed or resorted.
+        # TODO: Fix attributes types for ARFF
         result['attributes'] = list(zip(self.attribute_names(),
                                         self.attribute_types()))
         result['description'] = self.description
@@ -199,6 +213,11 @@ is '{type}'".format(key=key, type=expected_type))
         """
         if columns is None:
             raise ValueError("Columns cannot be None")
+
+        if not isinstance(columns, list):
+            aux = []
+            aux.append(columns)
+            columns = aux
 
         for column in columns:
             if column not in self.attribute_names():
@@ -259,6 +278,11 @@ is '{type}'".format(key=key, type=expected_type))
         """
         if attributes is None:
             raise ValueError("attributes cannot be None")
+
+        if not isinstance(attributes, list):
+            aux = []
+            aux.append(attributes)
+            attributes = aux
 
         for attr in attributes:
             if attr not in self.attribute_names():
@@ -406,6 +430,7 @@ is '{type}'".format(key=key, type=expected_type))
         """
         return self.data
 
+    @property
     def shape(self):
         """Return a tuple with the shape of the data.
 

@@ -39,25 +39,25 @@ def automl_log(message=None, level=logging.DEBUG):
     if message is None:
         return  # Do nothing
 
-    log_message = "{logid} := {message}".format(logid=LOGGER_IDENTIFIER,
-                                                message=message)
-    if level == logging.DEBUG:
+    log_message = "{logid} : {message}".format(logid=LOGGER_IDENTIFIER,
+                                               message=message)
+    if level == logging.DEBUG or level == 'DEBUG':
         logging.debug(log_message)
         return
 
-    if level == logging.INFO:
+    if level == logging.INFO or level == 'INFO':
         logging.info(log_message)
         return
 
-    if level == logging.WARNING:
+    if level == logging.WARNING or level == 'WARNING':
         logging.warning(log_message)
         return
 
-    if level == logging.ERROR:
+    if level == logging.ERROR or level == 'ERROR':
         logging.error(log_message)
         return
 
-    if level == logging.CRITICAL:
+    if level == logging.CRITICAL or level == 'CRITICAL':
         logging.critical(log_message)
         return
 
