@@ -6,13 +6,10 @@
 Welcome to auto-ml's documentation!
 ===================================
 
+This is the official documentation for the Achmea's auto-ml solution.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
-
-Indices and tables
-==================
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+    
+   API <modules>

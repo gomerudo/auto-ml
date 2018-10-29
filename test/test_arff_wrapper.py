@@ -96,22 +96,6 @@ class TestARFFWrapper(unittest.TestCase):
             })
         self.assertIsInstance(obj, ARFFWrapper)
 
-    # def test_fake(self):
-    #     """We
-    #     """
-    #     automl_path = os.path.dirname(os.path.dirname(__file__))
-    #     automl_path = os.path.join(automl_path,
-    #                                "automl",
-    #                                "metalearning",
-    #                                "db",
-    #                                "files",
-    #                                "feature_costs.arff")
-
-    #     arff_wrapper = ARFFWrapper(arff_filepath=automl_path)
-
-    #     print(arff_wrapper.summary())
-    #     print(arff_wrapper.attribute_names())
-
     def test_sorted_default(self):
         """Check that sorting of the data by column (attributes).
 

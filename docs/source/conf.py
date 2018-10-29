@@ -189,3 +189,6 @@ todo_include_todos = True
 
 
 napoleon_google_docstring = True
+
+# My Configurations
+autodoc_member_order = 'groupwise'
