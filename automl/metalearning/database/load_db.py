@@ -207,7 +207,13 @@ class MetaKnowledge:
             cols_diff.append('repetition')  # We dont care about this one
 
             # Drop everything that is not the intersection
-            self.features.drop_attributes(cols_diff)
+            for col in cols_diff:
+                try:
+                    self.features.drop_attributes(col)
+                except ValueError:
+                    # TODO: Change to logging
+                    print("Some columns were not droppend cause they were not \
+    present")
             self.costs.drop_attributes(cols_diff)
 
             # Fix the types of instance_id - otherwise the sort won't work

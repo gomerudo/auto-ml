@@ -1,11 +1,13 @@
 """Module to test the model builder."""
 
 import unittest
-import numpy as np
 from automl.discovery.assistant import Assistant
-from automl.metalearning.db.configurations_parsing import ConfigurationBuilder
-from automl.metalearning.db.load_db import ConfigurationsFile
+# from automl.metalearning.database.configurations_parsing \
+#     import ConfigurationBuilder
+# from automl.metalearning.database.load_db import ConfigurationsFile
 from automl.datahandler.dataloader import DataLoader
+from automl.bayesianoptimizationpiepeline.base \
+    import BayesianOptimizationPipeline
 
 
 class TestAssistant(unittest.TestCase):
@@ -25,6 +27,17 @@ class TestAssistant(unittest.TestCase):
         print("rescalers:", red_ss.rescalers)
         print("preprocessors:", red_ss.preprocessors)
         print("imputations:", red_ss.imputations)
-
+        print("Generating pipeline...")
         pipeline_obj = assistant.generate_pipeline()
+        pipeline = pipeline_obj.pipeline
 
+        bayesian = BayesianOptimizationPipeline(
+            dataset.X,
+            dataset.y,
+            pipeline,
+            optimize_on="quality",
+            iteration=1)
+
+        score, opt_pipeline = bayesian.optimize_pipeline()
+        print("Score", score)
+        print(opt_pipeline)

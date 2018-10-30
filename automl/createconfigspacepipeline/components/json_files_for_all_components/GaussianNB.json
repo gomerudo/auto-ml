@@ -1,0 +1,16 @@
+{
+  "hyperparameters": [
+    {
+      "name": "var_smoothing",
+      "type": "uniform_float",
+      "log": true,
+      "lower": 1e-11,
+      "upper": 1e-07,
+      "default": 1e-09
+    }
+  ],
+  "conditions": [],
+  "forbiddens": [],
+  "python_module_version": "0.4.7",
+  "json_format_version": 0.1
+}

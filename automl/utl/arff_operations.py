@@ -286,8 +286,9 @@ is '{type}'".format(key=key, type=expected_type))
 
         for attr in attributes:
             if attr not in self.attribute_names():
+                print(self.attribute_names())
                 raise ValueError("Column '{col}' not in the dataset. Indicate \
-                                 a valid column".format(col=attr))
+a valid column".format(col=attr))
 
         if inplace:
             self.data.drop(labels=attributes, axis=1, inplace=inplace,

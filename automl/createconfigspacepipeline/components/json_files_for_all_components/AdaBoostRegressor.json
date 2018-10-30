@@ -1,0 +1,42 @@
+{
+  "hyperparameters": [
+    {
+      "name": "learning_rate",
+      "type": "uniform_float",
+      "log": true,
+      "lower": 0.01,
+      "upper": 2.0,
+      "default": 0.1
+    },
+    {
+      "name": "loss",
+      "type": "categorical",
+      "choices": [
+        "linear",
+        "square",
+        "exponential"
+      ],
+      "default": "linear"
+    },
+    {
+      "name": "max_depth",
+      "type": "uniform_int",
+      "log": false,
+      "lower": 1,
+      "upper": 10,
+      "default": 1
+    },
+    {
+      "name": "n_estimators",
+      "type": "uniform_int",
+      "log": false,
+      "lower": 50,
+      "upper": 500,
+      "default": 50
+    }
+  ],
+  "conditions": [],
+  "forbiddens": [],
+  "python_module_version": "0.4.7",
+  "json_format_version": 0.1
+}

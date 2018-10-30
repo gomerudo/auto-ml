@@ -1,0 +1,34 @@
+{
+  "hyperparameters": [
+    {
+      "name": "n_neighbors",
+      "type": "uniform_int",
+      "log": true,
+      "lower": 1,
+      "upper": 100,
+      "default": 5
+    },
+    {
+      "name": "p",
+      "type": "categorical",
+      "choices": [
+        1,
+        2
+      ],
+      "default": 2
+    },
+    {
+      "name": "weights",
+      "type": "categorical",
+      "choices": [
+        "uniform",
+        "distance"
+      ],
+      "default": "uniform"
+    }
+  ],
+  "conditions": [],
+  "forbiddens": [],
+  "python_module_version": "0.4.7",
+  "json_format_version": 0.1
+}

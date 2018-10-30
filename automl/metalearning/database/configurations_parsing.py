@@ -79,8 +79,9 @@ def mix_suggestions(suggestion_list):
         MLSuggestion        The resulting MLSuggestion.
 
     """
-    if isinstance(suggestion_list, list):
-        raise TypeError("Argument must be a list")
+    if not isinstance(suggestion_list, list):
+        raise TypeError("Argument must be a list. Found {}\
+                        ".format(type(suggestion_list)))
 
     result = MLSuggestion()
     for suggestion in suggestion_list:

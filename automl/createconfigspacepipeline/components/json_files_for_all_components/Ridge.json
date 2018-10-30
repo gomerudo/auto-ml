@@ -1,0 +1,29 @@
+{
+  "hyperparameters": [
+    {
+      "name": "alpha",
+      "type": "uniform_float",
+      "log": true,
+      "lower": 1e-05,
+      "upper": 10.0,
+      "default": 1.0
+    },
+    {
+      "name": "fit_intercept",
+      "type": "constant",
+      "value": "True"
+    },
+    {
+      "name": "tol",
+      "type": "uniform_float",
+      "log": true,
+      "lower": 1e-05,
+      "upper": 0.1,
+      "default": 0.001
+    }
+  ],
+  "conditions": [],
+  "forbiddens": [],
+  "python_module_version": "0.4.7",
+  "json_format_version": 0.1
+}

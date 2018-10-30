@@ -1,0 +1,73 @@
+{
+  "hyperparameters": [
+    {
+      "name": "C",
+      "type": "uniform_float",
+      "log": true,
+      "lower": 0.03125,
+      "upper": 32768.0,
+      "default": 1.0
+    },
+    {
+      "name": "dual",
+      "type": "constant",
+      "value": "False"
+    },
+    {
+      "name": "epsilon",
+      "type": "uniform_float",
+      "log": true,
+      "lower": 0.001,
+      "upper": 1.0,
+      "default": 0.1
+    },
+    {
+      "name": "fit_intercept",
+      "type": "constant",
+      "value": "True"
+    },
+    {
+      "name": "intercept_scaling",
+      "type": "constant",
+      "value": 1
+    },
+    {
+      "name": "loss",
+      "type": "categorical",
+      "choices": [
+        "epsilon_insensitive",
+        "squared_epsilon_insensitive"
+      ],
+      "default": "squared_epsilon_insensitive"
+    },
+    {
+      "name": "tol",
+      "type": "uniform_float",
+      "log": true,
+      "lower": 1e-05,
+      "upper": 0.1,
+      "default": 0.0001
+    }
+  ],
+  "conditions": [],
+  "forbiddens": [
+    {
+      "name": "dual",
+      "type": "AND",
+      "clauses": [
+        {
+          "name": "dual",
+          "type": "EQUALS",
+          "value": "False"
+        },
+        {
+          "name": "loss",
+          "type": "EQUALS",
+          "value": "epsilon_insensitive"
+        }
+      ]
+    }
+  ],
+  "python_module_version": "0.4.7",
+  "json_format_version": 0.1
+}

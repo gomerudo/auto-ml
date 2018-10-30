@@ -1,0 +1,47 @@
+{
+  "hyperparameters": [
+    {
+      "name": "C",
+      "type": "uniform_float",
+      "log": true,
+      "lower": 1e-05,
+      "upper": 10.0,
+      "default": 1.0
+    },
+    {
+      "name": "average",
+      "type": "categorical",
+      "choices": [
+        "False",
+        "True"
+      ],
+      "default": "False"
+    },
+    {
+      "name": "fit_intercept",
+      "type": "constant",
+      "value": "True"
+    },
+    {
+      "name": "loss",
+      "type": "categorical",
+      "choices": [
+        "hinge",
+        "squared_hinge"
+      ],
+      "default": "hinge"
+    },
+    {
+      "name": "tol",
+      "type": "uniform_float",
+      "log": true,
+      "lower": 1e-05,
+      "upper": 0.1,
+      "default": 0.0001
+    }
+  ],
+  "conditions": [],
+  "forbiddens": [],
+  "python_module_version": "0.4.7",
+  "json_format_version": 0.1
+}

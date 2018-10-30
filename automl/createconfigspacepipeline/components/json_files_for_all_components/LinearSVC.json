@@ -1,0 +1,116 @@
+{
+  "hyperparameters": [
+    {
+      "name": "C",
+      "type": "uniform_float",
+      "log": true,
+      "lower": 0.03125,
+      "upper": 32768.0,
+      "default": 1.0
+    },
+    {
+      "name": "dual",
+      "type": "constant",
+      "value": "False"
+    },
+    {
+      "name": "fit_intercept",
+      "type": "constant",
+      "value": "True"
+    },
+    {
+      "name": "intercept_scaling",
+      "type": "constant",
+      "value": 1
+    },
+    {
+      "name": "loss",
+      "type": "categorical",
+      "choices": [
+        "hinge",
+        "squared_hinge"
+      ],
+      "default": "squared_hinge"
+    },
+    {
+      "name": "multi_class",
+      "type": "constant",
+      "value": "ovr"
+    },
+    {
+      "name": "penalty",
+      "type": "categorical",
+      "choices": [
+        "l1",
+        "l2"
+      ],
+      "default": "l2"
+    },
+    {
+      "name": "tol",
+      "type": "uniform_float",
+      "log": true,
+      "lower": 1e-05,
+      "upper": 0.1,
+      "default": 0.0001
+    }
+  ],
+  "conditions": [],
+  "forbiddens": [
+    {
+      "name": "penalty",
+      "type": "AND",
+      "clauses": [
+        {
+          "name": "penalty",
+          "type": "EQUALS",
+          "value": "l1"
+        },
+        {
+          "name": "loss",
+          "type": "EQUALS",
+          "value": "hinge"
+        }
+      ]
+    },
+    {
+      "name": "dual",
+      "type": "AND",
+      "clauses": [
+        {
+          "name": "dual",
+          "type": "EQUALS",
+          "value": "False"
+        },
+        {
+          "name": "penalty",
+          "type": "EQUALS",
+          "value": "l2"
+        },
+        {
+          "name": "loss",
+          "type": "EQUALS",
+          "value": "hinge"
+        }
+      ]
+    },
+    {
+      "name": "dual",
+      "type": "AND",
+      "clauses": [
+        {
+          "name": "dual",
+          "type": "EQUALS",
+          "value": "False"
+        },
+        {
+          "name": "penalty",
+          "type": "EQUALS",
+          "value": "l1"
+        }
+      ]
+    }
+  ],
+  "python_module_version": "0.4.7",
+  "json_format_version": 0.1
+}

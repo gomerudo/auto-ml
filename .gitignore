@@ -15,3 +15,6 @@
 
 # sphink
 **/build/**
+
+# smac
+**/smac*/**

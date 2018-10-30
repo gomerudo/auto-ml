@@ -9,7 +9,7 @@ import pandas as pd
 import scipy
 import numpy as np
 import openml as oml
-from sklearn.model_selection import train_test_split
+import sklearn.model_selection
 from automl.metalearning.metafeatures.metafeatures_interaction \
     import MetaFeaturesManager
 from automl.utl.miscellaneous import generate_random_id
@@ -86,6 +86,10 @@ class Dataset:
         else:
             self.categorical_indicators = categorical_indicators
 
+        # Validate the categorical indicators
+        if X.shape[1] != len(categorical_indicators):
+            raise ValueError("the number of categorical ")
+
         # Assign the ID
         self.dataset_id = generate_random_id(n_chars=6) if dataset_id is None \
             else str(dataset_id)
@@ -147,8 +151,12 @@ class Dataset:
             tuple: A 4-tuple as train_test_split in scikit-learn.
 
         """
-        return train_test_split(self.X, self.y, test_size=test_size,
-                                random_state=random_state)
+        return sklearn.model_selection.train_test_split(
+            self.X,
+            self.y,
+            test_size=test_size,
+            random_state=random_state
+        )
 
     @property
     def n_features(self):
