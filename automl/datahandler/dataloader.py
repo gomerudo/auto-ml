@@ -150,6 +150,16 @@ class Dataset:
         return train_test_split(self.X, self.y, test_size=test_size,
                                 random_state=random_state)
 
+    @property
+    def n_features(self):
+        """Return the number of features in the dataset.
+
+        Returns:
+            int: The number of features.
+
+        """
+        return self.X.shape[1]
+
 
 class DataLoader:
     """Class to load dataset as a Dataset class from different sources.
