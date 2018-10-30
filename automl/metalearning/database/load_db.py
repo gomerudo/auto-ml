@@ -18,6 +18,7 @@ import pkg_resources
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
+from automl import automl_log
 from automl.metalearning import CONFIGURATIONS_CSV_NAME
 from automl.metalearning import ALGORUNS_CSV_NAME
 from automl.utl.arff_operations import ARFFWrapper
@@ -212,8 +213,8 @@ class MetaKnowledge:
                     self.features.drop_attributes(col)
                 except ValueError:
                     # TODO: Change to logging
-                    print("Some columns were not droppend cause they were not \
-    present")
+                    automl_log("Column {col} was not dropped cause it is not \
+in the feature's meta-knowledge".format(col=col), 'INFO')
             self.costs.drop_attributes(cols_diff)
 
             # Fix the types of instance_id - otherwise the sort won't work

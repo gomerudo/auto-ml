@@ -2,9 +2,6 @@
 
 import unittest
 from automl.discovery.assistant import Assistant
-# from automl.metalearning.database.configurations_parsing \
-#     import ConfigurationBuilder
-# from automl.metalearning.database.load_db import ConfigurationsFile
 from automl.datahandler.dataloader import DataLoader
 from automl.bayesianoptimizationpiepeline.base \
     import BayesianOptimizationPipeline
