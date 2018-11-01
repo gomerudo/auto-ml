@@ -37,6 +37,7 @@ _CL_PASSIVE_AGGRESSIVE = "passive_aggressive"
 _CL_QDA = "qda"
 _CL_RANDOM_FOREST = "random_forest"
 _CL_SGD = "sgd"
+_CL_GAUSSIAN_NB = "gaussian_nb"
 
 # Pre-processors. Always start with _PP
 _PP_EXTRA_TREES_FOR_CL = "extra_trees_preproc_for_classification"
@@ -164,8 +165,6 @@ class ConfigurationBuilder:
         return mlsuggestion
 
     def _from_internal_list(self, element_type):
-        # TODO: Check existance and handle exception
-
         if ':' not in element_type:
             raise ValueError("Invalid format in element type. It must contain \
                              at least two strings separated by semicolon")
@@ -238,6 +237,7 @@ class ConfigurationBuilder:
             _CL_QDA: "sklearn.qda.QDA",
             _CL_RANDOM_FOREST: "sklearn.ensemble.RandomForestClassifier",
             _CL_SGD: "sklearn.linear_model.SGDClassifier",
+            _CL_GAUSSIAN_NB: "sklearn.naive_bayes.GaussianNB",
         }
 
         self._internal_list.update({
@@ -370,7 +370,11 @@ class _ConfigurationBuilderHelper:
         # in configurations.csv
         if name == 'no_preprocessing':
             return None
-        return dictionary[_PF_PREPROCESSOR][name]
+
+        if name in dictionary[_PF_PREPROCESSOR]:
+            return dictionary[_PF_PREPROCESSOR][name]
+
+        return None
 
     @staticmethod
     def _resolve_encoder(dictionary, name):

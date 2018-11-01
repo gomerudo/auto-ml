@@ -9,6 +9,7 @@ import os.path
 import numpy as np
 import pandas as pd
 from automl.utl.arff_operations import ARFFWrapper
+from automl.utl.miscellaneous import argsort_list
 
 
 class TestARFFWrapper(unittest.TestCase):
@@ -379,6 +380,39 @@ class TestARFFWrapper(unittest.TestCase):
 
     # TODO: Maybe add tests for inplace changes/exceptions column string not
     # found/exceptions out of bounds/etc.
+
+
+class TestMiscellaneous(unittest.TestCase):
+    """Test methods in Miscellaneous file."""
+
+    def test_argsort_list_default(self):
+        """Test that argsort_list sorts correctly.
+
+        We verify that the order a>b is preserverd as expected.
+        """
+        input_object = [
+            ('e', {1, 2}),
+            ('c', 'A'),
+            ('a', 0),
+            ('b', 1),
+            ('d', 2)
+        ]
+
+        expected_object = [
+            ('a', 0),
+            ('b', 1),
+            ('c', 'A'),
+            ('d', 2),
+            ('e', {1, 2})
+        ]
+
+        indices = argsort_list(input_object)
+
+        result = []
+        for index in indices:
+            result.append(input_object[index])
+
+        self.assertListEqual(result, expected_object, "Lists are not equal")
 
 if __name__ == '__main__':
     unittest.main()

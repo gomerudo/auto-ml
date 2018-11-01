@@ -18,7 +18,6 @@ import pkg_resources
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
-from automl import automl_log
 from automl.metalearning import CONFIGURATIONS_CSV_NAME
 from automl.metalearning import ALGORUNS_CSV_NAME
 from automl.utl.arff_operations import ARFFWrapper
@@ -56,6 +55,7 @@ class MKDatabaseClient:
         files.
         """
         self.metaknwoledge = self.metaknwoledge.load_datasets_info()
+        return self
 
     def nearest_datasets(self, dataset=None, k=5, weighted=False,
                          distance_metric='minkowski'):
@@ -87,6 +87,12 @@ class MKDatabaseClient:
         if not isinstance(dataset, Dataset):
             raise TypeError("dataset must be an instance of AutoML 'Dataset'")
 
+        # If k is greater than the maximum number of elements in the matrix
+        max_neighbours = len(self.metaknwoledge.weighted_matrix()[0])
+        if k > max_neighbours or k == 0:
+            raise ValueError("The number of neighbors must be an 'int' in the \
+invterval ({lower}, {upper}]".format(lower=0, upper=max_neighbours))
+
         # Otherwise ...
         nn_obj = NearestNeighbors(n_neighbors=k, metric=distance_metric)
 
@@ -115,17 +121,14 @@ class MKDatabaseClient:
             metric      (str) A Metalearning metric.
 
         Returns:
-            list    A list of MLSuggestions.
+            list:    A list of MLSuggestions.
 
         """
-        # TODO: Try to remove dependency on 'dataset'
         configs = LandmarkModelParser.models_by_metric(ids_list, dataset,
                                                        metric)
 
         res = mix_suggestions(configs)
         return res
-
-        # for dataset_id in ids_list:
 
 
 class MetaKnowledge:
@@ -209,13 +212,21 @@ class MetaKnowledge:
 
             # Drop everything that is not the intersection
             for col in cols_diff:
+                flag = False
+
                 try:
                     self.features.drop_attributes(col)
                 except ValueError:
-                    # TODO: Change to logging
-                    automl_log("Column {col} was not dropped cause it is not \
-in the feature's meta-knowledge".format(col=col), 'INFO')
-            self.costs.drop_attributes(cols_diff)
+                    flag = True
+                try:
+                    self.costs.drop_attributes(col)
+                    flag = flag if not flag else not flag
+                except ValueError:
+                    flag = True
+
+                if flag:
+                    raise ValueError("Column '{}' is not in any of the \
+                    feature's sets".format(col))
 
             # Fix the types of instance_id - otherwise the sort won't work
             self.features.change_attribute_type('instance_id', int)
@@ -224,6 +235,10 @@ in the feature's meta-knowledge".format(col=col), 'INFO')
             # Then we sort by instance_id int representation
             self.features.sort_rows('instance_id')
             self.costs.sort_rows('instance_id')
+
+            # Resort, just in case ...
+            f_cols = self.features.attribute_names()
+            c_cols = self.costs.attribute_names()
 
             # Verify that the instance_id's from both datasets are the same
             f_instid = self.features.values_by_attribute('instance_id')
@@ -320,20 +335,27 @@ class LandmarkModelParser:
         if dataset.is_classification_problem():
             problem_type = "classification"
             classif_type = "multiclass" if dataset.n_labels > 2 else "binary"
-
+        # sparse or not
         data_type = "sparse" if dataset.is_sparse() else "dense"
 
+        # metric to use is composed of `metric`_`binary/multiclass`. e.g.
+        # accuracy_binary
         internal_metric = "{me}_{c_type}".format(me=metric,
                                                  c_type=classif_type)
+        # problem_description is classification_`sparse/dense`. E.g.
+        # classficiation_sparse
         problem_desc = "{p_type}_{d_type}".format(p_type=problem_type,
                                                   d_type=data_type)
 
+        # Then the final basename_dir (name of the metric in auto-sklearn) is
+        # the mix of the above. E.g. accuracy_binary_classficiation_sparse
         basename_dir = \
             "{metric}.{problem}".format(metric=internal_metric,
                                         problem=problem_desc)
 
+        # Get the available metrics to validate the resolved metric is part of
+        # list
         metrics_available = LandmarkModelParser.metrics_available()
-
         if internal_metric not in metrics_available:
             raise ValueError("Metric '{argument}' is not supported. Try any \
                              of the following metrics: {available}".format(
@@ -341,24 +363,36 @@ class LandmarkModelParser:
                                  available=metrics_available
                              ))
 
+        # Get the corresponding configurations.csv file path
         configs_csv = LandmarkModelParser._configs_file_by_metric(basename_dir)
+        # Get the corresponding algorithm_runs.arff file path
         algoruns_arff = \
             LandmarkModelParser._algorithm_runs_file_by_metric(basename_dir)
 
+        # Validate we found valid files
         if configs_csv is None or algoruns_arff is None:
-            return None
+            raise ValueError("Some of the meta-learning files was not found \
+in the database for metric '{metric}'".format(metric=basename_dir))
 
+        # Start to resolve the result
         res = []
+        # For each of the instances requested
         for instance_id in instances_ids:
+            # instanciate the correspondant algorithm runs file
             algoruns_file = AlgorithmRunsFile(algoruns_arff)
-            config_id = algoruns_file.get_associated_configuration(instance_id)
+            # get the configuration id for that instance
+            config_id = \
+                algoruns_file.get_associated_configuration_id(instance_id)
 
+            # And then load the configurations.csv file
             config_file = ConfigurationsFile(configs_csv)
+
+            # Resolve the configuration as a list
             mmb = ConfigurationBuilder(
                 config_file.get_configuration(config_id)
             )
+            # and append it to the list
             res.append(mmb.build_configuration())
-
         return res
 
     @staticmethod
@@ -439,9 +473,12 @@ class ConfigurationsFile:
                             from the results in algorithm_runs.arff.
 
         """
-        # TODO: Handle non available ids with exception.
-        elem = self._frame.loc[algorithm_id].dropna()
-        return elem
+        try:
+            elem = self._frame.loc[algorithm_id].dropna()
+            return elem
+        except KeyError:
+            raise ValueError("The algorithm_id={algo_id} was not found in \
+file {file}".format(algo_id=algorithm_id, file=self.configs_file))
 
     def get_configurations(self, algorithms_ids):
         """Get the configurations for a given set of algorithm ids.
@@ -476,7 +513,7 @@ class AlgorithmRunsFile:
         else:
             raise ValueError("Invalid file path: File does not exist.")
 
-    def get_associated_configuration(self, instance_id):
+    def get_associated_configuration_id(self, instance_id):
         """Get the associated configuration for a given instance id.
 
         A configuration is a solution for the dataset (instance). This returns
@@ -490,15 +527,17 @@ class AlgorithmRunsFile:
                     (dataset).
 
         """
-        # TODO: Rename to clarify that the id is returned.
-        # TODO: Allow ARRF Wrapper to retrieve a row by id and check None
-        # values and errors.
-        aux_pandas = self._arrf_wrapper.as_pandas_df()
-        query = 'instance_id == {}'.format(instance_id)
-        res = aux_pandas.query(query)
+        res = self._arrf_wrapper.row_by_column_value('instance_id',
+                                                     instance_id)
+        if res.empty:
+            raise ValueError(
+                "instance_id={val} is not in the database.".format(
+                    val=instance_id
+                )
+            )
         return int(res['algorithm'])
 
-    def get_associated_configurations(self, instances_ids):
+    def get_associated_configuration_ids(self, instances_ids):
         """Get the associated configuration for a given set of instance ids.
 
         A configuration is a solution for the dataset (instance). This returns
@@ -513,12 +552,7 @@ class AlgorithmRunsFile:
                         (datasets) problems.
 
         """
-        # TODO: Allow ARRF Wrapper to retrieve a column by id and check None
-        # values and errors.
         result = []
-        aux_pandas = self._arrf_wrapper.as_pandas_df()
         for instance_id in instances_ids:
-            query = 'instance_id == {}'.format(instance_id)
-            res = aux_pandas.query(query)
-            result.append(int(res['algorithm']))
+            result.append(self.get_associated_configuration_id(instance_id))
         return result

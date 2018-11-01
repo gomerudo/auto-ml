@@ -12,4 +12,3 @@ class TestPipelineDiscovery(unittest.TestCase):
 
         print(pipeline)
         print(p_disc.validation_score)
-

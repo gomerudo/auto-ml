@@ -87,7 +87,7 @@ class Dataset:
             self.categorical_indicators = categorical_indicators
 
         # Validate the categorical indicators
-        if X.shape[1] != len(categorical_indicators):
+        if X.shape[1] != len(self.categorical_indicators):
             raise ValueError("the number of categorical ")
 
         # Assign the ID

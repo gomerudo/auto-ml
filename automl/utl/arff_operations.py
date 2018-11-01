@@ -286,7 +286,6 @@ is '{type}'".format(key=key, type=expected_type))
 
         for attr in attributes:
             if attr not in self.attribute_names():
-                print(self.attribute_names())
                 raise ValueError("Column '{col}' not in the dataset. Indicate \
 a valid column".format(col=attr))
 
@@ -399,6 +398,26 @@ a valid column".format(col=attr))
                 raise IndexError("Passed column index is out of bounds")
 
         return self.data[column].values
+
+    def row_by_column_value(self, column=None, value=None):
+        """Return the row that satisfies column=value."""
+        if column is None:
+            raise ValueError("'column' cannot be None")
+        if value is None:
+            raise ValueError("'value' cannot be None")
+
+        if not isinstance(column, str):
+            raise TypeError("Only str can be passed as column value")
+
+        if column not in self.attribute_names():
+            raise ValueError("Invalid column. Column is not in the dataset")
+
+        query_str = '{column} == {value}'.format(column=column, value=value)
+        return self.data.query(query_str)
+        # if res.empty():
+        #     return None
+
+        # return int(res['algorithm'])
 
     def summary(self):
         """Print a summary of the dataset.
