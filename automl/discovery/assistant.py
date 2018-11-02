@@ -24,11 +24,14 @@ class Assistant:
 
     """
 
-    def __init__(self, dataset=None, metric="accuracy"):
+    def __init__(self, dataset=None, metalearning_metric='accuracy',
+                 evaluation_metric='accuracy'):
         """Constructor."""
         self.dataset = dataset
-        # TODO: Use the metric
-        self.metric = metric
+        self.evaluation_metric = evaluation_metric
+
+        # TODO: validate a valid metalearning_metric
+        self.metalearning_metric = metalearning_metric
 
         # Private variables to hide logic
         self._neighbors = None
@@ -49,7 +52,7 @@ class Assistant:
         return metafeat_manager.metafeatures_as_numpy_array()
 
     # TODO: Allow for other metrics for the similarity
-    def compute_similar_datasets(self, k=5):
+    def compute_similar_datasets(self, k=5, similarity_metric='minkowski'):
         """Compute the similar datasets based on the dataset's metafeatures.
 
         Args:
@@ -62,7 +65,8 @@ class Assistant:
         """
         mk_dc = MKDatabaseClient()
         similarities, dataset_ids = \
-            mk_dc.nearest_datasets(self.dataset, k=k, weighted=False)
+            mk_dc.nearest_datasets(self.dataset, k=k, weighted=False,
+                                   distance_metric=similarity_metric)
 
         # Always set to None cause it has changed. Only recompute if needed.
         self._search_space = None
@@ -105,11 +109,14 @@ class Assistant:
                                compute_similar_datasets method first")
 
         mk_dc = MKDatabaseClient()
-        return mk_dc.meta_suggestions(self.dataset, list(self._neighbors))
+        return mk_dc.meta_suggestions(
+            dataset=self.dataset,
+            ids_list=list(self._neighbors),
+            metric=self.metalearning_metric
+        )
 
     # TODO: This is the method that should call TPOT using the search space
     # We should consider parameters to force and also to handle TPOTs features
-    # TODO: use the metric and allow for other metrics for the final search
     def generate_pipeline(self, ignore_similar_datasets=False):
         """Automatically generate a pipeline using the dataset and metric.
 
@@ -140,7 +147,11 @@ class Assistant:
         if ignore_similar_datasets:
             p_disc = PipelineDiscovery(self.dataset)
         else:
-            p_disc = PipelineDiscovery(self.dataset, search_space=search_space)
+            p_disc = PipelineDiscovery(
+                dataset=self.dataset,
+                search_space=search_space,
+                evaluation_metric=self.evaluation_metric
+            )
 
         pipeline = p_disc.discover()
 

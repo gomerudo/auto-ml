@@ -23,7 +23,7 @@ class PipelineDiscovery:
 
     Attributes:
         dataset (Dataset): The dataset to work with.
-        search_space: (str or dict) The search space to use for the discovery
+        search_space (str or dict): The search space to use for the discovery
             operation. If string, it should be any of the following:
             'scikit-learn'. If dict, it must comply with the TPOT config_dict
             format.
@@ -34,13 +34,14 @@ class PipelineDiscovery:
 
     # TODO: accept a metric
     def __init__(self, dataset=None, search_space='scikit-learn',
-                 tpot_params=None):
+                 tpot_params=None, evaluation_metric='accuracy'):
         """Constructor."""
         self.dataset = dataset
         self.search_space = search_space
         self.validation_score = None
         self._tpot_optimizer = None
-        self._passed_tpot_params = tpot_params  # TODO: Should be a dict
+        self._passed_tpot_params = tpot_params
+        self.evaluation_metric = evaluation_metric
 
         if not isinstance(dataset, Dataset):
             raise TypeError("Dataset must be of type AutoML Dataset")
@@ -51,7 +52,12 @@ class PipelineDiscovery:
         elif not isinstance(search_space, dict):
             raise TypeError("search-space must be an string or dict")
 
-    # TODO: use or drop the limit_time
+        if self._passed_tpot_params is not None and not \
+                isinstance(self._passed_tpot_params, dict):
+            raise TypeError("The TPOT args must be passed as a dictionary")
+
+        # TODO: Validate evaluation_metric
+
     def discover(self, limit_time=None, random_state=42):
         """Perform the discovery of a pipeline.
 
@@ -77,6 +83,13 @@ class PipelineDiscovery:
         # If the search space is defined, then use it
         if isinstance(self.search_space, dict):
             arguments['config_dict'] = self.search_space
+
+        # Limit time if passed
+        if limit_time is not None:
+            arguments['max_time_mins'] = limit_time
+
+        if self.evaluation_metric is not None:
+            arguments['scoring'] = self.evaluation_metric
 
         # If the initially passed tpot params are not none dict, we extend args
         if self._passed_tpot_params is not None \
@@ -114,7 +127,6 @@ class PipelineDiscovery:
             float: The score given by the pipeline for the passed set.
 
         """
-        # TODO: Handle None values
         self.validation_score = self._tpot_optimizer.score(x_val, y_val)
         return self.validation_score
 

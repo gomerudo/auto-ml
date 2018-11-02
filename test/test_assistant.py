@@ -26,15 +26,17 @@ class TestAssistant(unittest.TestCase):
         print("imputations:", red_ss.imputations)
         print("Generating pipeline...")
         pipeline_obj = assistant.generate_pipeline()
-        pipeline = pipeline_obj.pipeline
+        pipeline_obj.save_pipeline(target_dir="results")
+        print(pipeline_obj.validation_score)
+        # pipeline = pipeline_obj.pipeline
 
-        bayesian = BayesianOptimizationPipeline(
-            dataset.X,
-            dataset.y,
-            pipeline,
-            optimize_on="quality",
-            iteration=1)
+        # bayesian = BayesianOptimizationPipeline(
+        #     dataset.X,
+        #     dataset.y,
+        #     pipeline,
+        #     optimize_on="quality",
+        #     iteration=1)
 
-        score, opt_pipeline = bayesian.optimize_pipeline()
-        print("Score", score)
-        print(opt_pipeline)
+        # score, opt_pipeline = bayesian.optimize_pipeline()
+        # print("Score", score)
+        # print(opt_pipeline)

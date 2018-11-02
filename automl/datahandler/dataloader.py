@@ -7,9 +7,12 @@ new format.
 
 import pandas as pd
 import scipy
+import scipy.sparse
 import numpy as np
 import openml as oml
 import sklearn.model_selection
+from automl import automl_log
+from automl.errors.customerrors import CurrentlyNonSupportedError
 from automl.metalearning.metafeatures.metafeatures_interaction \
     import MetaFeaturesManager
 from automl.utl.miscellaneous import generate_random_id
@@ -88,7 +91,8 @@ class Dataset:
 
         # Validate the categorical indicators
         if X.shape[1] != len(self.categorical_indicators):
-            raise ValueError("the number of categorical ")
+            raise ValueError("The length of the categorical indicators should \
+                             match the number of features.")
 
         # Assign the ID
         self.dataset_id = generate_random_id(n_chars=6) if dataset_id is None \
@@ -96,6 +100,45 @@ class Dataset:
 
         # Assign the problem type
         self.problem_type = problem_type
+
+        # Validate missing and infinite data
+        self._internal_validation()
+
+    def _internal_validation(self):
+        # Check for missing values
+        nan_sum_x = self.X.isna().sum().sum()
+        nan_sum_y = self.y.isna().sum().sum()
+
+        # Log missing values messages
+        if nan_sum_x > 0:
+            automl_log("Features set (X) in dataset '{d_id}' contains {n_na} \
+missing values. Please not that with missing data, results can be innacurate. \
+Fix the missing values yourself.".format(d_id=self.dataset_id,
+                                         n_na=nan_sum_x),
+                       'WARNING')
+
+        if nan_sum_y > 0:
+            automl_log("Target set (y) in dataset '{d_id}' contains {n_na} \
+missing values. Please not that with missing data, results can be innacurate. \
+Fix the missing values yourself.".format(d_id=self.dataset_id,
+                                         n_na=nan_sum_y),
+                       'WARNING')
+        # Check for inifinite values
+        inf_sum_x = np.isinf(self.X.values).ravel().sum()
+        inf_sum_y = np.isinf(self.y.values).ravel().sum()
+
+        # Log infinite values messages
+        if inf_sum_x > 0:
+            automl_log("Features set (X) in dataset '{d_id}' contains {n_na} \
+missing values. Please not that with missing data, results can be innacurate. \
+Fix the missing values yourself.".format(d_id=self.dataset_id,
+                                         n_na=nan_sum_x))
+
+        if inf_sum_y > 0:
+            automl_log("Target set (y) in dataset '{d_id}' contains {n_na} \
+missing values. Please not that with missing data, results can be innacurate. \
+Fix the missing values yourself.".format(d_id=self.dataset_id,
+                                         n_na=nan_sum_y))
 
     def is_regression_problem(self):
         """Whether or not the dataset is registered as regression task.
@@ -122,7 +165,13 @@ class Dataset:
             np.array: The metafeatures as a numpy array.
 
         """
-        return MetaFeaturesManager(self).metafeatures_as_numpy_array()
+        res = MetaFeaturesManager(self).metafeatures_as_numpy_array()
+        if np.count_nonzero(~np.isnan(res)) > 0:
+            automl_log("It was not possible to compute all metafeatures (see \
+log messages). We will replace the NaN values in the meta-features vector \
+with 0", 'WARNING')
+            np.nan_to_num(res, False)
+        return res
 
     # TODO: How to proceed with sparse values? Do we need to handle that?
     @property
@@ -190,6 +239,9 @@ class DataLoader:
                 name and ID.
 
         """
+        automl_log(
+            "Loading dataset {d_id} from OpenML:".format(d_id=openml_id),
+            'INFO')
         openml_dataset = oml.datasets.get_dataset(openml_id)
         features, target, categorical_indicators, attribute_names = \
             openml_dataset.get_data(
@@ -197,6 +249,10 @@ class DataLoader:
                 return_attribute_names=True,
                 return_categorical_indicator=True
             )
+
+        if scipy.sparse.issparse(features):
+            raise CurrentlyNonSupportedError("Sparse datasets are not \
+supported yet in Achmea's auto-ml solution")
 
         features = pd.DataFrame(features, columns=attribute_names)
         target = pd.DataFrame(target, columns=[_TARGET_NAME])

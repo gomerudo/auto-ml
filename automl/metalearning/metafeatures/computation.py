@@ -6,6 +6,7 @@ import scipy.stats
 from scipy.linalg import LinAlgError
 import numpy as np
 from sklearn.multiclass import OneVsRestClassifier
+from automl import automl_log
 
 
 class StatisticalInformation:
@@ -18,113 +19,162 @@ class StatisticalInformation:
     @staticmethod
     def class_entropy(y):  # pylint: disable=C0103
         """Compute statistic."""
-        labels = 1 if len(y.shape) == 1 else y.shape[1]
-        if labels == 1:
-            y = y.reshape((-1, 1))
+        try:
+            labels = 1 if len(y.shape) == 1 else y.shape[1]
+            if labels == 1:
+                y = y.reshape((-1, 1))
 
-        entropies = []
-        for i in range(labels):
-            occurence_dict = defaultdict(float)
-            for value in y[:, i]:
-                occurence_dict[value] += 1
-            entropies.append(
-                scipy.stats.entropy(
-                    [occurence_dict[key] for key in occurence_dict], base=2
+            entropies = []
+            for i in range(labels):
+                occurence_dict = defaultdict(float)
+                for value in y[:, i]:
+                    occurence_dict[value] += 1
+                entropies.append(
+                    scipy.stats.entropy(
+                        [occurence_dict[key] for key in occurence_dict], base=2
+                    )
                 )
-            )
 
-        return np.mean(entropies)
+            return np.mean(entropies)
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Class entropy could not be computed. Returning 0 instead. \
+Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def class_ocurrences(y):  # pylint: disable=C0103
         """Compute statistic."""
-        if len(y.shape) == 2:
-            occurences = []
-            for i in range(y.shape[1]):
-                occurences.append(
-                    StatisticalInformation.class_ocurrences(y[:, i])
-                )
-            return occurences
-        else:
-            occurence_dict = defaultdict(float)
-            for value in y:
-                occurence_dict[value] += 1
-            return occurence_dict
+        try:
+            if len(y.shape) == 2:
+                occurences = []
+                for i in range(y.shape[1]):
+                    occurences.append(
+                        StatisticalInformation.class_ocurrences(y[:, i])
+                    )
+                return occurences
+            else:
+                occurence_dict = defaultdict(float)
+                for value in y:
+                    occurence_dict[value] += 1
+                return occurence_dict
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Class ocurrences could not be computed. Returning 0 instead. \
+Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def class_probability_max(y):  # pylint: disable=C0103
         """Compute statistic."""
-        occurences = StatisticalInformation.class_ocurrences(y)
-        max_value = -1
+        try:
+            occurences = StatisticalInformation.class_ocurrences(y)
+            max_value = -1
 
-        if len(y.shape) == 2:
-            for i in range(y.shape[1]):
-                for num_occurences in occurences[i].values():
+            if len(y.shape) == 2:
+                for i in range(y.shape[1]):
+                    for num_occurences in occurences[i].values():
+                        if num_occurences > max_value:
+                            max_value = num_occurences
+            else:
+                for num_occurences in occurences.values():
                     if num_occurences > max_value:
                         max_value = num_occurences
-        else:
-            for num_occurences in occurences.values():
-                if num_occurences > max_value:
-                    max_value = num_occurences
 
-        return float(max_value) / float(y.shape[0])
+            return float(max_value) / float(y.shape[0])
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Class probability max could not be computed. Returning 0 \
+instead. Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def class_probability_mean(y):  # pylint: disable=C0103
         """Compute statistic."""
-        occurence_dict = StatisticalInformation.class_ocurrences(y)
+        try:
+            occurence_dict = StatisticalInformation.class_ocurrences(y)
 
-        if len(y.shape) == 2:
-            occurences = []
-            for i in range(y.shape[1]):
-                occurences.extend(
-                    [occurrence for occurrence in occurence_dict[
-                        i].values()])
-            occurences = np.array(occurences)
-        else:
-            occurences = np.array(
-                [occurrence for occurrence in occurence_dict.values()],
-                dtype=np.float64
+            if len(y.shape) == 2:
+                occurences = []
+                for i in range(y.shape[1]):
+                    occurences.extend(
+                        [occurrence for occurrence in occurence_dict[
+                            i].values()])
+                occurences = np.array(occurences)
+            else:
+                occurences = np.array(
+                    [occurrence for occurrence in occurence_dict.values()],
+                    dtype=np.float64
+                )
+            return (occurences / y.shape[0]).mean()
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Class probability mean could not be computed. Returning 0 \
+instead. Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
             )
-        return (occurences / y.shape[0]).mean()
+            return 0.
 
     @staticmethod
     def class_probability_min(y):  # pylint: disable=C0103
         """Compute statistic."""
-        occurences = StatisticalInformation.class_ocurrences(y)
+        try:
+            occurences = StatisticalInformation.class_ocurrences(y)
 
-        min_value = np.iinfo(np.int64).max
-        if len(y.shape) == 2:
-            for i in range(y.shape[1]):
-                for num_occurences in occurences[i].values():
+            min_value = np.iinfo(np.int64).max
+            if len(y.shape) == 2:
+                for i in range(y.shape[1]):
+                    for num_occurences in occurences[i].values():
+                        if num_occurences < min_value:
+                            min_value = num_occurences
+            else:
+                for num_occurences in occurences.values():
                     if num_occurences < min_value:
                         min_value = num_occurences
-        else:
-            for num_occurences in occurences.values():
-                if num_occurences < min_value:
-                    min_value = num_occurences
-        return float(min_value) / float(y.shape[0])
+            return float(min_value) / float(y.shape[0])
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Class probability min could not be computed. Returning 0 \
+instead. Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def class_probability_std(y):  # pylint: disable=C0103
         """Compute statistic."""
-        occurence_dict = StatisticalInformation.class_ocurrences(y)
+        try:
+            occurence_dict = StatisticalInformation.class_ocurrences(y)
 
-        if len(y.shape) == 2:
-            stds = []
-            for i in range(y.shape[1]):
-                std = np.array(
-                    [occurrence for occurrence in occurence_dict[i].values()],
-                    dtype=np.float64)
-                std = (std / y.shape[0]).std()
-                stds.append(std)
-            return np.mean(stds)
-        else:
-            occurences = np.array(
-                [occurrence for occurrence in occurence_dict.values()],
-                dtype=np.float64
+            if len(y.shape) == 2:
+                stds = []
+                for i in range(y.shape[1]):
+                    std = np.array(
+                        [occurrence
+                         for occurrence in occurence_dict[i].values()],
+                        dtype=np.float64)
+                    std = (std / y.shape[0]).std()
+                    stds.append(std)
+                return np.mean(stds)
+            else:
+                occurences = np.array(
+                    [occurrence for occurrence in occurence_dict.values()],
+                    dtype=np.float64
+                )
+                return (occurences / y.shape[0]).std()
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Class probability std could not be computed. Returning 0 \
+instead. Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
             )
-            return (occurences / y.shape[0]).std()
+            return 0.
 
     ###########################################################################
 
@@ -152,34 +202,70 @@ class StatisticalInformation:
     @staticmethod
     def kurtosis_max(X, categorical_indicators):  # pylint: disable=C0103
         """Compute statistic."""
-        kurts = StatisticalInformation.kurtosisses(X, categorical_indicators)
-        # pylint: disable=C1801
-        maximum = np.nanmax(kurts) if len(kurts) > 0 else 0
-        return maximum if np.isfinite(maximum) else 0
+        try:
+            kurts = StatisticalInformation.kurtosisses(X,
+                                                       categorical_indicators)
+            # pylint: disable=C1801
+            maximum = np.nanmax(kurts) if len(kurts) > 0 else 0
+            return maximum if np.isfinite(maximum) else 0
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Kurtosis max could not be computed. Returning 0 instead. \
+Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def kurtosis_mean(X, categorical_indicators):  # pylint: disable=C0103
         """Compute statistic."""
-        kurts = StatisticalInformation.kurtosisses(X, categorical_indicators)
-        # pylint: disable=C1801
-        mean = np.nanmean(kurts) if len(kurts) > 0 else 0
-        return mean if np.isfinite(mean) else 0
+        try:
+            kurts = StatisticalInformation.kurtosisses(X,
+                                                       categorical_indicators)
+            # pylint: disable=C1801
+            mean = np.nanmean(kurts) if len(kurts) > 0 else 0
+            return mean if np.isfinite(mean) else 0
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Kurtosis mean could not be computed. Returning 0 instead. \
+Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def kurtosis_min(X, categorical_indicators):  # pylint: disable=C0103
         """Compute statistic."""
-        kurts = StatisticalInformation.kurtosisses(X, categorical_indicators)
-        # pylint: disable=C1801
-        minimum = np.nanmin(kurts) if len(kurts) > 0 else 0
-        return minimum if np.isfinite(minimum) else 0
+        try:
+            kurts = StatisticalInformation.kurtosisses(X,
+                                                       categorical_indicators)
+            # pylint: disable=C1801
+            minimum = np.nanmin(kurts) if len(kurts) > 0 else 0
+            return minimum if np.isfinite(minimum) else 0
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Kurtosis min could not be computed. Returning 0 instead. \
+Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def kurtosis_std(X, categorical_indicators):  # pylint: disable=C0103
         """Compute statistic."""
-        kurts = StatisticalInformation.kurtosisses(X, categorical_indicators)
-        # pylint: disable=C1801
-        std = np.nanstd(kurts) if len(kurts) > 0 else 0
-        return std if np.isfinite(std) else 0
+        try:
+            kurts = StatisticalInformation.kurtosisses(X,
+                                                       categorical_indicators)
+            # pylint: disable=C1801
+            std = np.nanstd(kurts) if len(kurts) > 0 else 0
+            return std if np.isfinite(std) else 0
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Kurtosis std could not be computed. Returning 0 instead. \
+Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     ###########################################################################
 
@@ -188,178 +274,235 @@ class StatisticalInformation:
     @staticmethod
     def landmark_1NN(X, y):  # pylint: disable=C0103
         """Compute statistic."""
-        import sklearn.neighbors
+        try:
+            import sklearn.neighbors
 
-        # pylint: disable=C0103
-        if len(y.shape) == 1 or y.shape[1] == 1:
-            kf = sklearn.model_selection.StratifiedKFold(n_splits=10)
-        else:
-            kf = sklearn.model_selection.KFold(n_splits=10)
-
-        accuracy = 0.
-        for train, test in kf.split(X, y):
-            kNN = sklearn.neighbors.KNeighborsClassifier(n_neighbors=1)
+            # pylint: disable=C0103
             if len(y.shape) == 1 or y.shape[1] == 1:
-                kNN.fit(X[train], y[train].ravel())
+                kf = sklearn.model_selection.StratifiedKFold(n_splits=10)
             else:
-                kNN = OneVsRestClassifier(kNN)
-                kNN.fit(X[train], y[train])
-            predictions = kNN.predict(X[test])
-            accuracy += sklearn.metrics.accuracy_score(predictions, y[test])
-        return accuracy / 10
+                kf = sklearn.model_selection.KFold(n_splits=10)
+
+            accuracy = 0.
+            for train, test in kf.split(X, y):
+                kNN = sklearn.neighbors.KNeighborsClassifier(n_neighbors=1)
+                if len(y.shape) == 1 or y.shape[1] == 1:
+                    kNN.fit(X[train], y[train].ravel())
+                else:
+                    kNN = OneVsRestClassifier(kNN)
+                    kNN.fit(X[train], y[train])
+                predictions = kNN.predict(X[test])
+                accuracy += sklearn.metrics.accuracy_score(predictions,
+                                                           y[test])
+            return accuracy / 10
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Landmark 1NN could not be computed. Returning 0 instead. \
+Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def landmark_decision_node_learner(X, y):  # pylint: disable=C0103
         """Compute statistic."""
-        if scipy.sparse.issparse(X):
-            return np.NaN
+        try:
+            if scipy.sparse.issparse(X):
+                return np.NaN
 
-        import sklearn.tree
+            import sklearn.tree
 
-        # pylint: disable=C0103
-        if len(y.shape) == 1 or y.shape[1] == 1:
-            kf = sklearn.model_selection.StratifiedKFold(n_splits=10)
-        else:
-            kf = sklearn.model_selection.KFold(n_splits=10)
-
-        accuracy = 0.
-        for train, test in kf.split(X, y):
-            random_state = sklearn.utils.check_random_state(42)
-            node = sklearn.tree.DecisionTreeClassifier(
-                criterion="entropy", max_depth=1, random_state=random_state,
-                min_samples_split=2, min_samples_leaf=1, max_features=None)
+            # pylint: disable=C0103
             if len(y.shape) == 1 or y.shape[1] == 1:
-                node.fit(X[train], y[train])
+                kf = sklearn.model_selection.StratifiedKFold(n_splits=10)
             else:
-                node = OneVsRestClassifier(node)
-                node.fit(X[train], y[train])
-            predictions = node.predict(X[test])
-            accuracy += sklearn.metrics.accuracy_score(predictions, y[test])
-        return accuracy / 10
+                kf = sklearn.model_selection.KFold(n_splits=10)
+
+            accuracy = 0.
+            for train, test in kf.split(X, y):
+                random_state = sklearn.utils.check_random_state(42)
+                node = sklearn.tree.DecisionTreeClassifier(
+                    criterion="entropy", max_depth=1,
+                    random_state=random_state, min_samples_split=2,
+                    min_samples_leaf=1, max_features=None)
+                if len(y.shape) == 1 or y.shape[1] == 1:
+                    node.fit(X[train], y[train])
+                else:
+                    node = OneVsRestClassifier(node)
+                    node.fit(X[train], y[train])
+                predictions = node.predict(X[test])
+                accuracy += sklearn.metrics.accuracy_score(predictions,
+                                                           y[test])
+            return accuracy / 10
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Landmark Decision Node Learner could not be computed. \
+Returning 0 instead. Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def landmark_decision_tree(X, y):  # pylint: disable=C0103
         """Compute statistic."""
-        if scipy.sparse.issparse(X):
-            return np.NaN
+        try:
+            if scipy.sparse.issparse(X):
+                return np.NaN
 
-        import sklearn.tree
+            import sklearn.tree
 
-        # pylint: disable=C0103
-        if len(y.shape) == 1 or y.shape[1] == 1:
-            kf = sklearn.model_selection.StratifiedKFold(n_splits=10)
-        else:
-            kf = sklearn.model_selection.KFold(n_splits=10)
-
-        accuracy = 0.
-        for train, test in kf.split(X, y):
-            random_state = sklearn.utils.check_random_state(42)
-            tree = sklearn.tree.DecisionTreeClassifier(
-                random_state=random_state
-            )
-
+            # pylint: disable=C0103
             if len(y.shape) == 1 or y.shape[1] == 1:
-                tree.fit(X[train], y[train])
+                kf = sklearn.model_selection.StratifiedKFold(n_splits=10)
             else:
-                tree = OneVsRestClassifier(tree)
-                tree.fit(X[train], y[train])
+                kf = sklearn.model_selection.KFold(n_splits=10)
 
-            predictions = tree.predict(X[test])
-            accuracy += sklearn.metrics.accuracy_score(predictions, y[test])
-        return accuracy / 10
+            accuracy = 0.
+            for train, test in kf.split(X, y):
+                random_state = sklearn.utils.check_random_state(42)
+                tree = sklearn.tree.DecisionTreeClassifier(
+                    random_state=random_state
+                )
+
+                if len(y.shape) == 1 or y.shape[1] == 1:
+                    tree.fit(X[train], y[train])
+                else:
+                    tree = OneVsRestClassifier(tree)
+                    tree.fit(X[train], y[train])
+
+                predictions = tree.predict(X[test])
+                accuracy += sklearn.metrics.accuracy_score(predictions,
+                                                           y[test])
+            return accuracy / 10
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Landmark Decision Tree could not be computed. Returning 0 \
+instead. Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def landmark_lda(X, y):  # pylint: disable=C0103
         """Compute statistic."""
-        if scipy.sparse.issparse(X):
-            return np.NaN
-
-        # pylint: disable=C0103
-        import sklearn.discriminant_analysis
-        if len(y.shape) == 1 or y.shape[1] == 1:
-            kf = sklearn.model_selection.StratifiedKFold(n_splits=10)
-        else:
-            kf = sklearn.model_selection.KFold(n_splits=10)
-
-        accuracy = 0.
         try:
-            for train, test in kf.split(X, y):
-                lda = \
-                    sklearn.discriminant_analysis.LinearDiscriminantAnalysis()
+            if scipy.sparse.issparse(X):
+                return np.NaN
 
-                if len(y.shape) == 1 or y.shape[1] == 1:
-                    lda.fit(X[train], y[train])
-                else:
-                    lda = OneVsRestClassifier(lda)
-                    lda.fit(X[train], y[train])
+            # pylint: disable=C0103
+            import sklearn.model_selection
+            from sklearn.discriminant_analysis \
+                import LinearDiscriminantAnalysis
 
-                predictions = lda.predict(X[test])
-                accuracy += sklearn.metrics.accuracy_score(
-                    predictions,
-                    y[test]
-                )
-            return accuracy / 10
-        except scipy.linalg.LinAlgError as ex:
-            # pylint: disable=W1201
-            logging.warning("LDA failed: %s Returned 0 instead!" % ex)
-            return np.NaN
-        except ValueError as ex:
-            # pylint: disable=W1201
-            logging.warning("LDA failed: %s Returned 0 instead!" % ex)
-            return np.NaN
+            if len(y.shape) == 1 or y.shape[1] == 1:
+                kf = sklearn.model_selection.StratifiedKFold(n_splits=10)
+            else:
+                kf = sklearn.model_selection.KFold(n_splits=10)
+
+            accuracy = 0.
+            try:
+                for train, test in kf.split(X, y):
+                    lda = LinearDiscriminantAnalysis()
+
+                    if len(y.shape) == 1 or y.shape[1] == 1:
+                        lda.fit(X[train], y[train])
+                    else:
+                        lda = OneVsRestClassifier(lda)
+                        lda.fit(X[train], y[train])
+
+                    predictions = lda.predict(X[test])
+                    accuracy += sklearn.metrics.accuracy_score(
+                        predictions,
+                        y[test]
+                    )
+                return accuracy / 10
+            except scipy.linalg.LinAlgError as ex:
+                # pylint: disable=W1201
+                logging.warning("LDA failed: %s Returned 0 instead!" % ex)
+                return np.NaN
+            except ValueError as ex:
+                # pylint: disable=W1201
+                logging.warning("LDA failed: %s Returned 0 instead!" % ex)
+                return np.NaN
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Landmark LDA could not be computed. Returning 0 instead. \
+Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def landmark_naive_bayes(X, y):  # pylint: disable=C0103
         """Compute statistic."""
-        if scipy.sparse.issparse(X):
-            return np.NaN
+        try:
+            if scipy.sparse.issparse(X):
+                return np.NaN
 
-        import sklearn.naive_bayes
+            import sklearn.naive_bayes
 
-        # pylint: disable=C0103
-        if len(y.shape) == 1 or y.shape[1] == 1:
-            kf = sklearn.model_selection.StratifiedKFold(n_splits=10)
-        else:
-            kf = sklearn.model_selection.KFold(n_splits=10)
-
-        accuracy = 0.
-        for train, test in kf.split(X, y):
-            nb = sklearn.naive_bayes.GaussianNB()  # pylint: disable=C0103
-
+            # pylint: disable=C0103
             if len(y.shape) == 1 or y.shape[1] == 1:
-                nb.fit(X[train], y[train])
+                kf = sklearn.model_selection.StratifiedKFold(n_splits=10)
             else:
-                nb = OneVsRestClassifier(nb)  # pylint: disable=C0103
-                nb.fit(X[train], y[train])
+                kf = sklearn.model_selection.KFold(n_splits=10)
 
-            predictions = nb.predict(X[test])
-            accuracy += sklearn.metrics.accuracy_score(predictions, y[test])
-        return accuracy / 10
+            accuracy = 0.
+            for train, test in kf.split(X, y):
+                nb = sklearn.naive_bayes.GaussianNB()  # pylint: disable=C0103
+
+                if len(y.shape) == 1 or y.shape[1] == 1:
+                    nb.fit(X[train], y[train])
+                else:
+                    nb = OneVsRestClassifier(nb)  # pylint: disable=C0103
+                    nb.fit(X[train], y[train])
+
+                predictions = nb.predict(X[test])
+                accuracy += sklearn.metrics.accuracy_score(predictions,
+                                                           y[test])
+            return accuracy / 10
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Landmark Naive Bayes could not be computed. Returning 0 \
+instead. Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def landmark_random_node_learner(X, y):  # pylint: disable=C0103
         """Compute statistic."""
-        if scipy.sparse.issparse(X):
-            return np.NaN
+        try:
+            if scipy.sparse.issparse(X):
+                return np.NaN
 
-        import sklearn.tree
+            import sklearn.tree
 
-        # pylint: disable=C0103
-        if len(y.shape) == 1 or y.shape[1] == 1:
-            kf = sklearn.model_selection.StratifiedKFold(n_splits=10)
-        else:
-            kf = sklearn.model_selection.KFold(n_splits=10)
-        accuracy = 0.
+            # pylint: disable=C0103
+            if len(y.shape) == 1 or y.shape[1] == 1:
+                kf = sklearn.model_selection.StratifiedKFold(n_splits=10)
+            else:
+                kf = sklearn.model_selection.KFold(n_splits=10)
+            accuracy = 0.
 
-        for train, test in kf.split(X, y):
-            random_state = sklearn.utils.check_random_state(42)
-            node = sklearn.tree.DecisionTreeClassifier(
-                criterion="entropy", max_depth=1, random_state=random_state,
-                min_samples_split=2, min_samples_leaf=1, max_features=1)
-            node.fit(X[train], y[train])
-            predictions = node.predict(X[test])
-            accuracy += sklearn.metrics.accuracy_score(predictions, y[test])
-        return accuracy / 10
+            for train, test in kf.split(X, y):
+                random_state = sklearn.utils.check_random_state(42)
+                node = sklearn.tree.DecisionTreeClassifier(
+                    criterion="entropy", max_depth=1,
+                    random_state=random_state,
+                    min_samples_split=2, min_samples_leaf=1, max_features=1)
+                node.fit(X[train], y[train])
+                predictions = node.predict(X[test])
+                accuracy += sklearn.metrics.accuracy_score(predictions,
+                                                           y[test])
+            return accuracy / 10
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Landmark Random Tree Node Learner could not be computed. \
+Returning 0 instead. Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     ###########################################################################
 
@@ -392,7 +535,15 @@ class StatisticalInformation:
     @staticmethod
     def number_of_categorical_features(categorical_indicators):
         """Compute statistic."""
-        return np.sum(categorical_indicators)
+        try:
+            return np.sum(categorical_indicators)
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Landmark Decision Node Learner could not be computed. \
+Returning 0 instead. Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def number_of_classes(y):  # pylint: disable=C0103
@@ -477,35 +628,44 @@ class StatisticalInformation:
     @staticmethod
     def pca(X):  # pylint: disable=C0103
         """Compute statistic."""
-        import sklearn.decomposition
-        rs = np.random.RandomState(42)  # pylint: disable=C0103
-        indices = np.arange(X.shape[0])
+        try:
+            import sklearn.decomposition
+            rs = np.random.RandomState(42)  # pylint: disable=C0103
+            indices = np.arange(X.shape[0])
 
-        if scipy.sparse.issparse(X):
-            pca = sklearn.decomposition.PCA(copy=True)
-            for i in range(10):
-                try:
-                    rs.shuffle(indices)
-                    pca.fit(X[indices])
-                    return pca
-                except LinAlgError:
-                    pass
-            logging.warning("Failed to compute a Principle Component Analysis")
+            if scipy.sparse.issparse(X):
+                pca = sklearn.decomposition.PCA(copy=True)
+                for i in range(10):
+                    try:
+                        rs.shuffle(indices)
+                        pca.fit(X[indices])
+                        return pca
+                    except LinAlgError:
+                        pass
+                automl_log("Failed to compute a Principle Component Analysis",
+                           'WARNING')
+                return None
+            else:
+                # This is expensive, but necessary with scikit-learn 0.15
+                Xt = X.astype(np.float64)  # pylint: disable=C0103
+                for i in range(10):
+                    try:
+                        rs.shuffle(indices)
+                        truncated_svd = sklearn.decomposition.TruncatedSVD(
+                            n_components=X.shape[1]-1, random_state=i,
+                            algorithm="randomized")
+                        truncated_svd.fit(Xt[indices])
+                        return truncated_svd
+                    except LinAlgError:
+                        pass
+                logging.warning("Failed to compute a Truncated SVD")
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "PCA could not be computed. Returning None instead. Originally\
+ failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
             return None
-        else:
-            # This is expensive, but necessary with scikit-learn 0.15
-            Xt = X.astype(np.float64)  # pylint: disable=C0103
-            for i in range(10):
-                try:
-                    rs.shuffle(indices)
-                    truncated_svd = sklearn.decomposition.TruncatedSVD(
-                        n_components=X.shape[1]-1, random_state=i,
-                        algorithm="randomized")
-                    truncated_svd.fit(Xt[indices])
-                    return truncated_svd
-                except LinAlgError:
-                    pass
-            logging.warning("Failed to compute a Truncated SVD")
 
     @staticmethod
     def pca_fraction_components_95v(X, pca=None):  # pylint: disable=C0103
@@ -636,46 +796,100 @@ class StatisticalInformation:
                 if not categorical_indicators[i]:
                     start = X_new.indptr[i]
                     stop = X_new.indptr[i + 1]
-                    skews.append(scipy.stats.skew(X_new.data[start:stop]))
+                    try:
+                        skews.append(scipy.stats.skew(X_new.data[start:stop]))
+                    except Exception as ex:  # pylint: disable=W0703
+                        automl_log(
+                            "Skewness of row {i} could not be computed. \
+Returning 0 instead. Originally failed with exception \
+'{ex}'".format(i=i, ex=ex),
+                            'WARNING'
+                        )
+                        skews.append(0)
             return skews
         else:
             skews = []
             for i in range(X.shape[1]):
                 if not categorical_indicators[i]:
-                    skews.append(scipy.stats.skew(X[:, i]))
+                    try:
+                        skews.append(scipy.stats.skew(X[:, i]))
+                    except Exception as ex:  # pylint: disable=W0703
+                        automl_log(
+                            "Skewness of row {i} could not be computed. \
+Returning 0 instead. Originally failed with exception \
+'{ex}'".format(i=i, ex=ex),
+                            'WARNING'
+                        )
+                        skews.append(0)
             return skews
 
     @staticmethod
     def skewness_max(X, categorical_indicators):  # pylint: disable=C0103
         """Compute statistic."""
-        skews = StatisticalInformation.skewnesses(X, categorical_indicators)
-        # pylint: disable=C1801
-        maximum = np.nanmax(skews) if len(skews) > 0 else 0
-        return maximum if np.isfinite(maximum) else 0
+        try:
+            skews = StatisticalInformation.skewnesses(X,
+                                                      categorical_indicators)
+            # pylint: disable=C1801
+            maximum = np.nanmax(skews) if len(skews) > 0 else 0
+            return maximum if np.isfinite(maximum) else 0
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Skewness Max could not be computed. Returning 0 instead. \
+Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def skewness_mean(X, categorical_indicators):  # pylint: disable=C0103
         """Compute statistic."""
-        skews = StatisticalInformation.skewnesses(X, categorical_indicators)
-        # pylint: disable=C1801
-        mean = np.nanmean(skews) if len(skews) > 0 else 0
-        return mean if np.isfinite(mean) else 0
+        try:
+            skews = StatisticalInformation.skewnesses(X,
+                                                      categorical_indicators)
+            # pylint: disable=C1801
+            mean = np.nanmean(skews) if len(skews) > 0 else 0
+            return mean if np.isfinite(mean) else 0
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Skewness mean could not be computed. Returning 0 instead. \
+Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def skewness_min(X, categorical_indicators):  # pylint: disable=C0103
         """Compute statistic."""
-        skews = StatisticalInformation.skewnesses(X, categorical_indicators)
-        # pylint: disable=C1801
-        minimum = np.nanmin(skews) if len(skews) > 0 else 0
-        return minimum if np.isfinite(minimum) else 0
+        try:
+            skews = StatisticalInformation.skewnesses(X,
+                                                      categorical_indicators)
+            # pylint: disable=C1801
+            minimum = np.nanmin(skews) if len(skews) > 0 else 0
+            return minimum if np.isfinite(minimum) else 0
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Skewness min could not be computed. Returning 0 instead. \
+Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     @staticmethod
     def skewness_std(X, categorical_indicators):  # pylint: disable=C0103
         """Compute statistic."""
-        skews = StatisticalInformation.skewnesses(X, categorical_indicators)
-        # pylint: disable=C1801
-        std = np.nanstd(skews) if len(skews) > 0 else 0
-        return std if np.isfinite(std) else 0
+        try:
+            skews = StatisticalInformation.skewnesses(X,
+                                                      categorical_indicators)
+            # pylint: disable=C1801
+            std = np.nanstd(skews) if len(skews) > 0 else 0
+            return std if np.isfinite(std) else 0
+        except Exception as ex:  # pylint: disable=W0703
+            automl_log(
+                "Skewness std could not be computed. Returning 0 instead. \
+Originally failed with exception '{ex}'".format(ex=ex),
+                'WARNING'
+            )
+            return 0.
 
     ###########################################################################
 

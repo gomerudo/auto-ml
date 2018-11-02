@@ -18,6 +18,7 @@ import pkg_resources
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
+from automl import automl_log
 from automl.metalearning import CONFIGURATIONS_CSV_NAME
 from automl.metalearning import ALGORUNS_CSV_NAME
 from automl.utl.arff_operations import ARFFWrapper
@@ -379,20 +380,28 @@ in the database for metric '{metric}'".format(metric=basename_dir))
         # For each of the instances requested
         for instance_id in instances_ids:
             # instanciate the correspondant algorithm runs file
-            algoruns_file = AlgorithmRunsFile(algoruns_arff)
-            # get the configuration id for that instance
-            config_id = \
-                algoruns_file.get_associated_configuration_id(instance_id)
+            try:
+                algoruns_file = AlgorithmRunsFile(algoruns_arff)
+                # get the configuration id for that instance
+                config_id = \
+                    algoruns_file.get_associated_configuration_id(instance_id)
 
-            # And then load the configurations.csv file
-            config_file = ConfigurationsFile(configs_csv)
+                # And then load the configurations.csv file
+                config_file = ConfigurationsFile(configs_csv)
 
-            # Resolve the configuration as a list
-            mmb = ConfigurationBuilder(
-                config_file.get_configuration(config_id)
-            )
-            # and append it to the list
-            res.append(mmb.build_configuration())
+                # Resolve the configuration as a list
+                mmb = ConfigurationBuilder(
+                    config_file.get_configuration(config_id)
+                )
+                # and append it to the list
+                res.append(mmb.build_configuration())
+            except ValueError:
+                automl_log(
+                    "Instance (dataset) with id={inst_id} has no \
+meta-knowledge associated for metric '{metric}'. We will ignore this dataset \
+and you should expect fewer ML Suggestions.".format(inst_id=instance_id,
+                                                    metric=basename_dir), 
+                    'WARNING')
         return res
 
     @staticmethod
