@@ -4,6 +4,7 @@ from automl.createconfigspacepipeline.base import ConfigSpacePipeline
 import numpy as np
 from sklearn.model_selection import cross_val_score
 from automl.utils import json_utils
+from sklearn.pipeline import make_pipeline, make_union
 
 
 class BayesianOptimizationPipeline:
@@ -13,30 +14,34 @@ class BayesianOptimizationPipeline:
     of the input pipeline.
 
     """
-    def __init__(self, X, y, pipeline, optimize_on="quality", cutoff_time=600, iteration=7, scoring=None):
+    def __init__(self, dataset=None, pipeline=None, optimize_on="quality", cutoff_time=600, iteration=15, scoring=None,
+                 cv=5):
         """Initializer of the class BayesianOptimizationPipeline.
 
         Args:
-            X: Training sample.
-            y: Test sample.
-            pipeline: Input pipeline to be optimized.
-            optimize_on: Optimization parameter that takes input either "quality" or "runtime". The pipeline can either
-                be optimized based on quality (performance metric) or runtime (time required to complete the bayesian
-                optimization process).
-            cutoff_time: This hyperparameter is only used when "optimize_on" hyperparameter is set to "runtime". Maximum
-                time limit in seconds after which the bayesian optimization process stops and best result is given as
-                output.
-            iteration: Number of iteration the bayesian optimization process will take. More number of iterations gives
-                better results but increases the execution time.
-            scoring: The performance metric on which the pipeline is supposed to be optimized.
+            dataset (Dataset): A dataset object to work with. Defaults to None.
+            pipeline (Pipeline): Input pipeline to be optimized. Defaults to None.
+            optimize_on (string): Optimization parameter that takes input either "quality" or "runtime". The pipeline
+                can either be optimized based on quality (performance metric) or runtime (time required to complete the
+                bayesian optimization process). Defaults to "quality".
+            cutoff_time (int): This hyperparameter is only used when "optimize_on" hyperparameter is set to "runtime".
+                Maximum time limit in seconds after which the bayesian optimization process stops and best result is
+                given as output. Defaults to 600.
+            iteration (int): Number of iteration the bayesian optimization process will take. More number of iterations
+                gives better results but increases the execution time. Defaults to 7
+            scoring (string or callable): The performance metric on which the pipeline is supposed to be optimized.
+                Defaults to None.
+            cv (int): Specifies the number of folds in a (Stratified)KFold. Defaults to 5
         """
-        self.X = X
-        self.y = y
+        self.dataset = dataset
         self.pipeline = pipeline
         self.optimize_on = optimize_on
         self.cutoff_time = cutoff_time
         self.iteration = iteration
         self.scoring = scoring
+        self.cv = cv
+
+        self.occurrence_no = {}
 
     def optimize_pipeline(self):
         """This function is used to initialize the optimization process.
@@ -49,29 +54,25 @@ class BayesianOptimizationPipeline:
             Pipeline: The pipeline with optimized hyperparameter.
 
         """
+        X = self.dataset.X
+        y = self.dataset.y
 
         def optimization_algorithm(config_dict):
             config_dict = {k: config_dict[k] for k in config_dict if config_dict[k]}
             config_dict = self.convert_string_to_boolean_or_none(config_dict)
 
+            pipeline_list = []
             for i in range(0, len(self.pipeline.steps)):
-                component = self.pipeline.steps[i][1]
-                if "estimator" in component.get_params():
-                    component_name = component.estimator.__class__.__name__
-                    component_dict = self.get_hyperparameter_for_component_from_dict(config_dict, component_name)
-                    self.pipeline.steps[i][1].estimator.set_params(**component_dict)
-                else:
-                    component_name = component.__class__.__name__
-                    component_dict = self.get_hyperparameter_for_component_from_dict(config_dict, component_name)
-                    self.pipeline.steps[i][1].set_params(**component_dict)
+                component = self.evaluate_component(self.pipeline.steps[i][1], config_dict)
+                pipeline_list.append(component)
 
-            score_array = cross_val_score(self.pipeline, self.X, self.y, cv=5, scoring=self.scoring)
+            score_array = cross_val_score(make_pipeline(*pipeline_list), X, y, cv=5, scoring=self.scoring)
             return 1-np.mean(score_array)
 
         cs = ConfigSpacePipeline(self.pipeline).get_config_space()
         cs_as_json = json_utils.convert_cs_to_json(cs)
         if not cs_as_json['hyperparameters']:
-            scores = cross_val_score(self.pipeline, self.X, self.y, cv=5)
+            scores = cross_val_score(self.pipeline, X, y, cv=5, scoring=self.scoring)
             return np.mean(scores), self.pipeline
         scenario = self.create_scenario(cs, self.optimize_on, self.iteration, self.cutoff_time)
         smac = SMAC(scenario=scenario, rng=np.random.RandomState(42),
@@ -80,23 +81,57 @@ class BayesianOptimizationPipeline:
         inc_value = optimization_algorithm(incumbent)
         return (1-inc_value), self.pipeline
 
+    def evaluate_component(self, component, config_dict):
+        if self.get_component_name(component) == "FeatureUnion":
+            union_list=[]
+            for i in range(0, len(component.transformer_list)):
+                union_component = self.evaluate_component(component.transformer_list[i][1], config_dict)
+                union_list.append(union_component)
+            return make_union(*union_list)
+        else:
+            if "estimator" in component.get_params():
+                component_name = self.get_component_name(component.estimator)
+                self.occurrence_no = self.update_occurrence(self.occurrence_no, component_name)
+                component_dict = self.get_hyperparameter_for_component_from_dict(
+                    config_dict, (component_name + str(self.occurrence_no[component_name]))
+                )
+                component.estimator.set_params(**component_dict)
+                return component
+
+            else:
+                component_name = self.get_component_name(component)
+                self.occurrence_no = self.update_occurrence(self.occurrence_no, component_name)
+                component_dict = self.get_hyperparameter_for_component_from_dict(
+                    config_dict, (component_name + str(self.occurrence_no[component_name]))
+                )
+                component.set_params(**component_dict)
+                return component
+
+    @staticmethod
+    def update_occurrence(occurrence_no, component_name):
+        if component_name in occurrence_no:
+            occurrence_no[component_name] = occurrence_no[component_name] + 1
+        else:
+            occurrence_no[component_name] = 1
+        return occurrence_no
+
     @staticmethod
     def create_scenario(cs, optimize_on, iteration, cutoff_time):
         """This function is used to create the Scenario object which is used by smac.
 
         Args:
-            cs: Configuration space
-            optimize_on: Optimization parameter that takes input either "quality" or "runtime". The pipeline can either
-                be optimized based on quality (performance metric) or runtime (time required to complete the bayesian
-                optimization process).
-            iteration: Number of iteration the bayesian optimization process will take. More number of iterations gives
-                better results but increases the execution time.
-            cutoff_time: This hyperparameter is only used when "optimize_on" hyperparameter is set to "runtime". Maximum
-                time limit in seconds after which the bayesian optimization process stops and best result is given as
-                output.
+            cs (ConfigurationSpace): Configuration space
+            optimize_on (string): Optimization parameter that takes input either "quality" or "runtime". The pipeline
+                can either be optimized based on quality (performance metric) or runtime (time required to complete the
+                bayesian optimization process).
+            iteration (int): Number of iteration the bayesian optimization process will take. More number of iterations
+                gives better results but increases the execution time.
+            cutoff_time (int): This hyperparameter is only used when "optimize_on" hyperparameter is set to "runtime".
+                Maximum time limit in seconds after which the bayesian optimization process stops and best result is
+                given as output.
 
         Returns:
-            Scenario object
+            Scenario: Scenario object.
 
         """
         if optimize_on == "quality":
@@ -121,13 +156,13 @@ class BayesianOptimizationPipeline:
     def convert_string_to_boolean_or_none(config_dict):
         """ This function replaces string boolean or none with it's actual form
 
-        Example : replaces "True" with True (String to Boolean)
+        For example, it replaces "True" with True (String to Boolean)
 
         Args:
-            config_dict: configuration dictionary
+            config_dict (dict): configuration dictionary
 
         Returns:
-            Reset configuration dictionary
+            dict: Reset configuration dictionary
 
         """
         for hyperparameter in config_dict:
@@ -147,11 +182,11 @@ class BayesianOptimizationPipeline:
         prefix component name from the configuration space.
 
         Args:
-            config_dict: Dictionary of all the component's hyperparameter in the pipeline.
-            component_name: Name of the component.
+            config_dict (dict): Dictionary of all the component's hyperparameter in the pipeline.
+            component_name (string): Name of the component.
 
         Returns:
-            Dictionary of the specific component's hyperparameter.
+            dict: Dictionary of the specific component's hyperparameter.
 
         """
         component_dict = {}
@@ -160,3 +195,7 @@ class BayesianOptimizationPipeline:
                 left, right = hyperparameter.split(":", 1)
                 component_dict[right] = config_dict[hyperparameter]
         return component_dict
+
+    @staticmethod
+    def get_component_name(component):
+        return component.__class__.__name__

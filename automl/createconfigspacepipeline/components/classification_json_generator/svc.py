@@ -8,7 +8,7 @@ C = UniformFloatHyperparameter("C", 0.03125, 32768, log=True,
                                default_value=1.0)
 # No linear kernel here, because we have LinearSVC
 kernel = CategoricalHyperparameter(name="kernel",
-                                   choices=["rbf", "poly", "sigmoid"],
+                                   choices=["linear", "rbf", "poly", "sigmoid"],
                                    default_value="rbf")
 degree = UniformIntegerHyperparameter("degree", 2, 5, default_value=3)
 gamma = UniformFloatHyperparameter("gamma", 3.0517578125e-05, 8,

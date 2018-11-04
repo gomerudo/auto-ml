@@ -16,43 +16,67 @@ class ConfigSpacePipeline:
         """Initializer of the class ConfigSpacePipeline
 
         Args:
-            pipeline: The pipeline for which configuration space will be generated.
+            pipeline (Pipeline): The pipeline for which configuration space will be generated.
         """
         self.pipeline = pipeline
+
+        self.combined_configuration_space = ConfigurationSpace()
 
     def get_config_space(self):
         """This function is used to get the combined configuration space for the pipeline.
 
         Returns:
-            Configuration space of the pipeline.
+            ConfigurationSpace: Configuration space of the pipeline.
 
         """
-        combined_configuration_space = ConfigurationSpace()
         for i in range(0, len(self.pipeline.steps)):
-            component = self.pipeline.steps[i][1]
+            self.evaluate_component_config_space_recursive(self.pipeline.steps[i][1])
+
+        return self.combined_configuration_space
+
+    def evaluate_component_config_space(self, component):
+        component_dict = component.get_params()
+        if "estimator" in component_dict:
+            component = component_dict["estimator"]
+            component_dict = component.get_params()
+        component_name = self.get_component_name(component)
+        if self.component_json_exist(component_name):
+            component_json = self.get_component_json(component_name)
+            component_new_json = self.component_reset_default(component_json, component_dict)
+            component_config_space = json_utils.convert_json_to_cs(component_new_json)
+            component_number = self.component_already_exists(component_name, self.combined_configuration_space)
+            component_name = component_name + "-" + str(component_number)
+            # The following line adds two configuration space by adding a prefix of the component's name
+            self.combined_configuration_space.add_configuration_space(component_name, component_config_space)
+
+    def evaluate_component_config_space_recursive(self, component):
+        if self.get_component_name(component) == "FeatureUnion":
+            for each_feature in component.transformer_list:
+                self.evaluate_component_config_space_recursive(each_feature[1])
+        else:
             component_dict = component.get_params()
             if "estimator" in component_dict:
                 component = component_dict["estimator"]
                 component_dict = component.get_params()
-            component_name = component.__class__.__name__
+            component_name = self.get_component_name(component)
             if self.component_json_exist(component_name):
                 component_json = self.get_component_json(component_name)
                 component_new_json = self.component_reset_default(component_json, component_dict)
                 component_config_space = json_utils.convert_json_to_cs(component_new_json)
+                component_number = self.component_already_exists(component_name, self.combined_configuration_space)
+                component_name = component_name + "-" + str(component_number)
                 # The following line adds two configuration space by adding a prefix of the component's name
-                combined_configuration_space.add_configuration_space(component_name,
-                                                                     component_config_space)
-        return combined_configuration_space
+                self.combined_configuration_space.add_configuration_space(component_name, component_config_space)
 
     @staticmethod
     def get_component_json(component_name):
         """This function is used to get individual configuration space of a component in JSON format.
 
         Args:
-            component_name: Name of the component as a string.
+            component_name (string): Name of the component as a string.
 
         Returns:
-            Individual configuration space in JSON format.
+            dict: Individual configuration space in JSON format.
 
         """
         component_json = json_utils.read_json_file_to_json_obj(component_name)
@@ -63,10 +87,10 @@ class ConfigSpacePipeline:
         """This function checks whether the configuration space of a component exits or not.
 
         Args:
-            component_name: Name of the component as a string.
+            component_name (string): Name of the component as a string.
 
         Returns:
-            True if the component exists and False if it does noName of the component as a string.
+            bool: True if the component exists and False if it does noName of the component as a string.
 
         """
         exist = True if (json_utils.check_existence(component_name)) else False
@@ -85,11 +109,11 @@ class ConfigSpacePipeline:
             the initial configuration space.
 
         Args:
-            component_json: Json of the component obtained from the pre-defined json file
-            component_dict: Dicitionary of hyperparameters of the component in the input pipeline
+            component_json (dict): Json of the component obtained from the pre-defined json file
+            component_dict (dict): Dictionary of hyperparameters of the component in the input pipeline
 
         Returns:
-            Configuration space in JSON format with reset defaults.
+            dict: Configuration space in JSON format with reset defaults.
 
         """
         for i in range(0, len(component_json['hyperparameters'])):
@@ -145,8 +169,8 @@ class ConfigSpacePipeline:
         """This function resets the default value of a categorical hyperparameter.
 
         Args:
-            hyperparameter_dict: Dictionary of hyperparameter name and the available choices.
-            value: Value of the hyperparameter that we want to reset
+            hyperparameter_dict (dict): Dictionary of hyperparameter name and the available choices.
+            value (string): Value of the hyperparameter that we want to reset
 
         Returns:
             Dictionary with reset default value.
@@ -161,11 +185,11 @@ class ConfigSpacePipeline:
         """This function resets the default value and (if necessary) upper-lower limit of int-float type hyperparameter.
 
         Args:
-            hyperparameter_dict: Dictionary of hyperparameter name and the upper-lower limit.
-            value: Value of the hyperparameter that we want to reset.
+            hyperparameter_dict (string): Dictionary of hyperparameter name and the upper-lower limit.
+            value (int or float): Value of the hyperparameter that we want to reset.
 
         Returns:
-            Dictionary with reset default value and upper-lower limit.
+            dict: Dictionary with reset default value and upper-lower limit.
 
         """
         # Due to bug in ConfigSpace package the default value cannot be set lesser than 1e-10 and greater than 1e298
@@ -194,3 +218,19 @@ class ConfigSpacePipeline:
             return True
         else:
             return False
+
+    @staticmethod
+    def component_already_exists(component_name, combined_configuration_space):
+        component_number = 0
+        combined_configuration_space_json = json_utils.convert_cs_to_json(combined_configuration_space)
+        for hyperparameter in combined_configuration_space_json['hyperparameters']:
+            if hyperparameter['name'].startswith(component_name):
+                c_full_name, h_name = hyperparameter['name'].split(':')
+                c_name, c_number = c_full_name.split('-')
+                if component_number < int(c_number):
+                    component_number = int(c_number)
+        return component_number+1
+
+    @staticmethod
+    def get_component_name(component):
+        return component.__class__.__name__

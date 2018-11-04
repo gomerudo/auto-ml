@@ -11,11 +11,11 @@ criterion = CategoricalHyperparameter("criterion",
 max_features = UniformFloatHyperparameter(
     "max_features", 0., 1., default_value=0.5)
 
-max_depth = Constant("max_depth_none", "None")
+max_depth = Constant("max_depth", "None")
 min_samples_split = UniformFloatHyperparameter(
     "min_samples_split", 0., 1., default_value=0.5)
 min_samples_leaf = UniformFloatHyperparameter(
-    "min_samples_leaf", 0., 1., default_value=1.)
+    "min_samples_leaf", 0., 0.5, default_value=0.0001)
 min_weight_fraction_leaf = Constant("min_weight_fraction_leaf", 0.)
 max_leaf_nodes = Constant("max_leaf_nodes", "None")
 min_impurity_decrease = Constant('min_impurity_decrease', 0.0)
