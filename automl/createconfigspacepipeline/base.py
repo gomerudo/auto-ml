@@ -1,5 +1,5 @@
 from smac.configspace import ConfigurationSpace
-from automl.utils import json_utils
+from automl.utl import json_utils
 
 
 class ConfigSpacePipeline:
@@ -30,46 +30,42 @@ class ConfigSpacePipeline:
 
         """
         for i in range(0, len(self.pipeline.steps)):
-            self.evaluate_component_config_space_recursive(self.pipeline.steps[i][1])
+            self._process_component_config_space(self.pipeline.steps[i][1])
 
         return self.combined_configuration_space
 
-    def evaluate_component_config_space(self, component):
-        component_dict = component.get_params()
-        if "estimator" in component_dict:
-            component = component_dict["estimator"]
-            component_dict = component.get_params()
-        component_name = self.get_component_name(component)
-        if self.component_json_exist(component_name):
-            component_json = self.get_component_json(component_name)
-            component_new_json = self.component_reset_default(component_json, component_dict)
-            component_config_space = json_utils.convert_json_to_cs(component_new_json)
-            component_number = self.component_already_exists(component_name, self.combined_configuration_space)
-            component_name = component_name + "-" + str(component_number)
-            # The following line adds two configuration space by adding a prefix of the component's name
-            self.combined_configuration_space.add_configuration_space(component_name, component_config_space)
+    def _process_component_config_space(self, component):
+        """Processes component's configuration space and adds it to the combined configuration space
 
-    def evaluate_component_config_space_recursive(self, component):
-        if self.get_component_name(component) == "FeatureUnion":
+        This functions also handles component such as 'FeatureUnion' by recursively adding the sub-component's
+        configuration space. It also adds the configuration space of estimators of a component but not of the component
+        itself.
+
+        Args:
+            component (obj): Object of the component
+
+        """
+
+        if self._get_component_name(component) == "FeatureUnion":
             for each_feature in component.transformer_list:
-                self.evaluate_component_config_space_recursive(each_feature[1])
+                self._process_component_config_space(each_feature[1])
         else:
             component_dict = component.get_params()
             if "estimator" in component_dict:
                 component = component_dict["estimator"]
                 component_dict = component.get_params()
-            component_name = self.get_component_name(component)
-            if self.component_json_exist(component_name):
-                component_json = self.get_component_json(component_name)
-                component_new_json = self.component_reset_default(component_json, component_dict)
+            component_name = self._get_component_name(component)
+            if self._component_json_exist(component_name):
+                component_json = self._get_component_json(component_name)
+                component_new_json = self._component_reset_default(component_json, component_dict)
                 component_config_space = json_utils.convert_json_to_cs(component_new_json)
-                component_number = self.component_already_exists(component_name, self.combined_configuration_space)
+                component_number = self._component_already_exists(component_name, self.combined_configuration_space)
                 component_name = component_name + "-" + str(component_number)
                 # The following line adds two configuration space by adding a prefix of the component's name
                 self.combined_configuration_space.add_configuration_space(component_name, component_config_space)
 
     @staticmethod
-    def get_component_json(component_name):
+    def _get_component_json(component_name):
         """This function is used to get individual configuration space of a component in JSON format.
 
         Args:
@@ -83,7 +79,7 @@ class ConfigSpacePipeline:
         return component_json
 
     @staticmethod
-    def component_json_exist(component_name):
+    def _component_json_exist(component_name):
         """This function checks whether the configuration space of a component exits or not.
 
         Args:
@@ -96,7 +92,7 @@ class ConfigSpacePipeline:
         exist = True if (json_utils.check_existence(component_name)) else False
         return exist
 
-    def component_reset_default(self, component_json, component_dict):
+    def _component_reset_default(self, component_json, component_dict):
         """This function is used to reset the defaults of the config space of the component of the input pipeline.
 
         In addition to resetting the defaults, it also updates the upper and lower limit of input hyperparameter if its
@@ -117,55 +113,55 @@ class ConfigSpacePipeline:
 
         """
         for i in range(0, len(component_json['hyperparameters'])):
-            if self.is_key_in_dic(component_dict, component_json['hyperparameters'][i]['name']):
-                if self.is_key_in_dic(component_json['hyperparameters'][i], "default"):
-                    if self.is_type_same(component_json['hyperparameters'][i]['default'],
-                                         component_dict[component_json['hyperparameters'][i]['name']]):
+            if self._is_key_in_dic(component_dict, component_json['hyperparameters'][i]['name']):
+                if self._is_key_in_dic(component_json['hyperparameters'][i], "default"):
+                    if self._is_type_same(component_json['hyperparameters'][i]['default'],
+                                          component_dict[component_json['hyperparameters'][i]['name']]):
                         if component_json['hyperparameters'][i]['type'] == "categorical":
                             component_json['hyperparameters'][i] = \
-                                self.json_process_for_categorical(
+                                self._json_process_for_categorical(
                                     component_json['hyperparameters'][i],
                                     component_dict[component_json['hyperparameters'][i]['name']]
                                 )
                         elif component_json['hyperparameters'][i]['type'] == "uniform_int":
                             component_json['hyperparameters'][i] = \
-                                self.json_process_for_int_and_float(
+                                self._json_process_for_int_and_float(
                                     component_json['hyperparameters'][i],
                                     component_dict[component_json['hyperparameters'][i]['name']]
                                 )
                         elif component_json['hyperparameters'][i]['type'] == "uniform_float":
                             component_json['hyperparameters'][i] = \
-                                self.json_process_for_int_and_float(
+                                self._json_process_for_int_and_float(
                                     component_json['hyperparameters'][i],
                                     component_dict[component_json['hyperparameters'][i]['name']]
                                 )
-                    elif self.is_string_boolean(component_json['hyperparameters'][i]['default'],
-                                                component_dict[component_json['hyperparameters'][i]['name']]):
+                    elif self._is_string_boolean(component_json['hyperparameters'][i]['default'],
+                                                 component_dict[component_json['hyperparameters'][i]['name']]):
                         component_json['hyperparameters'][i]['default'] = \
                             str(component_dict[component_json['hyperparameters'][i]['name']])
-                    elif self.is_string_none(component_json['hyperparameters'][i]['default'],
-                                             component_dict[component_json['hyperparameters'][i]['name']]):
+                    elif self._is_string_none(component_json['hyperparameters'][i]['default'],
+                                              component_dict[component_json['hyperparameters'][i]['name']]):
                         component_json['hyperparameters'][i]['default'] = \
                             str(component_dict[component_json['hyperparameters'][i]['name']])
 
         return component_json
 
     @staticmethod
-    def is_key_in_dic(component_dict, key):
+    def _is_key_in_dic(component_dict, key):
         if key in component_dict:
             return True
         else:
             return False
 
     @staticmethod
-    def is_type_same(hyperparameter_1, hyperparameter_2):
+    def _is_type_same(hyperparameter_1, hyperparameter_2):
         if isinstance(hyperparameter_1, type(hyperparameter_2)):
             return True
         else:
             return False
 
     @staticmethod
-    def json_process_for_categorical(hyperparameter_dict, value):
+    def _json_process_for_categorical(hyperparameter_dict, value):
         """This function resets the default value of a categorical hyperparameter.
 
         Args:
@@ -181,7 +177,7 @@ class ConfigSpacePipeline:
         return hyperparameter_dict
 
     @staticmethod
-    def json_process_for_int_and_float(hyperparameter_dict, value):
+    def _json_process_for_int_and_float(hyperparameter_dict, value):
         """This function resets the default value and (if necessary) upper-lower limit of int-float type hyperparameter.
 
         Args:
@@ -205,7 +201,7 @@ class ConfigSpacePipeline:
         return hyperparameter_dict
 
     @staticmethod
-    def is_string_boolean(hyperparameter_1, hyperparameter_2):
+    def _is_string_boolean(hyperparameter_1, hyperparameter_2):
         if ((hyperparameter_1 == "True" or hyperparameter_1 == "False") and
                 (hyperparameter_2 is True or hyperparameter_2 is False)):
             return True
@@ -213,14 +209,14 @@ class ConfigSpacePipeline:
             return False
 
     @staticmethod
-    def is_string_none(hyperparameter_1, hyperparameter_2):
+    def _is_string_none(hyperparameter_1, hyperparameter_2):
         if hyperparameter_1 == "None" and hyperparameter_2 is None:
             return True
         else:
             return False
 
     @staticmethod
-    def component_already_exists(component_name, combined_configuration_space):
+    def _component_already_exists(component_name, combined_configuration_space):
         component_number = 0
         combined_configuration_space_json = json_utils.convert_cs_to_json(combined_configuration_space)
         for hyperparameter in combined_configuration_space_json['hyperparameters']:
@@ -232,5 +228,5 @@ class ConfigSpacePipeline:
         return component_number+1
 
     @staticmethod
-    def get_component_name(component):
+    def _get_component_name(component):
         return component.__class__.__name__

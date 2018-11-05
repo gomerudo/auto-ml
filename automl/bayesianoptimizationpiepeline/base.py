@@ -3,7 +3,7 @@ from smac.facade.smac_facade import SMAC
 from automl.createconfigspacepipeline.base import ConfigSpacePipeline
 import numpy as np
 from sklearn.model_selection import cross_val_score
-from automl.utils import json_utils
+from automl.utl import json_utils
 from sklearn.pipeline import make_pipeline, make_union
 
 
@@ -42,6 +42,8 @@ class BayesianOptimizationPipeline:
         self.cv = cv
 
         self.occurrence_no = {}
+        self.score = None
+        self.opt_pipeline = None
 
     def optimize_pipeline(self):
         """This function is used to initialize the optimization process.
@@ -57,16 +59,15 @@ class BayesianOptimizationPipeline:
         X = self.dataset.X
         y = self.dataset.y
 
-        def optimization_algorithm(config_dict):
+        def _optimization_algorithm(config_dict):
             config_dict = {k: config_dict[k] for k in config_dict if config_dict[k]}
-            config_dict = self.convert_string_to_boolean_or_none(config_dict)
-
+            config_dict = self._convert_string_to_boolean_or_none(config_dict)
             pipeline_list = []
             for i in range(0, len(self.pipeline.steps)):
-                component = self.evaluate_component(self.pipeline.steps[i][1], config_dict)
+                component = self._process_component(self.pipeline.steps[i][1], config_dict)
                 pipeline_list.append(component)
-
-            score_array = cross_val_score(make_pipeline(*pipeline_list), X, y, cv=5, scoring=self.scoring)
+            self.opt_pipeline = make_pipeline(*pipeline_list)
+            score_array = cross_val_score(self.opt_pipeline, X, y, cv=5, scoring=self.scoring)
             return 1-np.mean(score_array)
 
         cs = ConfigSpacePipeline(self.pipeline).get_config_space()
@@ -74,41 +75,57 @@ class BayesianOptimizationPipeline:
         if not cs_as_json['hyperparameters']:
             scores = cross_val_score(self.pipeline, X, y, cv=5, scoring=self.scoring)
             return np.mean(scores), self.pipeline
-        scenario = self.create_scenario(cs, self.optimize_on, self.iteration, self.cutoff_time)
+        scenario = self._create_scenario(cs, self.optimize_on, self.iteration, self.cutoff_time)
         smac = SMAC(scenario=scenario, rng=np.random.RandomState(42),
-                    tae_runner=optimization_algorithm)
+                    tae_runner=_optimization_algorithm)
         incumbent = smac.optimize()
-        inc_value = optimization_algorithm(incumbent)
-        return (1-inc_value), self.pipeline
+        inc_value = _optimization_algorithm(incumbent)
+        self.score = (1-inc_value)
 
-    def evaluate_component(self, component, config_dict):
-        if self.get_component_name(component) == "FeatureUnion":
+    def get_optimized_score(self):
+        return self.score
+
+    def get_optimized_pipeline(self):
+        return self.opt_pipeline
+
+    def _process_component(self, component, config_dict):
+        """Processes each component
+
+        Args:
+            component (obj): Object of the component.
+            config_dict (dict): Dictionary with hyperparameter configuration.
+
+        Returns:
+            obj : Object of the component with reset default values.
+        """
+
+        if self._get_component_name(component) == "FeatureUnion":
             union_list=[]
             for i in range(0, len(component.transformer_list)):
-                union_component = self.evaluate_component(component.transformer_list[i][1], config_dict)
+                union_component = self._process_component(component.transformer_list[i][1], config_dict)
                 union_list.append(union_component)
             return make_union(*union_list)
         else:
             if "estimator" in component.get_params():
-                component_name = self.get_component_name(component.estimator)
-                self.occurrence_no = self.update_occurrence(self.occurrence_no, component_name)
-                component_dict = self.get_hyperparameter_for_component_from_dict(
-                    config_dict, (component_name + str(self.occurrence_no[component_name]))
+                component_name = self._get_component_name(component.estimator)
+                self.occurrence_no = self._update_occurrence(self.occurrence_no, component_name)
+                component_dict = self._get_hyperparameter_for_component_from_dict(
+                    config_dict, component_name
                 )
                 component.estimator.set_params(**component_dict)
                 return component
 
             else:
-                component_name = self.get_component_name(component)
-                self.occurrence_no = self.update_occurrence(self.occurrence_no, component_name)
-                component_dict = self.get_hyperparameter_for_component_from_dict(
-                    config_dict, (component_name + str(self.occurrence_no[component_name]))
+                component_name = self._get_component_name(component)
+                self.occurrence_no = self._update_occurrence(self.occurrence_no, component_name)
+                component_dict = self._get_hyperparameter_for_component_from_dict(
+                    config_dict, component_name
                 )
                 component.set_params(**component_dict)
                 return component
 
     @staticmethod
-    def update_occurrence(occurrence_no, component_name):
+    def _update_occurrence(occurrence_no, component_name):
         if component_name in occurrence_no:
             occurrence_no[component_name] = occurrence_no[component_name] + 1
         else:
@@ -116,7 +133,7 @@ class BayesianOptimizationPipeline:
         return occurrence_no
 
     @staticmethod
-    def create_scenario(cs, optimize_on, iteration, cutoff_time):
+    def _create_scenario(cs, optimize_on, iteration, cutoff_time):
         """This function is used to create the Scenario object which is used by smac.
 
         Args:
@@ -153,7 +170,7 @@ class BayesianOptimizationPipeline:
             raise UnboundLocalError("'optimize_on' parameter can only be set to 'quality' or 'runtime'")
 
     @staticmethod
-    def convert_string_to_boolean_or_none(config_dict):
+    def _convert_string_to_boolean_or_none(config_dict):
         """ This function replaces string boolean or none with it's actual form
 
         For example, it replaces "True" with True (String to Boolean)
@@ -174,8 +191,7 @@ class BayesianOptimizationPipeline:
                 config_dict[hyperparameter] = None
         return config_dict
 
-    @staticmethod
-    def get_hyperparameter_for_component_from_dict(config_dict, component_name):
+    def _get_hyperparameter_for_component_from_dict(self, config_dict, component_name):
         """This function returns the component's hyperparameter from the configuration space.
 
         This function is used to search for the component's hyperparameter from the configuration space and remove the
@@ -191,11 +207,11 @@ class BayesianOptimizationPipeline:
         """
         component_dict = {}
         for hyperparameter in list(config_dict):
-            if hyperparameter.startswith((component_name+':')):
+            if hyperparameter.startswith((component_name+'-' + str(self.occurrence_no[component_name]) + ':')):
                 left, right = hyperparameter.split(":", 1)
                 component_dict[right] = config_dict[hyperparameter]
         return component_dict
 
     @staticmethod
-    def get_component_name(component):
+    def _get_component_name(component):
         return component.__class__.__name__
