@@ -15,13 +15,17 @@ class Assistant:
 
     Args:
         dataset (Dataset): A dataset object to work with. Defaults to None.
-        metric (string or callable): A metric to evalate the pipeline against.
-            Defaults to 'accuracy'.
+        metalearning_metric: A metric in the metalearning database to use if
+            similar datasets want to be retrieved. Defatuls to 'accuracy'.
+        evaluation_metric (string or callable): A metric to evalate the
+            pipeline with. Defaults to 'accuracy'.
 
     Attributes:
         dataset (Dataset): A dataset object to work with.
-        metric (string or callable): A metric to evalate the pipeline against.
-
+        metalearning_metric: A metric in the metalearning database to use if
+            similar datasets want to be retrieved.
+        evaluation_metric (string or callable): A metric to evalate the
+            pipeline with.
     """
 
     def __init__(self, dataset=None, metalearning_metric='accuracy',

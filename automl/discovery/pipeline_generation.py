@@ -32,7 +32,6 @@ class PipelineDiscovery:
 
     """
 
-    # TODO: accept a metric
     def __init__(self, dataset=None, search_space='scikit-learn',
                  tpot_params=None, evaluation_metric='accuracy'):
         """Constructor."""
@@ -64,7 +63,8 @@ class PipelineDiscovery:
         Args:
             limit_time (int): In minutes, the maximum time to wait for the
                 generation of the pipeline. If None, ignored.
-            random-state (int): The number to seed the random state with.
+            random_state (int): The number to seed the random state with.
+                Defaults to 42.
 
         Returns:
             sklearn.pipeline.Pipeline: The resulting pipeline.

@@ -11,5 +11,11 @@ This is the official documentation for the Achmea's auto-ml solution.
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-    
+
+   AutoML in a nutshell <nutshell>
+   Installing the tool <install>
+   Using the tool <howto>
    API <modules>
+   Python basics to understand the tool <python>
+   Contribute <contribute>
+

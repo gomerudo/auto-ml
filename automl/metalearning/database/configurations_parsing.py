@@ -126,7 +126,13 @@ class ConfigurationBuilder:
         self._internal_list_loader()
 
     def build_configuration(self):
-        """Build a ML Suggestion with the row passed at instaciation time."""
+        """Build a ML Suggestion with the row passed at instaciation time.
+
+        Returns:
+            MLSuggestion: A suggestion with classifiers, pre-processors,
+                scalers, encoders and imputation methods.
+
+        """
         imputation_col = _PF_IMPUTATION + _CSV_COL_SEP + _PF_STRATEGY
         classifier_choice_col = _PF_CLASSIFIER + _CSV_COL_SEP + _CSV_CHOICE
         preprocessor_choice_col = _PF_PREPROCESSOR + _CSV_COL_SEP + _CSV_CHOICE
@@ -300,7 +306,7 @@ class _ConfigurationBuilderHelper:
             ValueError: If the choice_type is not recognized.
 
         Returns:
-            str:        The auto-sklearn class name to use for 'name'.
+            str: The auto-sklearn class name to use for 'name'.
 
         """
         if choice_type == _PF_CLASSIFIER:

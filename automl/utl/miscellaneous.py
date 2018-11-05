@@ -12,9 +12,8 @@ def argsort_list(src_list=None, backwards=False):
     numpy-argsort-in-basic-python/3382369#3382369>`_.
 
     Args:
-        src_list    (list): The list to sort. Defaults to None.
-        backwards   (bool): Whether or not to do reverse sort. Defaults to
-            False.
+        src_list (list): The list to sort. Defaults to None.
+        backwards (bool): Whether or not to do reverse sort. Defaults to False.
 
     Returns:
         list: The resulting list of indices sorted by value.

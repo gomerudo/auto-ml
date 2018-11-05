@@ -68,20 +68,18 @@ class MKDatabaseClient:
         automl/metalearning/db/files.
 
         Attributes:
-            dataset         (automl.datahandler.dataloader.Dataset): The
-                            dataset to use. Default is None, which will cause
-                            the method to fail.
-            weighted        (bool): True if the costs should be used. Default
-                            is False.
-            k               (int) The number of neighbor datasets to retrieve.
+            dataset (automl.datahandler.dataloader.Dataset): The dataset to
+                use. Default is None, which will cause the method to fail.
+            weighted (bool): True if the costs should be used. Defaults to
+                False.
+            k (int): The number of neighbor datasets to retrieve.
             distance_metric (string or sklearn callable): The distance metric
-                            to use for the KNN algorithm.
+                to use for the KNN algorithm.
 
         Returns:
-            (np.array, np.array)    A tuple where the first element is a numpy
-                                    array of the similarity metrics for the
-                                    result datasets and the second element
-                                    contains the similar dataset's ids.
+            (np.array, np.array) A tuple where the first element is a numpy
+                array of the similarity metrics for the result datasets and
+                the second element contains the similar dataset's ids.
 
         """
         # For now, accept only Dataset objects
@@ -117,12 +115,12 @@ invterval ({lower}, {upper}]".format(lower=0, upper=max_neighbours))
         Using a given metric, retrieve the models suggested.
 
         Attributes:
-            dataset     (Dataset) The dataset to use as areference.
-            ids_list    (list) The list of ids to retrieve information about.
-            metric      (str) A Metalearning metric.
+            dataset (Dataset): The dataset to use as areference.
+            ids_list (list): The list of ids to retrieve information about.
+            metric (str): A Metalearning metric.
 
         Returns:
-            list:    A list of MLSuggestions.
+            list: A list of MLSuggestions.
 
         """
         configs = LandmarkModelParser.models_by_metric(ids_list, dataset,
@@ -308,12 +306,11 @@ class LandmarkModelParser:
         """Return the models for a list of instances by the given accuracy.
 
         Attributes:
-            instances_ids   (list) List of integers with the ids of the
-                            instances (datasets).
-            dataset         The dataset to work with.
-            metric          (str) Name of the metric to use. It must be one of
-                            the metrics returned by
-                            LandmarkModelParser.metrics_available().
+            instances_ids (list): List of integers with the ids of the
+                instances (datasets).
+            dataset (Dataset): The dataset to work with.
+            metric (str) Name of the metric to use. It must be one of the
+                metrics returned by LandmarkModelParser.metrics_available().
         Results:
             list: List of models. One element per instance.
 
@@ -400,7 +397,7 @@ in the database for metric '{metric}'".format(metric=basename_dir))
                     "Instance (dataset) with id={inst_id} has no \
 meta-knowledge associated for metric '{metric}'. We will ignore this dataset \
 and you should expect fewer ML Suggestions.".format(inst_id=instance_id,
-                                                    metric=basename_dir), 
+                                                    metric=basename_dir),
                     'WARNING')
         return res
 
@@ -433,7 +430,7 @@ and you should expect fewer ML Suggestions.".format(inst_id=instance_id,
         """Return the metrics that are available in the meta-knowledge.
 
         Returns:
-            list:   Metrics available in the package's local storage.
+            list: Metrics available in the package's local storage.
 
         """
         files_dir = pkg_resources.resource_filename(__name__, "files")
@@ -462,7 +459,7 @@ class ConfigurationsFile:
         """Constructor.
 
         Attributes:
-            configs_file    (str): The configuration's file path.
+            configs_file (str): The configuration's file path.
 
         """
         self.configs_file = configs_file
@@ -478,8 +475,8 @@ class ConfigurationsFile:
         """Get the configurations for a given algorithm id.
 
         Attributes:
-            algorithm_id    (int): The id for the algorithm. This should come
-                            from the results in algorithm_runs.arff.
+            algorithm_id (int): The id for the algorithm. This should come
+                from the results in algorithm_runs.arff.
 
         """
         try:
@@ -493,8 +490,8 @@ file {file}".format(algo_id=algorithm_id, file=self.configs_file))
         """Get the configurations for a given set of algorithm ids.
 
         Attributes:
-            algorithm_ids   (list): The ids for the algorithms. These should
-                            come from the results in algorithm_runs.arff
+            algorithm_ids (list): The ids for the algorithms. These should
+                come from the results in algorithm_runs.arff
 
         """
         results = []
@@ -509,7 +506,7 @@ class AlgorithmRunsFile:
         """Constructor.
 
         Arguments:
-            algruns_file    (str): The algorithm_runs.arff file path.
+            algruns_file (str): The algorithm_runs.arff file path.
 
         """
         self.algruns_file = algruns_file
@@ -532,8 +529,8 @@ class AlgorithmRunsFile:
             instance_id (int): The id of the dataset (instance) to search for.
 
         Returns:
-            int:    The id of the configuration solving the instance_id problem
-                    (dataset).
+            int: The id of the configuration solving the instance_id problem
+                (dataset).
 
         """
         res = self._arrf_wrapper.row_by_column_value('instance_id',
@@ -553,12 +550,12 @@ class AlgorithmRunsFile:
         the ids for the solutions, not the solutions themselves.
 
         Attributes:
-            instances_ids   (list): The ids of the datasets (instances) to
-                            search for.
+            instances_ids (list): The ids of the datasets (instances) to
+                search for.
 
         Returns:
-            list(int):  The ids of the configurations solving the instance_id's
-                        (datasets) problems.
+            list(int): The ids of the configurations solving the instance_id's
+                (datasets) problems.
 
         """
         result = []

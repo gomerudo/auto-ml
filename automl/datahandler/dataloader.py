@@ -192,9 +192,9 @@ with 0", 'WARNING')
         """Make a train-test split as defined in scikit-learn for the dataset.
 
         Args:
-            random_state    (int): The random_state to initialize with so that
+            random_state (int): The random_state to initialize with so that
                 the results can be reproduced.
-            test_size       (float): Proportion of split for the test set.
+            test_size (float): Proportion of split for the test set.
 
         Returns:
             tuple: A 4-tuple as train_test_split in scikit-learn.

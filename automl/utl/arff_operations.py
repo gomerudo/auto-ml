@@ -326,8 +326,11 @@ a valid column".format(col=attr))
         key in Databases.
 
         Args:
-            column: The column to add as a key in the dataset. Defaults to
-                `None`.
+            column (str): The column to add as a key in the dataset. Defaults
+                to `None`.
+
+        Raises:
+            ValueError: If column is None or not in the attributes.
 
         """
         if column is None:
@@ -384,6 +387,10 @@ a valid column".format(col=attr))
         Returns:
             numpy.array: The values in the specified column.
 
+        Raises:
+            TypeError: If column is not int nor str
+            ValueError: If the column is not in the attributes.
+
         """
         if not isinstance(column, str) and not isinstance(column, int):
             raise TypeError("Only int or str can be passed as column value")
@@ -400,7 +407,22 @@ a valid column".format(col=attr))
         return self.data[column].values
 
     def row_by_column_value(self, column=None, value=None):
-        """Return the row that satisfies column=value."""
+        """Return the row that satisfies column=value.
+
+        Args:
+            column (str): The column to query against. Defaults to None.
+            value (object): The value to search for in the specified column.
+                Defaults to None.
+
+        Raises:
+            ValueError: If column or value are None.
+            TypeError: If column is not an instance of str.
+
+        Returns:
+            pandas.Series: The row satisfying the search, if any. Empty series
+                if nothing was found.
+
+        """
         if column is None:
             raise ValueError("'column' cannot be None")
         if value is None:
@@ -414,10 +436,6 @@ a valid column".format(col=attr))
 
         query_str = '{column} == {value}'.format(column=column, value=value)
         return self.data.query(query_str)
-        # if res.empty():
-        #     return None
-
-        # return int(res['algorithm'])
 
     def summary(self):
         """Print a summary of the dataset.
