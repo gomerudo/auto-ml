@@ -8,7 +8,7 @@ to the tool.
 
 Python
 ------
-Python is a 'genera purpose' programming language. This is, contrarely to R it
+Python is a 'general purpose' programming language. This is, contrarely to R it
 gives more flexibility for the type of problems it solves, such as web
 development, scripting (similar to bash) or scientific programming. The ability
 to use it for one purpose or the other is given by the 'packages' (or library,

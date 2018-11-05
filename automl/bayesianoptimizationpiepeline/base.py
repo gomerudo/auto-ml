@@ -81,6 +81,7 @@ class BayesianOptimizationPipeline:
         incumbent = smac.optimize()
         inc_value = _optimization_algorithm(incumbent)
         self.score = (1-inc_value)
+        return self
 
     def get_optimized_score(self):
         return self.score

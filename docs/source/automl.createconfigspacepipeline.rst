@@ -12,14 +12,6 @@ automl.createconfigspacepipeline.base module
     :undoc-members:
     :show-inheritance:
 
-automl.createconfigspacepipeline.example module
------------------------------------------------
-
-.. automodule:: automl.createconfigspacepipeline.example
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 
 Module contents
 ---------------

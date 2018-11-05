@@ -7,13 +7,11 @@ Subpackages
 .. toctree::
 
     automl.bayesianoptimizationpiepeline
-    automl.config
     automl.createconfigspacepipeline
     automl.datahandler
     automl.discovery
     automl.errors
     automl.metalearning
-    automl.utils
     automl.utl
 
 Submodules

@@ -12,14 +12,6 @@ automl.bayesianoptimizationpiepeline.base module
     :undoc-members:
     :show-inheritance:
 
-automl.bayesianoptimizationpiepeline.example\_1 module
-------------------------------------------------------
-
-.. automodule:: automl.bayesianoptimizationpiepeline.example_1
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 
 Module contents
 ---------------

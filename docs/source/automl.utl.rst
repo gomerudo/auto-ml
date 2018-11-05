@@ -12,6 +12,14 @@ automl.utl.arff\_operations module
     :undoc-members:
     :show-inheritance:
 
+automl.utl.json\_utils module
+-----------------------------
+
+.. automodule:: automl.utl.json_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 automl.utl.miscellaneous module
 -------------------------------
 

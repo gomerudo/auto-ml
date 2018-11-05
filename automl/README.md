@@ -51,6 +51,13 @@ a restricted search space based on meta-suggestions. The top classes here are
 
 ## The `bayesianoptimizationpipeline` subpackage
 
+This module makes use of SMAC3 library which uses the bayesian optimization
+technique to optimize the hyperparameter of the input pipeline. The most
+important class is `BayesianOptimizationPipeline`.
 
 ## The `createconfigspacepipeline` subpackage
 
+This module deals with the creation and manipulation of configuration space
+from the given input pipeline. The reference class in this module is 
+`ConfigSpacePipeline`, which is not supposed to be instantiated in a workflow
+but used internally by the bayesian module.

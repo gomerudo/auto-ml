@@ -5,6 +5,8 @@ from automl.metalearning.metafeatures.metafeatures_interaction \
     import MetaFeaturesManager
 from automl.metalearning.database.load_db import MKDatabaseClient
 from automl.discovery.pipeline_generation import PipelineDiscovery
+from automl.bayesianoptimizationpiepeline.base \
+    import BayesianOptimizationPipeline
 
 
 class Assistant:
@@ -161,5 +163,54 @@ class Assistant:
 
         # TODO: Think of print options.
         print(pipeline)
-        print(p_disc.validation_score)
+        self._pipeline_discovery = p_disc
         return p_disc
+
+    def optimize(self, pipeline=None, optimize_on="quality", iteration=20,
+                 cutoff_time=600, scoring=None, cv=5):
+        """Optimize a pipeline using Bayesian optimization.
+
+        Args:
+            pipeline (Pipeline): A pipeline to use. If None, we try to use the
+                last auto generated pipeline.
+            optimize_on (string): Optimization parameter that takes input
+                either "quality" or "runtime". The pipeline
+                can either be optimized based on quality (performance metric)
+                or runtime (time required to complete the bayesian optimization
+                process). Defaults to "quality".
+            cutoff_time (int): This hyperparameter is only used when
+                "optimize_on" hyperparameter is set to "runtime". Maximum time
+                limit in seconds after which the bayesian optimization process
+                stops and best result is given as output. Defaults to 600.
+            iteration (int): Number of iteration the bayesian optimization
+                process will take. More number of iterations gives better
+                results but increases the execution time. Defaults to 7.
+            scoring (string or callable): The performance metric on which the
+                pipeline is supposed to be optimized. Defaults to None.
+            cv (int): Specifies the number of folds in a (Stratified)KFold.
+                Defaults to 5.
+        Raises:
+            ValueError: if no pipeline has been specified nor found.
+
+        Returns:
+            BayesianOptimizationPipeline: the object used for optimization.
+
+        """
+        if pipeline is None and self._pipeline_discovery is None:
+            raise ValueError("No pipeline available. Either use \
+generate_pipeline() method or pass a pipelineas an argument to the function.")
+
+        pipeline_ = pipeline if pipeline is not None else \
+            self._pipeline_discovery.pipeline
+
+        bayesian = BayesianOptimizationPipeline(
+            dataset=self.dataset,
+            pipeline=pipeline_,
+            optimize_on=optimize_on,
+            iteration=iteration,
+            cutoff_time=cutoff_time,
+            scoring=scoring,
+            cv=cv
+            )
+
+        return bayesian.optimize_pipeline()

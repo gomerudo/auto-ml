@@ -13,7 +13,7 @@ class TestAssistant(unittest.TestCase):
     def test_workflow(self):
         """Test a workflow for the Assistant."""
         # Get dataset
-        dataset = DataLoader.get_openml_dataset(openml_id=179, problem_type=0)
+        dataset = DataLoader.get_openml_dataset(openml_id=46, problem_type=0)
 
         # start assistant
         assistant = Assistant(dataset)
@@ -40,19 +40,19 @@ class TestAssistant(unittest.TestCase):
 
         # Run bayestian opt
         pipeline = pipeline_obj.pipeline
-        bayesian = BayesianOptimizationPipeline(
-            dataset,
-            pipeline,
-            optimize_on="quality",
-            iteration=20)
+        # bayesian = BayesianOptimizationPipeline(
+        #     dataset,
+        #     pipeline,
+        #     optimize_on="quality",
+        #     iteration=20)
 
-        score, opt_pipeline = bayesian.optimize_pipeline()
+        bopt = assistant.optimize(optimize_on="quality", iteration=5)
 
         # Prive bayesian's score
-        print("Score", score)
-        print(opt_pipeline)
+        print("Score", bopt.score)
+        print(bopt.opt_pipeline)
 
         print("TPOT: {} vs. Bayesian: {}".format(
             pipeline_obj.validation_score,
-            score
+            bopt.score
         ))

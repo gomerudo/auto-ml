@@ -2,14 +2,12 @@
 
 In order to apply bayesian optimization for a given pipeline on a dataset we do as follows : 
 
-1. Initialize objects of DataLoader and Assistant
+1. Initialize objects of DataLoader
 
     ```python
     from automl.datahandler.dataloader import DataLoader
-    from automl.discovery.assistant import Assistant
     
     dataset = DataLoader.get_openml_dataset(openml_id=46, problem_type=0)
-    assistant = Assistant(dataset)
     ```
 
 2. Create a pipeline
