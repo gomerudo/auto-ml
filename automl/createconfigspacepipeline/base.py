@@ -10,20 +10,24 @@ class ConfigSpacePipeline:
     configuration space is also adjusted if the input hyperparameter value is out of range. This class is not supposed
     to be instantiated by the user instead is used by the BayesianOptimizationPipeline class.
 
+    Args:
+        pipeline (Pipeline): The pipeline for which configuration space will be generated.
+
     """
 
     def __init__(self, pipeline):
-        """Initializer of the class ConfigSpacePipeline
-
-        Args:
-            pipeline (Pipeline): The pipeline for which configuration space will be generated.
-        """
+        """Initializer of the class ConfigSpacePipeline"""
         self.pipeline = pipeline
 
         self.combined_configuration_space = ConfigurationSpace()
 
     def get_config_space(self):
         """This function is used to get the combined configuration space for the pipeline.
+
+        This function process each component in the pipeline, thereby adding the configuration space with reset
+        default of each of the component and obtaining the complete configuration space. It adds configuration space of
+        components within 'FeatureUnion' and deals with situation such as 'FeatureUnion' within 'FeatureUnion'.
+        It also adds the configuration space of estimators of a component but not of the component itself.
 
         Returns:
             ConfigurationSpace: Configuration space of the pipeline.
@@ -58,7 +62,7 @@ class ConfigSpacePipeline:
             if self._component_json_exist(component_name):
                 component_json = self._get_component_json(component_name)
                 component_new_json = self._component_reset_default(component_json, component_dict)
-                component_config_space = json_utils.convert_json_to_cs(component_new_json)
+                component_config_space = json_utils._convert_json_to_cs(component_new_json)
                 component_number = self._component_already_exists(component_name, self.combined_configuration_space)
                 component_name = component_name + "-" + str(component_number)
                 # The following line adds two configuration space by adding a prefix of the component's name
@@ -75,7 +79,7 @@ class ConfigSpacePipeline:
             dict: Individual configuration space in JSON format.
 
         """
-        component_json = json_utils.read_json_file_to_json_obj(component_name)
+        component_json = json_utils._read_json_file_to_json_obj(component_name)
         return component_json
 
     @staticmethod
@@ -89,7 +93,7 @@ class ConfigSpacePipeline:
             bool: True if the component exists and False if it does noName of the component as a string.
 
         """
-        exist = True if (json_utils.check_existence(component_name)) else False
+        exist = True if (json_utils._check_existence(component_name)) else False
         return exist
 
     def _component_reset_default(self, component_json, component_dict):
@@ -218,7 +222,7 @@ class ConfigSpacePipeline:
     @staticmethod
     def _component_already_exists(component_name, combined_configuration_space):
         component_number = 0
-        combined_configuration_space_json = json_utils.convert_cs_to_json(combined_configuration_space)
+        combined_configuration_space_json = json_utils._convert_cs_to_json(combined_configuration_space)
         for hyperparameter in combined_configuration_space_json['hyperparameters']:
             if hyperparameter['name'].startswith(component_name):
                 c_full_name, h_name = hyperparameter['name'].split(':')

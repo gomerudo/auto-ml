@@ -13,12 +13,7 @@ class BayesianOptimizationPipeline:
     This class makes use of SMAC3 library which uses the bayesian optimization technique to optimize the hyperparameter
     of the input pipeline.
 
-    """
-    def __init__(self, dataset=None, pipeline=None, optimize_on="quality", cutoff_time=600, iteration=15, scoring=None,
-                 cv=5):
-        """Initializer of the class BayesianOptimizationPipeline.
-
-        Args:
+    Args:
             dataset (Dataset): A dataset object to work with. Defaults to None.
             pipeline (Pipeline): Input pipeline to be optimized. Defaults to None.
             optimize_on (string): Optimization parameter that takes input either "quality" or "runtime". The pipeline
@@ -32,7 +27,12 @@ class BayesianOptimizationPipeline:
             scoring (string or callable): The performance metric on which the pipeline is supposed to be optimized.
                 Defaults to None.
             cv (int): Specifies the number of folds in a (Stratified)KFold. Defaults to 5
-        """
+
+    """
+    def __init__(self, dataset=None, pipeline=None, optimize_on="quality", cutoff_time=600, iteration=15, scoring=None,
+                 cv=5):
+        """Initializer of the class BayesianOptimizationPipeline."""
+
         self.dataset = dataset
         self.pipeline = pipeline
         self.optimize_on = optimize_on
@@ -46,14 +46,12 @@ class BayesianOptimizationPipeline:
         self.opt_pipeline = None
 
     def optimize_pipeline(self):
-        """This function is used to initialize the optimization process.
+        """This function is used to initiate the optimization process and obtained the optimized score and pipeline.
 
-        This function creates a function which consist of the input pipeline which is evaluated based on various
-        hyperparameter setting provided by the bayesian optimization technique.
+        This function gets the configuration space from the createconfigspacepipeline subpackage on which the bayesian
+        optimization technique is performed. This function creates a function which consist of the input pipeline which
+        is evaluated based on various hyperparameter setting provided by the bayesian optimization technique (SMAC).
 
-        Returns:
-            float: The optimized test score.
-            Pipeline: The pipeline with optimized hyperparameter.
 
         """
         X = self.dataset.X
@@ -71,7 +69,7 @@ class BayesianOptimizationPipeline:
             return 1-np.mean(score_array)
 
         cs = ConfigSpacePipeline(self.pipeline).get_config_space()
-        cs_as_json = json_utils.convert_cs_to_json(cs)
+        cs_as_json = json_utils._convert_cs_to_json(cs)
         if not cs_as_json['hyperparameters']:
             scores = cross_val_score(self.pipeline, X, y, cv=5, scoring=self.scoring)
             return np.mean(scores), self.pipeline
@@ -84,10 +82,34 @@ class BayesianOptimizationPipeline:
         return self
 
     def get_optimized_score(self):
-        return self.score
+        """ This function returns the optimized score
+
+        Raises:
+            TypeError: If the function returns None, then the pipeline has'nt been optimized.
+
+        Returns:
+            float: The optimized score.
+
+        """
+        if self.score is None:
+            raise TypeError("None returned. Optimize the pipeline first!")
+        else:
+            return self.score
 
     def get_optimized_pipeline(self):
-        return self.opt_pipeline
+        """ This function returns the optimized pipeline
+
+        Raises:
+            TypeError: If the function returns None, then the pipeline has'nt been optimized.
+
+        Returns:
+            Pipeline: The optimized pipeline.
+
+        """
+        if self.score is None:
+            raise TypeError("None returned. Optimize the pipeline first!")
+        else:
+            return self.opt_pipeline
 
     def _process_component(self, component, config_dict):
         """Processes each component
