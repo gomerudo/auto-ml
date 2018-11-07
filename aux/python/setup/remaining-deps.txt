@@ -1,0 +1,12 @@
+deap
+update_checker
+tqdm
+stopit
+xgboost
+dask[delayed]
+dask-ml
+scikit-mdr
+skrebate
+auto-sklearn
+tpot
+openml

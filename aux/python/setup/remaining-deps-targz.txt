@@ -1,0 +1,10 @@
+deap
+stopit
+xgboost
+toolz>=0.7.3
+scipy
+scikit-mdr
+skrebate
+auto-sklearn
+tpot
+openml
