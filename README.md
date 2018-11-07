@@ -33,7 +33,7 @@ explaining the behaviour that can be easily associated to the image.
 
 By **default** in auto-ml, the output pipelines consider the whole set of algorithms
 defined in scikit-learn and it is cosidered to be the default **search space**.
-However, these search space can be reduced **manually** (i.e. programatically
+However, this search space can be reduced **manually** (i.e. programatically
 specify the models to use following TPOT's conventions) or **automatically** 
 (i.e. use auto-ml's assistant to search for potential models by looking into
 similar datasets in the so called Meta Knowledge Databaset). These operations
