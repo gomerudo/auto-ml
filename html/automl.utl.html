@@ -1,0 +1,802 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>automl.utl package &mdash; auto-ml 1.0-beta documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Python basics to understand the tool" href="python.html" />
+    <link rel="prev" title="automl.metalearning.metafeatures package" href="automl.metalearning.metafeatures.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> auto-ml
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="nutshell.html">AutoML in a nutshell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto.html">Using the tool</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="automl.html">automl package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="automl.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="automl.bayesianoptimizationpiepeline.html">automl.bayesianoptimizationpiepeline package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.createconfigspacepipeline.html">automl.createconfigspacepipeline package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.datahandler.html">automl.datahandler package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.discovery.html">automl.discovery package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.errors.html">automl.errors package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.metalearning.html">automl.metalearning package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">automl.utl package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#module-automl.globalvars">automl.globalvars module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#module-automl">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python basics to understand the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">auto-ml</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">automl</a> &raquo;</li>
+        
+          <li><a href="automl.html">automl package</a> &raquo;</li>
+        
+      <li>automl.utl package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/automl.utl.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="automl-utl-package">
+<h1>automl.utl package<a class="headerlink" href="#automl-utl-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-automl.utl.arff_operations">
+<span id="automl-utl-arff-operations-module"></span><h2>automl.utl.arff_operations module<a class="headerlink" href="#module-automl.utl.arff_operations" title="Permalink to this headline">¶</a></h2>
+<p>Read ARFF files and provide an interface to interact with them.</p>
+<p>The current MetaDatabase (the place where the meta-knowledge acquired by
+auto-sklearn is stored) is based on ARFF files. These, are expressive but not
+straightforward to manipulate neither for matrices operations nor data access.</p>
+<p>The intention here is to provide classes that can perform some basic/common
+operations and can hide the object as numpy/pandas objects that are easier to
+manipulate for data science purposes.</p>
+<dl class="class">
+<dt id="automl.utl.arff_operations.ARFFWrapper">
+<em class="property">class </em><code class="descclassname">automl.utl.arff_operations.</code><code class="descname">ARFFWrapper</code><span class="sig-paren">(</span><em>arff_dataset=None</em>, <em>arff_filepath=None</em>, <em>sort_attributes=False</em>, <em>sort_attr_backwards=False</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to perform operations on a ARFF dataset.</p>
+<p>Since performing matrix operations or even data manipulation with ARFF
+datasets in python is not an straightforward operation, we expose this
+wrapper that will perform some of these operations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>arff_dataset</strong> (<em>dict</em>) – The dataset as an ARFF dictionary.
+If <cite>arrff_filepath</cite> is not None, <cite>arff_dataset</cite> is ignored.</li>
+<li><strong>arff_filepath</strong> (<em>str</em>) – The filepath used to load the dataset. <cite>None</cite> if
+is not desired to load from file.</li>
+<li><strong>sort_attributes</strong> (<em>bool</em>) – Wheter or not to sort the columns after loading
+the dataset. Defaults to False.</li>
+<li><strong>sort_attr_backwards</strong> (<em>bool</em>) – If <cite>sort_attributes</cite> is True, this argument
+controls the reverse/natural order of the sorting.
+Defaults to False (non-reverse).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code> – When the dictionary describing the ARFF dataset does not
+contain the official fields: <cite>data</cite>, <cite>relation</cite>, <cite>attributes</cite> and
+<cite>description</cite>.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When the values for each of the official fields in the ARFF
+dataset are not as expected: <cite>list</cite> for <cite>data and `attributes</cite> and
+<cite>str</cite> for <cite>relation</cite> and <cite>description</cite>.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When <cite>arff_dataser</cite> is not a dictionary.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If the path argument is <cite>None</cite> and <cite>arff_dataset</cite> is <cite>None</cite>
+(no dataset passed).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="automl.utl.arff_operations.ARFFWrapper.data">
+<code class="descname">data</code><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <cite>data</cite> field in an ARFF dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.utl.arff_operations.ARFFWrapper.description">
+<code class="descname">description</code><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <cite>description</cite> as in the original ARFF dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.utl.arff_operations.ARFFWrapper.name">
+<code class="descname">name</code><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Corresponds to the <cite>relation</cite> field in the original ARFF
+dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.utl.arff_operations.ARFFWrapper.key_attributes">
+<code class="descname">key_attributes</code><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.key_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>The names for the columns (attributes) in the
+ARFF dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.utl.arff_operations.ARFFWrapper.add_attribute_key">
+<code class="descname">add_attribute_key</code><span class="sig-paren">(</span><em>column=None</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.add_attribute_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an attribute to the list of keys.</p>
+<p>A key is the identifier in the dataset, similar to what we call primary
+key in Databases.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>column</strong> (<em>str</em>) – The column to add as a key in the dataset. Defaults
+to <cite>None</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If column is None or not in the attributes.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.utl.arff_operations.ARFFWrapper.arrf_dict">
+<code class="descname">arrf_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.arrf_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the dataset as an arff dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The resulting ARFF dataset in the form of a dictionary.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.utl.arff_operations.ARFFWrapper.as_numpy_array">
+<code class="descname">as_numpy_array</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.as_numpy_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the data as a numpy array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The dataset as numpy object.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy.array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.utl.arff_operations.ARFFWrapper.as_pandas_df">
+<code class="descname">as_pandas_df</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.as_pandas_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the data as a pandas data frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The data as a pandas dataframe.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.utl.arff_operations.ARFFWrapper.attribute_names">
+<code class="descname">attribute_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.attribute_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list with the names of the attributes/features/columns.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>A list with the names of the attributes, in the order they</dt>
+<dd>appear in the dataset.</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.utl.arff_operations.ARFFWrapper.attribute_types">
+<code class="descname">attribute_types</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.attribute_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list with the attribute types.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>A list with the types of the attributes, in the order they</dt>
+<dd>appear in the dataset.</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.utl.arff_operations.ARFFWrapper.change_attribute_type">
+<code class="descname">change_attribute_type</code><span class="sig-paren">(</span><em>column=None</em>, <em>newtype=None</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.change_attribute_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the dtype of a column.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>column</strong> (<em>str</em><em> or </em><em>int</em>) – The column we want to work with, either its
+name or its index position. Defaults to <cite>None</cite>.</li>
+<li><strong>newtype</strong> (<em>type</em>) – The new type to assign as the column’s dtype.
+Defaults to <cite>None</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When no str or int is used for <cite>column</cite> argument.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – When column is <cite>None</cite>.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">IndexError</span></code> – If column is instance of int and is out of bounds with
+respect to the number of columns (attributes) in the dataset.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.utl.arff_operations.ARFFWrapper.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a copy of this object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.utl.arff_operations.ARFFWrapper.drop_attributes">
+<code class="descname">drop_attributes</code><span class="sig-paren">(</span><em>attributes=None</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.drop_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drop a column (attribute) from the dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>attributes</strong> (<em>bool</em>) – List of attributes to drop off. Defaults to
+<cite>None</cite>.</li>
+<li><strong>inplace</strong> (<em>bool</em>) – Whether to perform the drop inplace or not.
+Defaults to <cite>True</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If an attribute in <cite>attributes</cite> is not part of the
+dataset columns or <cite>None</cite> is passed.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The dataframe after dropping the attribute.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.utl.arff_operations.ARFFWrapper.load_dataset">
+<code class="descname">load_dataset</code><span class="sig-paren">(</span><em>path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.load_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the dataset from a ARFF file.</p>
+<p>It loads the file and validates that the resulting arff dict is valid.
+If a dataset had already been loaded, then this operation overrides it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>str</em>) – The path where the file to load is located. Defaults to</li>
+<li><strong>None.</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code> – When the dictionary describing the ARFF dataset does not
+contain the official fields: <cite>data</cite>, <cite>relation</cite>, <cite>attributes</cite>
+and <cite>description</cite>.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When the values for each of the official fields in the
+ARFF dataset are not as expected: <cite>list</cite> for <cite>data and
+`attributes</cite>, and <cite>str</cite> for <cite>relation</cite> and <cite>description</cite>.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – When the path argument is <cite>None</cite>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.utl.arff_operations.ARFFWrapper.row_by_column_value">
+<code class="descname">row_by_column_value</code><span class="sig-paren">(</span><em>column=None</em>, <em>value=None</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.row_by_column_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the row that satisfies column=value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>column</strong> (<em>str</em>) – The column to query against. Defaults to None.</li>
+<li><strong>value</strong> (<em>object</em>) – The value to search for in the specified column.
+Defaults to None.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If column or value are None.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If column is not an instance of str.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>The row satisfying the search, if any. Empty series</dt>
+<dd><p class="first last">if nothing was found.</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.Series</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.utl.arff_operations.ARFFWrapper.sort_attributes">
+<code class="descname">sort_attributes</code><span class="sig-paren">(</span><em>backwards=False</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.sort_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort the columns in the dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>backwards</strong> (<em>bool</em>) – Whether to apply reverse order or not. Defaults
+to <cite>False</cite>.</li>
+<li><strong>inplace</strong> (<em>bool</em>) – Whether to perform the mutation inplace or not.
+Defaults to <cite>True</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>The self object after changes if inplace was specified</dt>
+<dd><p class="first last">or a copy with the modification otherwise.</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#automl.utl.arff_operations.ARFFWrapper" title="automl.utl.arff_operations.ARFFWrapper">ARFFWrapper</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.utl.arff_operations.ARFFWrapper.sort_rows">
+<code class="descname">sort_rows</code><span class="sig-paren">(</span><em>columns=None</em>, <em>ascending=True</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.sort_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort the rows, similarly to pandas dataframe sorting.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>columns</strong> (<em>list</em>) – Columns (ordered) to sort by.
+Defaults to <cite>None</cite>.</li>
+<li><strong>ascending</strong> (<em>bool</em>) – Whether or not to sort in ascending order.
+Defaults to <cite>True</cite>.</li>
+<li><strong>inplace</strong> (<em>bool</em>) – Whether or not to perform the change in place.
+Defaults to <cite>True</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If a value in <cite>columns</cite> is not part of the dataset or
+<cite>None</cite> is passed.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>The self object if inplace = True. A copy with the</dt>
+<dd><p class="first last">modifications otherwise.</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#automl.utl.arff_operations.ARFFWrapper" title="automl.utl.arff_operations.ARFFWrapper">ARFFWrapper</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.utl.arff_operations.ARFFWrapper.summary">
+<code class="descname">summary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a summary of the dataset.</p>
+<p>It shows basic information: name, description, shape and first 5
+observations.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.utl.arff_operations.ARFFWrapper.values_by_attribute">
+<code class="descname">values_by_attribute</code><span class="sig-paren">(</span><em>column=None</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.values_by_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the data in one column (attribute).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>column</strong> (<em>str</em><em> or </em><em>int</em>) – This is the column we want to retrieve, either
+by its name or its positional index.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The values in the specified column.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">numpy.array</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If column is not int nor str</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If the column is not in the attributes.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.utl.arff_operations.ARFFWrapper.shape">
+<code class="descname">shape</code><a class="headerlink" href="#automl.utl.arff_operations.ARFFWrapper.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a tuple with the shape of the data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">2-tuple with first element being <cite>n</cite> and second <cite>m</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-automl.utl.json_utils">
+<span id="automl-utl-json-utils-module"></span><h2>automl.utl.json_utils module<a class="headerlink" href="#module-automl.utl.json_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="automl.utl.json_utils.check_existence">
+<code class="descclassname">automl.utl.json_utils.</code><code class="descname">check_existence</code><span class="sig-paren">(</span><em>json_name</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.json_utils.check_existence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="automl.utl.json_utils.convert_cs_to_json">
+<code class="descclassname">automl.utl.json_utils.</code><code class="descname">convert_cs_to_json</code><span class="sig-paren">(</span><em>cs</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.json_utils.convert_cs_to_json" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="automl.utl.json_utils.convert_json_to_cs">
+<code class="descclassname">automl.utl.json_utils.</code><code class="descname">convert_json_to_cs</code><span class="sig-paren">(</span><em>json_obj</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.json_utils.convert_json_to_cs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="automl.utl.json_utils.read_json_file_to_json_obj">
+<code class="descclassname">automl.utl.json_utils.</code><code class="descname">read_json_file_to_json_obj</code><span class="sig-paren">(</span><em>json_name</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.json_utils.read_json_file_to_json_obj" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="automl.utl.json_utils.write_cs_to_json_file">
+<code class="descclassname">automl.utl.json_utils.</code><code class="descname">write_cs_to_json_file</code><span class="sig-paren">(</span><em>cs</em>, <em>json_name</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.json_utils.write_cs_to_json_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-automl.utl.miscellaneous">
+<span id="automl-utl-miscellaneous-module"></span><h2>automl.utl.miscellaneous module<a class="headerlink" href="#module-automl.utl.miscellaneous" title="Permalink to this headline">¶</a></h2>
+<p>Module to define useful but no AutoMl-specific methods.</p>
+<dl class="function">
+<dt id="automl.utl.miscellaneous.argsort_list">
+<code class="descclassname">automl.utl.miscellaneous.</code><code class="descname">argsort_list</code><span class="sig-paren">(</span><em>src_list=None</em>, <em>backwards=False</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.miscellaneous.argsort_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the sorted (alphabetically) indices of a src_list.</p>
+<p>Similar to argsort for numpy arrays. It is based on <a class="reference external" href="http://stackoverflow.com/questions/3382352/equivalent-of-numpy-argsort-in-basic-python/3382369#3382369">unutbu’s answer in
+StackOverflow</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>src_list</strong> (<em>list</em>) – The list to sort. Defaults to None.</li>
+<li><strong>backwards</strong> (<em>bool</em>) – Whether or not to do reverse sort. Defaults to False.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The resulting list of indices sorted by value.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="automl.utl.miscellaneous.generate_random_id">
+<code class="descclassname">automl.utl.miscellaneous.</code><code class="descname">generate_random_id</code><span class="sig-paren">(</span><em>n_chars=6</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.utl.miscellaneous.generate_random_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an internal ID of a given length.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n_chars</strong> (<em>int</em>) – The length. Defaults to 6.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The resulting ID.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-automl.utl">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-automl.utl" title="Permalink to this headline">¶</a></h2>
+<p>Module containing utility classes and methods.</p>
+<p>In this library, other code can use the methods/classes defined here. Any piece
+of code in this module must be non-specific for AutoML tasks.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python.html" class="btn btn-neutral float-right" title="Python basics to understand the tool" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="automl.metalearning.metafeatures.html" class="btn btn-neutral" title="automl.metalearning.metafeatures package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Achmea.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0-beta',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

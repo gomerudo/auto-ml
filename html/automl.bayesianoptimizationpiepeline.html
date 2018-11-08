@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>automl.bayesianoptimizationpiepeline package &mdash; auto-ml 1.0-beta documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="automl.createconfigspacepipeline package" href="automl.createconfigspacepipeline.html" />
+    <link rel="prev" title="automl package" href="automl.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> auto-ml
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="nutshell.html">AutoML in a nutshell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto.html">Using the tool</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="automl.html">automl package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="automl.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">automl.bayesianoptimizationpiepeline package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.createconfigspacepipeline.html">automl.createconfigspacepipeline package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.datahandler.html">automl.datahandler package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.discovery.html">automl.discovery package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.errors.html">automl.errors package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.metalearning.html">automl.metalearning package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.utl.html">automl.utl package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#module-automl.globalvars">automl.globalvars module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#module-automl">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python basics to understand the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">auto-ml</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">automl</a> &raquo;</li>
+        
+          <li><a href="automl.html">automl package</a> &raquo;</li>
+        
+      <li>automl.bayesianoptimizationpiepeline package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/automl.bayesianoptimizationpiepeline.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="automl-bayesianoptimizationpiepeline-package">
+<h1>automl.bayesianoptimizationpiepeline package<a class="headerlink" href="#automl-bayesianoptimizationpiepeline-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-automl.bayesianoptimizationpiepeline.base">
+<span id="automl-bayesianoptimizationpiepeline-base-module"></span><h2>automl.bayesianoptimizationpiepeline.base module<a class="headerlink" href="#module-automl.bayesianoptimizationpiepeline.base" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline">
+<em class="property">class </em><code class="descclassname">automl.bayesianoptimizationpiepeline.base.</code><code class="descname">BayesianOptimizationPipeline</code><span class="sig-paren">(</span><em>dataset=None</em>, <em>pipeline=None</em>, <em>optimize_on='quality'</em>, <em>cutoff_time=600</em>, <em>iteration=15</em>, <em>scoring=None</em>, <em>cv=5</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class deals with the optimization of the hyperparameter of the pipeline.</p>
+<p>This class makes use of SMAC3 library which uses the bayesian optimization technique to optimize the hyperparameter
+of the input pipeline.</p>
+<dl class="method">
+<dt id="automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.get_optimized_pipeline">
+<code class="descname">get_optimized_pipeline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.get_optimized_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.get_optimized_score">
+<code class="descname">get_optimized_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.get_optimized_score" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.optimize_pipeline">
+<code class="descname">optimize_pipeline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.optimize_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is used to initialize the optimization process.</p>
+<p>This function creates a function which consist of the input pipeline which is evaluated based on various
+hyperparameter setting provided by the bayesian optimization technique.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The optimized test score.
+Pipeline: The pipeline with optimized hyperparameter.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-automl.bayesianoptimizationpiepeline">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-automl.bayesianoptimizationpiepeline" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="automl.createconfigspacepipeline.html" class="btn btn-neutral float-right" title="automl.createconfigspacepipeline package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="automl.html" class="btn btn-neutral" title="automl package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Achmea.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0-beta',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,1 +1,0 @@
-{"hyperparameters": [{"name": "n_components", "type": "uniform_float", "log": false, "lower": 0.5, "upper": 0.9999, "default": 0.9999}, {"name": "whiten", "type": "categorical", "choices": ["False", "True"], "default": "False"}], "conditions": [], "forbiddens": [], "python_module_version": "0.4.7", "json_format_version": 0.1}

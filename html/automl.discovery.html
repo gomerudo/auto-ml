@@ -1,0 +1,645 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>automl.discovery package &mdash; auto-ml 1.0-beta documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="automl.errors package" href="automl.errors.html" />
+    <link rel="prev" title="automl.datahandler package" href="automl.datahandler.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> auto-ml
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="nutshell.html">AutoML in a nutshell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto.html">Using the tool</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="automl.html">automl package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="automl.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="automl.bayesianoptimizationpiepeline.html">automl.bayesianoptimizationpiepeline package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.createconfigspacepipeline.html">automl.createconfigspacepipeline package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.datahandler.html">automl.datahandler package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">automl.discovery package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.errors.html">automl.errors package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.metalearning.html">automl.metalearning package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.utl.html">automl.utl package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#module-automl.globalvars">automl.globalvars module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#module-automl">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python basics to understand the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">auto-ml</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">automl</a> &raquo;</li>
+        
+          <li><a href="automl.html">automl package</a> &raquo;</li>
+        
+      <li>automl.discovery package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/automl.discovery.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="automl-discovery-package">
+<h1>automl.discovery package<a class="headerlink" href="#automl-discovery-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-automl.discovery.assistant">
+<span id="automl-discovery-assistant-module"></span><h2>automl.discovery.assistant module<a class="headerlink" href="#module-automl.discovery.assistant" title="Permalink to this headline">¶</a></h2>
+<p>Module containing the classes to allow for easy discovery.</p>
+<dl class="class">
+<dt id="automl.discovery.assistant.Assistant">
+<em class="property">class </em><code class="descclassname">automl.discovery.assistant.</code><code class="descname">Assistant</code><span class="sig-paren">(</span><em>dataset=None</em>, <em>metalearning_metric='accuracy'</em>, <em>evaluation_metric='accuracy'</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.discovery.assistant.Assistant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Provide methods to return AutoML results.</p>
+<p>This class can compute the metafeatures, similar datasets and discover
+pipelines. For this, a metric and a dataset are required.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dataset</strong> (<a class="reference internal" href="automl.datahandler.html#automl.datahandler.dataloader.Dataset" title="automl.datahandler.dataloader.Dataset"><em>Dataset</em></a>) – A dataset object to work with. Defaults to None.</li>
+<li><strong>metalearning_metric</strong> – A metric in the metalearning database to use if
+similar datasets want to be retrieved. Defatuls to ‘accuracy’.</li>
+<li><strong>evaluation_metric</strong> (<em>string</em><em> or </em><em>callable</em>) – A metric to evalate the
+pipeline with. Defaults to ‘accuracy’.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="automl.discovery.assistant.Assistant.dataset">
+<code class="descname">dataset</code><a class="headerlink" href="#automl.discovery.assistant.Assistant.dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dataset object to work with.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="automl.datahandler.html#automl.datahandler.dataloader.Dataset" title="automl.datahandler.dataloader.Dataset">Dataset</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.discovery.assistant.Assistant.metalearning_metric">
+<code class="descname">metalearning_metric</code><a class="headerlink" href="#automl.discovery.assistant.Assistant.metalearning_metric" title="Permalink to this definition">¶</a></dt>
+<dd><p>A metric in the metalearning database to use if
+similar datasets want to be retrieved.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.discovery.assistant.Assistant.evaluation_metric">
+<code class="descname">evaluation_metric</code><a class="headerlink" href="#automl.discovery.assistant.Assistant.evaluation_metric" title="Permalink to this definition">¶</a></dt>
+<dd><p>A metric to evalate the
+pipeline with.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string or callable</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.discovery.assistant.Assistant.compute_similar_datasets">
+<code class="descname">compute_similar_datasets</code><span class="sig-paren">(</span><em>k=5</em>, <em>similarity_metric='minkowski'</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.discovery.assistant.Assistant.compute_similar_datasets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the similar datasets based on the dataset’s metafeatures.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>k</strong> (<em>int</em>) – The number of similar datasets to retrieve. Defaults to 5.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">List of neighbors ordered by similarity.
+list: List of the metrics for each of the neighbors.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.discovery.assistant.Assistant.generate_pipeline">
+<code class="descname">generate_pipeline</code><span class="sig-paren">(</span><em>ignore_similar_datasets=False</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.discovery.assistant.Assistant.generate_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatically generate a pipeline using the dataset and metric.</p>
+<p>If the similar datasets have been already been computed and the default
+value of ignore_similar_datasets is kept, then the search space of
+classifiers is reduced to the suggestions for the similar datasets.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ignore_similar_datasets</strong> (<em>bool</em>) – Whether to ignore the suggested
+models for the similar datasets or not. Defaults to False.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>The PipelineDiscoverObject used to find out the</dt>
+<dd>dataset.</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#automl.discovery.pipeline_generation.PipelineDiscovery" title="automl.discovery.pipeline_generation.PipelineDiscovery">PipelineDiscovery</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.discovery.assistant.Assistant.optimize">
+<code class="descname">optimize</code><span class="sig-paren">(</span><em>pipeline=None</em>, <em>optimize_on='quality'</em>, <em>iteration=20</em>, <em>cutoff_time=600</em>, <em>scoring=None</em>, <em>cv=5</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.discovery.assistant.Assistant.optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optimize a pipeline using Bayesian optimization.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pipeline</strong> (<em>Pipeline</em>) – A pipeline to use. If None, we try to use the
+last auto generated pipeline.</li>
+<li><strong>optimize_on</strong> (<em>string</em>) – Optimization parameter that takes input
+either “quality” or “runtime”. The pipeline
+can either be optimized based on quality (performance metric)
+or runtime (time required to complete the bayesian optimization
+process). Defaults to “quality”.</li>
+<li><strong>cutoff_time</strong> (<em>int</em>) – This hyperparameter is only used when
+“optimize_on” hyperparameter is set to “runtime”. Maximum time
+limit in seconds after which the bayesian optimization process
+stops and best result is given as output. Defaults to 600.</li>
+<li><strong>iteration</strong> (<em>int</em>) – Number of iteration the bayesian optimization
+process will take. More number of iterations gives better
+results but increases the execution time. Defaults to 7.</li>
+<li><strong>scoring</strong> (<em>string</em><em> or </em><em>callable</em>) – The performance metric on which the
+pipeline is supposed to be optimized. Defaults to None.</li>
+<li><strong>cv</strong> (<em>int</em>) – Specifies the number of folds in a (Stratified)KFold.
+Defaults to 5.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if no pipeline has been specified nor found.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the object used for optimization.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="automl.bayesianoptimizationpiepeline.html#automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline" title="automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline">BayesianOptimizationPipeline</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.discovery.assistant.Assistant.metafeatures">
+<code class="descname">metafeatures</code><a class="headerlink" href="#automl.discovery.assistant.Assistant.metafeatures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the metafeatures for the dataset attribute of the class.</p>
+<dl class="docutils">
+<dt>Returns</dt>
+<dd><dl class="first last docutils">
+<dt>numpy.array: The metafeatures computed in the form of an array.</dt>
+<dd>They are sorted alphabetically by its name.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.discovery.assistant.Assistant.reduced_search_space">
+<code class="descname">reduced_search_space</code><a class="headerlink" href="#automl.discovery.assistant.Assistant.reduced_search_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the reduced search space based on the similar datasets.</p>
+<p>The similar datasets should have been computed already. AutoMLError is
+thrown if no neighbors have been computed yet.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of MLSuggestions.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.discovery.assistant.Assistant.similar_datasets">
+<code class="descname">similar_datasets</code><a class="headerlink" href="#automl.discovery.assistant.Assistant.similar_datasets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the similar datasets, without recomputing.</p>
+<p>AutoMLError is thrown if no neighbors have been computed yet.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>A 2-tuple where the first element is the set of similar</dt>
+<dd>datasets and the second is the metric (distance) between our
+dataset and the similar ones.</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-automl.discovery.pipeline_generation">
+<span id="automl-discovery-pipeline-generation-module"></span><h2>automl.discovery.pipeline_generation module<a class="headerlink" href="#module-automl.discovery.pipeline_generation" title="Permalink to this headline">¶</a></h2>
+<p>Module defining the functionality to generate a pipeline using TPOT GP.</p>
+<dl class="class">
+<dt id="automl.discovery.pipeline_generation.PipelineDiscovery">
+<em class="property">class </em><code class="descclassname">automl.discovery.pipeline_generation.</code><code class="descname">PipelineDiscovery</code><span class="sig-paren">(</span><em>dataset=None</em>, <em>search_space='scikit-learn'</em>, <em>tpot_params=None</em>, <em>evaluation_metric='accuracy'</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.discovery.pipeline_generation.PipelineDiscovery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Discover a pipeline for a given dataset, using a given metric.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dataset</strong> (<a class="reference internal" href="automl.datahandler.html#automl.datahandler.dataloader.Dataset" title="automl.datahandler.dataloader.Dataset"><em>Dataset</em></a>) – The dataset to work with. Defaults to None.</li>
+<li><strong>search_space</strong> (<em>str</em><em> or </em><em>dict</em>) – The search space to use for the discovery
+operation. If string, it should be any of the following:
+‘scikit-learn’. If dict, it must comply with the TPOT config_dict
+format. Defaults to ‘scikit-learn’.</li>
+<li><strong>tpot_params</strong> (<em>dict</em>) – The extra parameters to pass to the TPOT object
+(either a TPOTClassifier or a TPOTRegressor). Defaults to None.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If any of the arguments do not satisfies the type
+constraints described above.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="automl.discovery.pipeline_generation.PipelineDiscovery.dataset">
+<code class="descname">dataset</code><a class="headerlink" href="#automl.discovery.pipeline_generation.PipelineDiscovery.dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dataset to work with.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="automl.datahandler.html#automl.datahandler.dataloader.Dataset" title="automl.datahandler.dataloader.Dataset">Dataset</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.discovery.pipeline_generation.PipelineDiscovery.search_space">
+<code class="descname">search_space</code><a class="headerlink" href="#automl.discovery.pipeline_generation.PipelineDiscovery.search_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>The search space to use for the discovery
+operation. If string, it should be any of the following:
+‘scikit-learn’. If dict, it must comply with the TPOT config_dict
+format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str or dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.discovery.pipeline_generation.PipelineDiscovery.validation_score">
+<code class="descname">validation_score</code><a class="headerlink" href="#automl.discovery.pipeline_generation.PipelineDiscovery.validation_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>The extra parameters to pass to the TPOT
+object (either a TPOTClassifier or a TPOTRegressor).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.discovery.pipeline_generation.PipelineDiscovery.discover">
+<code class="descname">discover</code><span class="sig-paren">(</span><em>limit_time=None</em>, <em>random_state=42</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.discovery.pipeline_generation.PipelineDiscovery.discover" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the discovery of a pipeline.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>limit_time</strong> (<em>int</em>) – In minutes, the maximum time to wait for the
+generation of the pipeline. If None, ignored.</li>
+<li><strong>random_state</strong> (<em>int</em>) – The number to seed the random state with.
+Defaults to 42.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The resulting pipeline.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">sklearn.pipeline.Pipeline</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.discovery.pipeline_generation.PipelineDiscovery.save_pipeline">
+<code class="descname">save_pipeline</code><span class="sig-paren">(</span><em>target_dir=None</em>, <em>file_name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.discovery.pipeline_generation.PipelineDiscovery.save_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the discovered pipeline into a file, as python code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>target_dir</strong> (<em>string</em>) – If not none, use it as parent dir for the
+resulting file. Defaults to None.</li>
+<li><strong>file_name</strong> (<em>string</em>) – The name to use for the resulting file.
+Defaults to None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.discovery.pipeline_generation.PipelineDiscovery.score">
+<code class="descname">score</code><span class="sig-paren">(</span><em>x_val</em>, <em>y_val</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.discovery.pipeline_generation.PipelineDiscovery.score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Score a validation set against the discovered pipeline.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x_val</strong> (<em>numpy.array</em>) – The validation set for the features.</li>
+<li><strong>y_val</strong> (<em>numpy.array</em>) – The validation set for the target.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The score given by the pipeline for the passed set.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.discovery.pipeline_generation.PipelineDiscovery.pipeline">
+<code class="descname">pipeline</code><a class="headerlink" href="#automl.discovery.pipeline_generation.PipelineDiscovery.pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the resulting pipeline from the discovery process.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The discovered pipeline if any.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">sklearn.pipeline.Pipeline</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.discovery.pipeline_generation.PipelineDiscovery.tpot_object">
+<code class="descname">tpot_object</code><a class="headerlink" href="#automl.discovery.pipeline_generation.PipelineDiscovery.tpot_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the TPOT object used in the discovery process.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The TPOTBase class (TPOTClassifier or TPOTRegressor).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">TPOTBase</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-automl.discovery">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-automl.discovery" title="Permalink to this headline">¶</a></h2>
+<p>Provide the classes to perform automated discovery of pipelines.</p>
+<p>The discovery module is able to discover pipelines from scratch or based on a
+restricted Search Space (set of MLSuggestion objects) that come from a query of
+similar datasets to a given one.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="automl.errors.html" class="btn btn-neutral float-right" title="automl.errors package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="automl.datahandler.html" class="btn btn-neutral" title="automl.datahandler package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Achmea.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0-beta',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

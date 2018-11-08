@@ -1,0 +1,391 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How to use the tool &mdash; auto-ml 1.0-beta documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="automl" href="modules.html" />
+    <link rel="prev" title="Installing the tool" href="install.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> auto-ml
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="nutshell.html">AutoML in a nutshell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing the tool</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using the tool</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#build-a-dataset-object-from-an-openml-dataset">Build a Dataset object from an OpenML dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-a-dataset-object-from-a-pandas-data-frame">Build a Dataset object from a pandas data frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#get-similar-datasets-based-on-a-valid-meta-learning-metric">Get similar datasets, based on a valid meta-learning metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#query-the-reduced-search-space-based-on-the-similar-datasets">Query the reduced search space, based on the similar datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#discover-a-pipeline-using-the-reduced-search-space">Discover a Pipeline using the reduced search space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#discover-a-pipeline-from-scratch">Discover a pipeline from scratch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optimize-a-pipeline-with-bayesian-optimization">Optimize a pipeline with Bayesian Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optimize-any-pipeline-using-bayesian-optimization">Optimize any pipeline using Bayesian Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python basics to understand the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">auto-ml</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>How to use the tool</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/howto.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-use-the-tool">
+<h1>How to use the tool<a class="headerlink" href="#how-to-use-the-tool" title="Permalink to this headline">¶</a></h1>
+<p>There are different use cases that can be handled from the tool. Here, we
+present the ones we think are the most important and helpful to the Data
+Scientist.</p>
+<div class="section" id="build-a-dataset-object-from-an-openml-dataset">
+<h2>Build a Dataset object from an OpenML dataset<a class="headerlink" href="#build-a-dataset-object-from-an-openml-dataset" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate" id="get-openml-dataset"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">automl.datahandler.dataloader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+
+ <span class="c1"># Download OpenML dataset 179, and consider it for classification (0)</span>
+ <span class="n">dataset</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="o">.</span><span class="n">get_openml_dataset</span><span class="p">(</span><span class="n">openml_id</span><span class="o">=</span><span class="mi">179</span><span class="p">,</span> <span class="n">problem_type</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-a-dataset-object-from-a-pandas-data-frame">
+<h2>Build a Dataset object from a pandas data frame<a class="headerlink" href="#build-a-dataset-object-from-a-pandas-data-frame" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate" id="build-dataset"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">automl.datahandler.dataloader</span> <span class="kn">import</span> <span class="n">Dataset</span>
+
+ <span class="n">features_df</span><span class="p">,</span> <span class="n">target_df</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Some data frames</span>
+
+ <span class="n">data</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span>
+     <span class="n">dataset_id</span><span class="o">=</span><span class="s2">&quot;test-dataset&quot;</span><span class="p">,</span>
+     <span class="n">X</span><span class="o">=</span><span class="n">features_df</span><span class="p">,</span>
+     <span class="n">y</span><span class="o">=</span><span class="n">target_df</span><span class="p">,</span>
+     <span class="n">problem_type</span><span class="o">=</span><span class="mi">0</span>  <span class="c1"># Problem type for classification</span>
+ <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-similar-datasets-based-on-a-valid-meta-learning-metric">
+<h2>Get similar datasets, based on a valid meta-learning metric<a class="headerlink" href="#get-similar-datasets-based-on-a-valid-meta-learning-metric" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate" id="metalearning-hints"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">automl.datahandler.dataloader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+ <span class="kn">from</span> <span class="nn">automl.discovery.assistant</span> <span class="kn">import</span> <span class="n">Assistant</span>
+
+ <span class="n">dataset</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="o">.</span><span class="n">get_openml_dataset</span><span class="p">(</span><span class="n">openml_id</span><span class="o">=</span><span class="mi">179</span><span class="p">,</span> <span class="n">problem_type</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+ <span class="c1"># start assistant</span>
+ <span class="n">assistant</span> <span class="o">=</span> <span class="n">Assistant</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+                       <span class="n">metalearning_metric</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+
+ <span class="c1"># Compute similar datasets</span>
+ <span class="n">datasets</span><span class="p">,</span> <span class="n">distances</span> <span class="o">=</span> <span class="n">assistant</span><span class="o">.</span><span class="n">compute_similar_datasets</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="query-the-reduced-search-space-based-on-the-similar-datasets">
+<h2>Query the reduced search space, based on the similar datasets<a class="headerlink" href="#query-the-reduced-search-space-based-on-the-similar-datasets" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate" id="reduced-searchspace"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">automl.datahandler.dataloader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+ <span class="kn">from</span> <span class="nn">automl.discovery.assistant</span> <span class="kn">import</span> <span class="n">Assistant</span>
+
+ <span class="n">dataset</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="o">.</span><span class="n">get_openml_dataset</span><span class="p">(</span><span class="n">openml_id</span><span class="o">=</span><span class="mi">179</span><span class="p">,</span> <span class="n">problem_type</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+ <span class="c1"># start assistant</span>
+ <span class="n">assistant</span> <span class="o">=</span> <span class="n">Assistant</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+                       <span class="n">metalearning_metric</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+
+ <span class="c1"># Compute similar datasets</span>
+ <span class="n">assistant</span><span class="o">.</span><span class="n">compute_similar_datasets</span><span class="p">()</span>
+ <span class="n">reduced_ss</span> <span class="o">=</span> <span class="n">assistant</span><span class="o">.</span><span class="n">reduced_search_space</span>
+
+ <span class="c1"># Get the reduced search space</span>
+ <span class="n">classifiers</span> <span class="o">=</span> <span class="n">reduced_search_space</span><span class="o">.</span><span class="n">classifiers</span>
+ <span class="n">encoders</span> <span class="o">=</span> <span class="n">reduced_search_space</span><span class="o">.</span><span class="n">encoders</span>
+ <span class="n">scalers</span> <span class="o">=</span> <span class="n">reduced_search_space</span><span class="o">.</span><span class="n">rescalers</span>
+ <span class="n">preprocessors</span> <span class="o">=</span> <span class="n">reduced_search_space</span><span class="o">.</span><span class="n">preprocessors</span>
+ <span class="n">imputations</span> <span class="o">=</span> <span class="n">reduced_search_space</span><span class="o">.</span><span class="n">imputations</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="discover-a-pipeline-using-the-reduced-search-space">
+<h2>Discover a Pipeline using the reduced search space<a class="headerlink" href="#discover-a-pipeline-using-the-reduced-search-space" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate" id="pipeline-reduced"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">automl.datahandler.dataloader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+ <span class="kn">from</span> <span class="nn">automl.discovery.assistant</span> <span class="kn">import</span> <span class="n">Assistant</span>
+
+ <span class="n">dataset</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="o">.</span><span class="n">get_openml_dataset</span><span class="p">(</span><span class="n">openml_id</span><span class="o">=</span><span class="mi">179</span><span class="p">,</span> <span class="n">problem_type</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+ <span class="c1"># start assistant</span>
+ <span class="n">assistant</span> <span class="o">=</span> <span class="n">Assistant</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+                       <span class="n">metalearning_metric</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span>
+                       <span class="n">evaluation_metric</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+
+ <span class="c1"># Compute similar datasets</span>
+ <span class="n">assistant</span><span class="o">.</span><span class="n">compute_similar_datasets</span><span class="p">()</span>
+
+ <span class="n">pipeline_obj</span> <span class="o">=</span> <span class="n">assistant</span><span class="o">.</span><span class="n">generate_pipeline</span><span class="p">()</span>
+ <span class="n">pipeline_obj</span><span class="o">.</span><span class="n">save_pipeline</span><span class="p">(</span><span class="n">target_dir</span><span class="o">=</span><span class="s2">&quot;results&quot;</span><span class="p">)</span>
+
+ <span class="c1"># Get the scikit-learn pipeline object</span>
+ <span class="n">sklearn_pipeline</span> <span class="o">=</span> <span class="n">pipeline_obj</span><span class="o">.</span><span class="n">pipeline</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="discover-a-pipeline-from-scratch">
+<h2>Discover a pipeline from scratch<a class="headerlink" href="#discover-a-pipeline-from-scratch" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate" id="pipeline-scratch"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">automl.datahandler.dataloader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+ <span class="kn">from</span> <span class="nn">automl.discovery.assistant</span> <span class="kn">import</span> <span class="n">Assistant</span>
+
+ <span class="n">dataset</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="o">.</span><span class="n">get_openml_dataset</span><span class="p">(</span><span class="n">openml_id</span><span class="o">=</span><span class="mi">179</span><span class="p">,</span> <span class="n">problem_type</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+ <span class="c1"># start assistant</span>
+ <span class="n">assistant</span> <span class="o">=</span> <span class="n">Assistant</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+                       <span class="n">metalearning_metric</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span>
+                       <span class="n">evaluation_metric</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+
+ <span class="n">pipeline_obj</span> <span class="o">=</span> <span class="n">assistant</span><span class="o">.</span><span class="n">generate_pipeline</span><span class="p">()</span>
+ <span class="n">pipeline_obj</span><span class="o">.</span><span class="n">save_pipeline</span><span class="p">(</span><span class="n">target_dir</span><span class="o">=</span><span class="s2">&quot;results&quot;</span><span class="p">)</span>
+
+ <span class="c1"># Get the scikit-learn pipeline object</span>
+ <span class="n">sklearn_pipeline</span> <span class="o">=</span> <span class="n">pipeline_obj</span><span class="o">.</span><span class="n">pipeline</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="optimize-a-pipeline-with-bayesian-optimization">
+<h2>Optimize a pipeline with Bayesian Optimization<a class="headerlink" href="#optimize-a-pipeline-with-bayesian-optimization" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate" id="bayesian-full"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">automl.datahandler.dataloader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+ <span class="kn">from</span> <span class="nn">automl.discovery.assistant</span> <span class="kn">import</span> <span class="n">Assistant</span>
+
+ <span class="n">dataset</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="o">.</span><span class="n">get_openml_dataset</span><span class="p">(</span><span class="n">openml_id</span><span class="o">=</span><span class="mi">179</span><span class="p">,</span> <span class="n">problem_type</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+ <span class="c1"># start assistant</span>
+ <span class="n">assistant</span> <span class="o">=</span> <span class="n">Assistant</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+                       <span class="n">metalearning_metric</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span>
+                       <span class="n">evaluation_metric</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+
+ <span class="c1"># Compute similar datasets</span>
+ <span class="n">assistant</span><span class="o">.</span><span class="n">compute_similar_datasets</span><span class="p">()</span>
+
+ <span class="n">pipeline_obj</span> <span class="o">=</span> <span class="n">assistant</span><span class="o">.</span><span class="n">generate_pipeline</span><span class="p">()</span>
+ <span class="n">pipeline_obj</span><span class="o">.</span><span class="n">save_pipeline</span><span class="p">(</span><span class="n">target_dir</span><span class="o">=</span><span class="s2">&quot;results&quot;</span><span class="p">)</span>
+
+ <span class="c1"># Get the scikit-learn pipeline object</span>
+ <span class="n">sklearn_pipeline</span> <span class="o">=</span> <span class="n">pipeline_obj</span><span class="o">.</span><span class="n">pipeline</span>
+
+ <span class="c1"># Run the optimizer</span>
+ <span class="n">assistant</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="optimize-any-pipeline-using-bayesian-optimization">
+<h2>Optimize any pipeline using Bayesian Optimization<a class="headerlink" href="#optimize-any-pipeline-using-bayesian-optimization" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate" id="bayesian-only"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">automl.datahandler.dataloader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+ <span class="kn">from</span> <span class="nn">automl.discovery.assistant</span> <span class="kn">import</span> <span class="n">Assistant</span>
+
+ <span class="n">dataset</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="o">.</span><span class="n">get_openml_dataset</span><span class="p">(</span><span class="n">openml_id</span><span class="o">=</span><span class="mi">179</span><span class="p">,</span> <span class="n">problem_type</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+ <span class="c1"># start assistant</span>
+ <span class="n">assistant</span> <span class="o">=</span> <span class="n">Assistant</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">evaluation_metric</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+
+ <span class="c1"># Get the scikit-learn pipeline object</span>
+ <span class="n">my_pipeline</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># A pipeline</span>
+
+ <span class="c1"># Run the optimizer</span>
+ <span class="n">assistant</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">my_pipeline</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="modules.html" class="btn btn-neutral float-right" title="automl" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="install.html" class="btn btn-neutral" title="Installing the tool" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Achmea.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0-beta',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

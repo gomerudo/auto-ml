@@ -1,0 +1,665 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>automl.metalearning.metafeatures package &mdash; auto-ml 1.0-beta documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="automl.utl package" href="automl.utl.html" />
+    <link rel="prev" title="automl.metalearning.database package" href="automl.metalearning.database.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> auto-ml
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="nutshell.html">AutoML in a nutshell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto.html">Using the tool</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="automl.html">automl package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="automl.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="automl.bayesianoptimizationpiepeline.html">automl.bayesianoptimizationpiepeline package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.createconfigspacepipeline.html">automl.createconfigspacepipeline package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.datahandler.html">automl.datahandler package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.discovery.html">automl.discovery package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.errors.html">automl.errors package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="automl.metalearning.html">automl.metalearning package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.utl.html">automl.utl package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#module-automl.globalvars">automl.globalvars module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#module-automl">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python basics to understand the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">auto-ml</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">automl</a> &raquo;</li>
+        
+          <li><a href="automl.html">automl package</a> &raquo;</li>
+        
+          <li><a href="automl.metalearning.html">automl.metalearning package</a> &raquo;</li>
+        
+      <li>automl.metalearning.metafeatures package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/automl.metalearning.metafeatures.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="automl-metalearning-metafeatures-package">
+<h1>automl.metalearning.metafeatures package<a class="headerlink" href="#automl-metalearning-metafeatures-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-automl.metalearning.metafeatures.computation">
+<span id="automl-metalearning-metafeatures-computation-module"></span><h2>automl.metalearning.metafeatures.computation module<a class="headerlink" href="#module-automl.metalearning.metafeatures.computation" title="Permalink to this headline">¶</a></h2>
+<p>Module that exposes the classes to compute statistics on a dataset.</p>
+<dl class="class">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation">
+<em class="property">class </em><code class="descclassname">automl.metalearning.metafeatures.computation.</code><code class="descname">StatisticalInformation</code><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Compute statistics on a dataset.</p>
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.class_entropy">
+<em class="property">static </em><code class="descname">class_entropy</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.class_entropy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.class_ocurrences">
+<em class="property">static </em><code class="descname">class_ocurrences</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.class_ocurrences" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.class_probability_max">
+<em class="property">static </em><code class="descname">class_probability_max</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.class_probability_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.class_probability_mean">
+<em class="property">static </em><code class="descname">class_probability_mean</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.class_probability_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.class_probability_min">
+<em class="property">static </em><code class="descname">class_probability_min</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.class_probability_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.class_probability_std">
+<em class="property">static </em><code class="descname">class_probability_std</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.class_probability_std" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.dataset_ratio">
+<em class="property">static </em><code class="descname">dataset_ratio</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.dataset_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.inverse_dataset_ratio">
+<em class="property">static </em><code class="descname">inverse_dataset_ratio</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.inverse_dataset_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.kurtosis_max">
+<em class="property">static </em><code class="descname">kurtosis_max</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.kurtosis_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.kurtosis_mean">
+<em class="property">static </em><code class="descname">kurtosis_mean</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.kurtosis_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.kurtosis_min">
+<em class="property">static </em><code class="descname">kurtosis_min</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.kurtosis_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.kurtosis_std">
+<em class="property">static </em><code class="descname">kurtosis_std</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.kurtosis_std" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.kurtosisses">
+<em class="property">static </em><code class="descname">kurtosisses</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.kurtosisses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.landmark_1NN">
+<em class="property">static </em><code class="descname">landmark_1NN</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.landmark_1NN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.landmark_decision_node_learner">
+<em class="property">static </em><code class="descname">landmark_decision_node_learner</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.landmark_decision_node_learner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.landmark_decision_tree">
+<em class="property">static </em><code class="descname">landmark_decision_tree</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.landmark_decision_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.landmark_lda">
+<em class="property">static </em><code class="descname">landmark_lda</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.landmark_lda" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.landmark_naive_bayes">
+<em class="property">static </em><code class="descname">landmark_naive_bayes</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.landmark_naive_bayes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.landmark_random_node_learner">
+<em class="property">static </em><code class="descname">landmark_random_node_learner</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.landmark_random_node_learner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.log_dataset_ratio">
+<em class="property">static </em><code class="descname">log_dataset_ratio</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.log_dataset_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.log_inverse_dataset_ratio">
+<em class="property">static </em><code class="descname">log_inverse_dataset_ratio</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.log_inverse_dataset_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.log_number_of_features">
+<em class="property">static </em><code class="descname">log_number_of_features</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.log_number_of_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.log_number_of_instances">
+<em class="property">static </em><code class="descname">log_number_of_instances</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.log_number_of_instances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.missing_values">
+<em class="property">static </em><code class="descname">missing_values</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.missing_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_categorical_features">
+<em class="property">static </em><code class="descname">number_of_categorical_features</code><span class="sig-paren">(</span><em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_categorical_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_classes">
+<em class="property">static </em><code class="descname">number_of_classes</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_classes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_features">
+<em class="property">static </em><code class="descname">number_of_features</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_features_with_na">
+<em class="property">static </em><code class="descname">number_of_features_with_na</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_features_with_na" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_instances">
+<em class="property">static </em><code class="descname">number_of_instances</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_instances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_instances_with_na">
+<em class="property">static </em><code class="descname">number_of_instances_with_na</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_instances_with_na" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_missing_values">
+<em class="property">static </em><code class="descname">number_of_missing_values</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_missing_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_numeric_features">
+<em class="property">static </em><code class="descname">number_of_numeric_features</code><span class="sig-paren">(</span><em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_numeric_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_symbols">
+<em class="property">static </em><code class="descname">number_of_symbols</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.number_of_symbols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.pca">
+<em class="property">static </em><code class="descname">pca</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.pca" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.pca_fraction_components_95v">
+<em class="property">static </em><code class="descname">pca_fraction_components_95v</code><span class="sig-paren">(</span><em>X</em>, <em>pca=None</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.pca_fraction_components_95v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.pca_kurtosis_first_pc">
+<em class="property">static </em><code class="descname">pca_kurtosis_first_pc</code><span class="sig-paren">(</span><em>X</em>, <em>pca=None</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.pca_kurtosis_first_pc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.pca_skewness_first_pc">
+<em class="property">static </em><code class="descname">pca_skewness_first_pc</code><span class="sig-paren">(</span><em>X</em>, <em>pca=None</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.pca_skewness_first_pc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.percentage_of_features_with_na">
+<em class="property">static </em><code class="descname">percentage_of_features_with_na</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.percentage_of_features_with_na" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.percentage_of_instances_with_na">
+<em class="property">static </em><code class="descname">percentage_of_instances_with_na</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.percentage_of_instances_with_na" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.percentage_of_missing_values">
+<em class="property">static </em><code class="descname">percentage_of_missing_values</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.percentage_of_missing_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.ratio_nominal_numerical">
+<em class="property">static </em><code class="descname">ratio_nominal_numerical</code><span class="sig-paren">(</span><em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.ratio_nominal_numerical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.ratio_numerical_nominal">
+<em class="property">static </em><code class="descname">ratio_numerical_nominal</code><span class="sig-paren">(</span><em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.ratio_numerical_nominal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.skewness_max">
+<em class="property">static </em><code class="descname">skewness_max</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.skewness_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.skewness_mean">
+<em class="property">static </em><code class="descname">skewness_mean</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.skewness_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.skewness_min">
+<em class="property">static </em><code class="descname">skewness_min</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.skewness_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.skewness_std">
+<em class="property">static </em><code class="descname">skewness_std</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.skewness_std" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.skewnesses">
+<em class="property">static </em><code class="descname">skewnesses</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.skewnesses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.symbols_max">
+<em class="property">static </em><code class="descname">symbols_max</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.symbols_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.symbols_mean">
+<em class="property">static </em><code class="descname">symbols_mean</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.symbols_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.symbols_min">
+<em class="property">static </em><code class="descname">symbols_min</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.symbols_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.symbols_std">
+<em class="property">static </em><code class="descname">symbols_std</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.symbols_std" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.metafeatures.computation.StatisticalInformation.symbols_sum">
+<em class="property">static </em><code class="descname">symbols_sum</code><span class="sig-paren">(</span><em>X</em>, <em>categorical_indicators</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.computation.StatisticalInformation.symbols_sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistic.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-automl.metalearning.metafeatures.metafeatures_interaction">
+<span id="automl-metalearning-metafeatures-metafeatures-interaction-module"></span><h2>automl.metalearning.metafeatures.metafeatures_interaction module<a class="headerlink" href="#module-automl.metalearning.metafeatures.metafeatures_interaction" title="Permalink to this headline">¶</a></h2>
+<p>Module intented to expose the classes to provide dataset metafeatures.</p>
+<p>This module includes the global variables to refer the meta-features.</p>
+<dl class="class">
+<dt id="automl.metalearning.metafeatures.metafeatures_interaction.MetaFeaturesManager">
+<em class="property">class </em><code class="descclassname">automl.metalearning.metafeatures.metafeatures_interaction.</code><code class="descname">MetaFeaturesManager</code><span class="sig-paren">(</span><em>dataset=None</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.metafeatures_interaction.MetaFeaturesManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to obtain/interact with the metafeatures for a given dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dataset</strong> (<a class="reference internal" href="automl.datahandler.html#automl.datahandler.dataloader.Dataset" title="automl.datahandler.dataloader.Dataset"><em>Dataset</em></a>) – The dataset to work with. Defaults to None.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="automl.metalearning.metafeatures.metafeatures_interaction.MetaFeaturesManager.dataset">
+<code class="descname">dataset</code><a class="headerlink" href="#automl.metalearning.metafeatures.metafeatures_interaction.MetaFeaturesManager.dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dataset to work with.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="automl.datahandler.html#automl.datahandler.dataloader.Dataset" title="automl.datahandler.dataloader.Dataset">Dataset</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.metalearning.metafeatures.metafeatures_interaction.MetaFeaturesManager.metafeatures_as_dict">
+<code class="descname">metafeatures_as_dict</code><span class="sig-paren">(</span><em>recompute=False</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.metafeatures_interaction.MetaFeaturesManager.metafeatures_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the dataset’s metafeatures in the form of a dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>recompute</strong> (<em>bool</em>) – Whether or not to force the recomputing of the
+metafeatures even if they were already computed. Defaults to
+False.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.metalearning.metafeatures.metafeatures_interaction.MetaFeaturesManager.metafeatures_as_numpy_array">
+<code class="descname">metafeatures_as_numpy_array</code><span class="sig-paren">(</span><em>recompute=False</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.metafeatures_interaction.MetaFeaturesManager.metafeatures_as_numpy_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the dataset’s metafeatures in the form of a numpy darray.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>recompute</strong> (<em>bool</em>) – Whether or not to force the recomputing of the
+metafeatures even if they were already computed. Defaults to
+False.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.metalearning.metafeatures.metafeatures_interaction.MetaFeaturesManager.metafeatures_as_pandas_df">
+<code class="descname">metafeatures_as_pandas_df</code><span class="sig-paren">(</span><em>recompute=False</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.metafeatures.metafeatures_interaction.MetaFeaturesManager.metafeatures_as_pandas_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the dataset’s metafeatures in the form of a pandas data frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>recompute</strong> (<em>bool</em>) – Whether or not to force the recomputing of the
+metafeatures even if they were already computed. Defaults to
+False.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-automl.metalearning.metafeatures">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-automl.metalearning.metafeatures" title="Permalink to this headline">¶</a></h2>
+<p>Compute metafeatures and interact with the precomputed ones.</p>
+<p>The methods to compute each field of the metafeatures vector are provided here.
+Also, the class to interact with the metafeatures is provided.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="automl.utl.html" class="btn btn-neutral float-right" title="automl.utl package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="automl.metalearning.database.html" class="btn btn-neutral" title="automl.metalearning.database package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Achmea.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0-beta',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

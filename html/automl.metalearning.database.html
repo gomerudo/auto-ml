@@ -1,0 +1,1041 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>automl.metalearning.database package &mdash; auto-ml 1.0-beta documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="automl.metalearning.metafeatures package" href="automl.metalearning.metafeatures.html" />
+    <link rel="prev" title="automl.metalearning package" href="automl.metalearning.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> auto-ml
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="nutshell.html">AutoML in a nutshell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto.html">Using the tool</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="automl.html">automl package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="automl.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="automl.bayesianoptimizationpiepeline.html">automl.bayesianoptimizationpiepeline package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.createconfigspacepipeline.html">automl.createconfigspacepipeline package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.datahandler.html">automl.datahandler package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.discovery.html">automl.discovery package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.errors.html">automl.errors package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="automl.metalearning.html">automl.metalearning package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.utl.html">automl.utl package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#module-automl.globalvars">automl.globalvars module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#module-automl">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python basics to understand the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">auto-ml</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">automl</a> &raquo;</li>
+        
+          <li><a href="automl.html">automl package</a> &raquo;</li>
+        
+          <li><a href="automl.metalearning.html">automl.metalearning package</a> &raquo;</li>
+        
+      <li>automl.metalearning.database package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/automl.metalearning.database.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="automl-metalearning-database-package">
+<h1>automl.metalearning.database package<a class="headerlink" href="#automl-metalearning-database-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-automl.metalearning.database.configurations_parsing">
+<span id="automl-metalearning-database-configurations-parsing-module"></span><h2>automl.metalearning.database.configurations_parsing module<a class="headerlink" href="#module-automl.metalearning.database.configurations_parsing" title="Permalink to this headline">¶</a></h2>
+<p>Provide functions, classes and private variables to build configurations.</p>
+<p>We define a configuration as a set of classifiers / imputation-methods /
+rescalers / preprocessors for a given problem. The set of these configurations
+can be understood as The Search Space for a problem.</p>
+<dl class="class">
+<dt id="automl.metalearning.database.configurations_parsing.ConfigurationBuilder">
+<em class="property">class </em><code class="descclassname">automl.metalearning.database.configurations_parsing.</code><code class="descname">ConfigurationBuilder</code><span class="sig-paren">(</span><em>model_row=None</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.ConfigurationBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Build a configuration: model/pre-processor/encoder/scaler/imputation.</p>
+<p>A set of configurations can be used to feed TPOT with.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model_row</strong> (<em>pandas.Series</em><em> or </em><em>pandas.DataFrame</em>) – Represents a row
+coming from a configurations.csv file. Defaults to None</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="automl.metalearning.database.configurations_parsing.ConfigurationBuilder.model_row">
+<code class="descname">model_row</code><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.ConfigurationBuilder.model_row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a row
+coming from a configurations.csv file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">pandas.Series or pandas.DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If no pandas Series or DataFrame is passed as argument.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="automl.metalearning.database.configurations_parsing.ConfigurationBuilder.build_configuration">
+<code class="descname">build_configuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.ConfigurationBuilder.build_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a ML Suggestion with the row passed at instaciation time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>A suggestion with classifiers, pre-processors,</dt>
+<dd>scalers, encoders and imputation methods.</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#automl.metalearning.database.configurations_parsing.MLSuggestion" title="automl.metalearning.database.configurations_parsing.MLSuggestion">MLSuggestion</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion">
+<em class="property">class </em><code class="descclassname">automl.metalearning.database.configurations_parsing.</code><code class="descname">MLSuggestion</code><span class="sig-paren">(</span><em>classifiers=None</em>, <em>rescalers=None</em>, <em>preprocessors=None</em>, <em>encoders=None</em>, <em>imputations=None</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class that represents a MLSuggestion.</p>
+<p>A Machine Learning suggestion can (in the biggest picture we consider)
+contain imputation methods, encoders, pre-processors, rescalers and/or
+classifiers.</p>
+<p>Please note that in principle we are restricted to the scikit-learn
+classes available and moreover to the auto-sklearn results.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>classifiers</strong> (<em>list</em>) – A list of strings defining the full class path of
+the classifiers (e.g. [sklearn.subgroup.MyClass]).</li>
+<li><strong>rescalers</strong> (<em>list</em>) – A list of strings defining the full class path of the
+rescalers (e.g. [sklearn.subgroup.MyClass]).</li>
+<li><strong>preprocessors</strong> (<em>list</em>) – A list of strings defining the full class path of
+the preprocessors (e.g. [sklearn.subgroup.MyClass]).</li>
+<li><strong>encoders</strong> (<em>list</em>) – A list of strings defining the full class path of the
+encoders (e.g. [sklearn.subgroup.MyClass]).</li>
+<li><strong>imputations</strong> (<em>list</em>) – A list of strings defining the full class path of
+the imputations (e.g. [sklearn.subgroup.MyClass]).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt>
+<code class="descname">None.</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.add_classifier">
+<code class="descname">add_classifier</code><span class="sig-paren">(</span><em>classifier</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.add_classifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new classifier or set of classifiers.</p>
+<dl class="attribute">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.classifier">
+<code class="descname">classifier</code><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.classifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>If str, then the element is added. If
+list, then all elements in the list are added.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str or list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.add_encoder">
+<code class="descname">add_encoder</code><span class="sig-paren">(</span><em>encoder</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.add_encoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new encoder or set of encoders.</p>
+<dl class="attribute">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.encoder">
+<code class="descname">encoder</code><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.encoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>If str, then the element is added. If list,
+then all elements in the list are added.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str or list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.add_imputation">
+<code class="descname">add_imputation</code><span class="sig-paren">(</span><em>imputation</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.add_imputation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new imputation or set of imputation methods.</p>
+<dl class="attribute">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.imputation">
+<code class="descname">imputation</code><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.imputation" title="Permalink to this definition">¶</a></dt>
+<dd><p>If str, then the element is added. If
+list, then all elements in the list are added.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str or list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.add_preprocessor">
+<code class="descname">add_preprocessor</code><span class="sig-paren">(</span><em>preprocessor</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.add_preprocessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new pre-processor or set of pre-processors.</p>
+<dl class="attribute">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.preprocessor">
+<code class="descname">preprocessor</code><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.preprocessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>If str, then the element is added. If
+list, then all elements in the list are added.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str or list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.add_rescaler">
+<code class="descname">add_rescaler</code><span class="sig-paren">(</span><em>rescaler</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.add_rescaler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new rescaler or set of rescalers.</p>
+<dl class="attribute">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.rescaler">
+<code class="descname">rescaler</code><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.rescaler" title="Permalink to this definition">¶</a></dt>
+<dd><p>If str, then the element is added. If list,
+then all elements in the list are added.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str or list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.get_all_elements">
+<code class="descname">get_all_elements</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.get_all_elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all elements.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>A single list with all classifiers, rescalers,</dt>
+<dd>pre-processors, encoders and imputation methods.</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.classifiers">
+<code class="descname">classifiers</code><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.classifiers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the valid classifiers.</p>
+<p>None values are considered invalid, and hence not included.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The classifiers.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.encoders">
+<code class="descname">encoders</code><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.encoders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the valid _encoders.</p>
+<p>None values are considered invalid, and hence not included.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The encoders.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.imputations">
+<code class="descname">imputations</code><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.imputations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the valid imputations.</p>
+<p>None values are considered invalid, and hence not included.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The imputations.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.preprocessors">
+<code class="descname">preprocessors</code><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.preprocessors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the valid preprocessors.</p>
+<p>None values are considered invalid, and hence not included.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The preprocessors.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.metalearning.database.configurations_parsing.MLSuggestion.rescalers">
+<code class="descname">rescalers</code><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.MLSuggestion.rescalers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the valid rescalers.</p>
+<p>None values are considered invalid, and hence not included.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The rescalers.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="automl.metalearning.database.configurations_parsing.mix_suggestions">
+<code class="descclassname">automl.metalearning.database.configurations_parsing.</code><code class="descname">mix_suggestions</code><span class="sig-paren">(</span><em>suggestion_list</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.configurations_parsing.mix_suggestions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mix a list of MLSuggestion’s into a single one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>suggestion_list</strong> (<em>list</em>) – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If the argument is not a list or any of the elements in the
+list is not an instance of MLSuggestion.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">MLSuggestion        The resulting MLSuggestion.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-automl.metalearning.database.load_db">
+<span id="automl-metalearning-database-load-db-module"></span><h2>automl.metalearning.database.load_db module<a class="headerlink" href="#module-automl.metalearning.database.load_db" title="Permalink to this headline">¶</a></h2>
+<p>File defining classes to load the meta db and interact with it.</p>
+<p>The MetaDB is the metalearning information for the 140+ datasets defined in the
+auto-sklearn paper. These help us to build a space of datasets we can
+query against to obtain similar datasets and consequently, potential algorithms
+to work with in a given dataset.</p>
+<p>In this implementation, we provide methods to retrieve the simple space and its
+weighted version.</p>
+<dl class="class">
+<dt id="automl.metalearning.database.load_db.AlgorithmRunsFile">
+<em class="property">class </em><code class="descclassname">automl.metalearning.database.load_db.</code><code class="descname">AlgorithmRunsFile</code><span class="sig-paren">(</span><em>algruns_file</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.AlgorithmRunsFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Abstract the algorithm_runs.arff file.</p>
+<dl class="method">
+<dt id="automl.metalearning.database.load_db.AlgorithmRunsFile.get_associated_configuration_id">
+<code class="descname">get_associated_configuration_id</code><span class="sig-paren">(</span><em>instance_id</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.AlgorithmRunsFile.get_associated_configuration_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the associated configuration for a given instance id.</p>
+<p>A configuration is a solution for the dataset (instance). This returns
+the id for that solution, not the solution itself.</p>
+<dl class="attribute">
+<dt id="automl.metalearning.database.load_db.AlgorithmRunsFile.instance_id">
+<code class="descname">instance_id</code><a class="headerlink" href="#automl.metalearning.database.load_db.AlgorithmRunsFile.instance_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The id of the dataset (instance) to search for.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>The id of the configuration solving the instance_id problem</dt>
+<dd>(dataset).</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.metalearning.database.load_db.AlgorithmRunsFile.get_associated_configuration_ids">
+<code class="descname">get_associated_configuration_ids</code><span class="sig-paren">(</span><em>instances_ids</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.AlgorithmRunsFile.get_associated_configuration_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the associated configuration for a given set of instance ids.</p>
+<p>A configuration is a solution for the dataset (instance). This returns
+the ids for the solutions, not the solutions themselves.</p>
+<dl class="attribute">
+<dt id="automl.metalearning.database.load_db.AlgorithmRunsFile.instances_ids">
+<code class="descname">instances_ids</code><a class="headerlink" href="#automl.metalearning.database.load_db.AlgorithmRunsFile.instances_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ids of the datasets (instances) to
+search for.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>The ids of the configurations solving the instance_id’s</dt>
+<dd>(datasets) problems.</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list(int)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="automl.metalearning.database.load_db.ConfigurationsFile">
+<em class="property">class </em><code class="descclassname">automl.metalearning.database.load_db.</code><code class="descname">ConfigurationsFile</code><span class="sig-paren">(</span><em>configs_file</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.ConfigurationsFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Abstract a configurations.csv file.</p>
+<p>This class represents a configurations.csv file for our meta-knowledge. It
+also provides some useful methods to interact with the file.</p>
+<dl class="method">
+<dt id="automl.metalearning.database.load_db.ConfigurationsFile.get_configuration">
+<code class="descname">get_configuration</code><span class="sig-paren">(</span><em>algorithm_id</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.ConfigurationsFile.get_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the configurations for a given algorithm id.</p>
+<dl class="attribute">
+<dt id="automl.metalearning.database.load_db.ConfigurationsFile.algorithm_id">
+<code class="descname">algorithm_id</code><a class="headerlink" href="#automl.metalearning.database.load_db.ConfigurationsFile.algorithm_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The id for the algorithm. This should come
+from the results in algorithm_runs.arff.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.metalearning.database.load_db.ConfigurationsFile.get_configurations">
+<code class="descname">get_configurations</code><span class="sig-paren">(</span><em>algorithms_ids</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.ConfigurationsFile.get_configurations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the configurations for a given set of algorithm ids.</p>
+<dl class="attribute">
+<dt id="automl.metalearning.database.load_db.ConfigurationsFile.algorithm_ids">
+<code class="descname">algorithm_ids</code><a class="headerlink" href="#automl.metalearning.database.load_db.ConfigurationsFile.algorithm_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ids for the algorithms. These should
+come from the results in algorithm_runs.arff</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="automl.metalearning.database.load_db.LandmarkModelParser">
+<em class="property">class </em><code class="descclassname">automl.metalearning.database.load_db.</code><code class="descname">LandmarkModelParser</code><a class="headerlink" href="#automl.metalearning.database.load_db.LandmarkModelParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to interact with the models stored per instance (dataset).</p>
+<dl class="staticmethod">
+<dt id="automl.metalearning.database.load_db.LandmarkModelParser.metrics_available">
+<em class="property">static </em><code class="descname">metrics_available</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.LandmarkModelParser.metrics_available" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the metrics that are available in the meta-knowledge.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Metrics available in the package’s local storage.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="automl.metalearning.database.load_db.LandmarkModelParser.models_by_metric">
+<em class="property">static </em><code class="descname">models_by_metric</code><span class="sig-paren">(</span><em>instances_ids=None</em>, <em>dataset=None</em>, <em>metric='accuracy'</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.LandmarkModelParser.models_by_metric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the models for a list of instances by the given accuracy.</p>
+<dl class="attribute">
+<dt id="automl.metalearning.database.load_db.LandmarkModelParser.instances_ids">
+<code class="descname">instances_ids</code><a class="headerlink" href="#automl.metalearning.database.load_db.LandmarkModelParser.instances_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of integers with the ids of the
+instances (datasets).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.metalearning.database.load_db.LandmarkModelParser.dataset">
+<code class="descname">dataset</code><a class="headerlink" href="#automl.metalearning.database.load_db.LandmarkModelParser.dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dataset to work with.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="automl.datahandler.html#automl.datahandler.dataloader.Dataset" title="automl.datahandler.dataloader.Dataset">Dataset</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.metalearning.database.load_db.LandmarkModelParser.metric">
+<code class="descname">metric</code><a class="headerlink" href="#automl.metalearning.database.load_db.LandmarkModelParser.metric" title="Permalink to this definition">¶</a></dt>
+<dd><p>metrics returned by LandmarkModelParser.metrics_available().</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="docutils">
+<dt>Results:</dt>
+<dd>list: List of models. One element per instance.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="automl.metalearning.database.load_db.MKDatabaseClient">
+<em class="property">class </em><code class="descclassname">automl.metalearning.database.load_db.</code><code class="descname">MKDatabaseClient</code><a class="headerlink" href="#automl.metalearning.database.load_db.MKDatabaseClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>MKDatabase (Meta-Knowledge Database) to perform queries.</p>
+<p>This class serves as a facade to interact with the Meta Knowledge. We would
+like to expose the next features:
+- Ability to find the nearest datasets given a metric
+- Reload the database (in case of any change at running time in the arff
+files).
+TODO // To consider (future implementation):
+- Ability to add observations into the database at running time, e.g.
+MKDatabase().add_dataset_metaknowledge()</p>
+<dl class="method">
+<dt id="automl.metalearning.database.load_db.MKDatabaseClient.meta_suggestions">
+<code class="descname">meta_suggestions</code><span class="sig-paren">(</span><em>dataset=None</em>, <em>ids_list=None</em>, <em>metric='accuracy'</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.MKDatabaseClient.meta_suggestions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the Model Suggestions for a set of ids, based on a dataset.</p>
+<p>Using a given metric, retrieve the models suggested.</p>
+<dl class="attribute">
+<dt id="automl.metalearning.database.load_db.MKDatabaseClient.dataset">
+<code class="descname">dataset</code><a class="headerlink" href="#automl.metalearning.database.load_db.MKDatabaseClient.dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dataset to use as areference.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="automl.datahandler.html#automl.datahandler.dataloader.Dataset" title="automl.datahandler.dataloader.Dataset">Dataset</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.metalearning.database.load_db.MKDatabaseClient.ids_list">
+<code class="descname">ids_list</code><a class="headerlink" href="#automl.metalearning.database.load_db.MKDatabaseClient.ids_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of ids to retrieve information about.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.metalearning.database.load_db.MKDatabaseClient.metric">
+<code class="descname">metric</code><a class="headerlink" href="#automl.metalearning.database.load_db.MKDatabaseClient.metric" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Metalearning metric.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of MLSuggestions.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.metalearning.database.load_db.MKDatabaseClient.nearest_datasets">
+<code class="descname">nearest_datasets</code><span class="sig-paren">(</span><em>dataset=None</em>, <em>k=5</em>, <em>weighted=False</em>, <em>distance_metric='minkowski'</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.MKDatabaseClient.nearest_datasets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the _k_ nearest datasets in the meta-knwonledge DB.</p>
+<p>This method finds the _k_ nearest neighbors for a given dataset, based
+on a given metric. This helps, for instance, to latter make the
+relation with the saved algorithms for each of the metrics in
+automl/metalearning/db/files.</p>
+<dl class="attribute">
+<dt>
+<code class="descname">dataset</code></dt>
+<dd><p>The dataset to
+use. Default is None, which will cause the method to fail.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="automl.datahandler.html#automl.datahandler.dataloader.Dataset" title="automl.datahandler.dataloader.Dataset">automl.datahandler.dataloader.Dataset</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.metalearning.database.load_db.MKDatabaseClient.weighted">
+<code class="descname">weighted</code><a class="headerlink" href="#automl.metalearning.database.load_db.MKDatabaseClient.weighted" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if the costs should be used. Defaults to
+False.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.metalearning.database.load_db.MKDatabaseClient.k">
+<code class="descname">k</code><a class="headerlink" href="#automl.metalearning.database.load_db.MKDatabaseClient.k" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of neighbor datasets to retrieve.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.metalearning.database.load_db.MKDatabaseClient.distance_metric">
+<code class="descname">distance_metric</code><a class="headerlink" href="#automl.metalearning.database.load_db.MKDatabaseClient.distance_metric" title="Permalink to this definition">¶</a></dt>
+<dd><p>The distance metric
+to use for the KNN algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string or sklearn callable</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>(np.array, np.array) A tuple where the first element is a numpy</dt>
+<dd>array of the similarity metrics for the result datasets and
+the second element contains the similar dataset’s ids.</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.metalearning.database.load_db.MKDatabaseClient.reload">
+<code class="descname">reload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.MKDatabaseClient.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reload the metaknowledge object.</p>
+<p>This is helpful if any change is done at runtime in the metaknowledge
+files.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="automl.metalearning.database.load_db.MetaKnowledge">
+<em class="property">class </em><code class="descclassname">automl.metalearning.database.load_db.</code><code class="descname">MetaKnowledge</code><a class="headerlink" href="#automl.metalearning.database.load_db.MetaKnowledge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class is a representation of the feature’s costs/values.</p>
+<p>The information comes from the meta-knowledge acquired by auto-sklearn. It
+provides a way to load the information in the form of ARFFWrapper objects
+and retrieve pandas and numpy representations of this information to ease
+1) interaction with the features and 2) matrix operations for more
+mathematical methods that are needed for machine learning.</p>
+<dl class="method">
+<dt id="automl.metalearning.database.load_db.MetaKnowledge.load_datasets_info">
+<code class="descname">load_datasets_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.MetaKnowledge.load_datasets_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load both the costs and values file for the features in the meta db.</p>
+<p>It will initialize the features/costs objects with ARFFWrapper objs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Self object with the initialized features/costs.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">LoadMetaDB</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.metalearning.database.load_db.MetaKnowledge.simple_matrix">
+<code class="descname">simple_matrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.MetaKnowledge.simple_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the feature values in the meta db - without the weights.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The ordered list of instance_id’s for the features
+np.darray: The matrix with the features values. Each row
+corresponds to the id in the first return value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">np.array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.metalearning.database.load_db.MetaKnowledge.weighted_matrix">
+<code class="descname">weighted_matrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.MetaKnowledge.weighted_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a matrix with the weighted (costs) features in the meta db.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The ordered list of instance_id’s for the features
+np.darray: The matrix with the weighted features values. Each row
+corresponds to the id in the first return value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">np.array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-automl.metalearning.database">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-automl.metalearning.database" title="Permalink to this headline">¶</a></h2>
+<p>Store the Meta Knowledge database and provide classes to interact with it.</p>
+<p>The Meta Knowledge is understood as the results from the meta-learning
+component of auto-sklearn. Here we idendity two submodules: one to interact
+with the results and the other to compute new meta-knowledge either for a new
+dataset or to ease the inclusion of new results into the database.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="automl.metalearning.metafeatures.html" class="btn btn-neutral float-right" title="automl.metalearning.metafeatures package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="automl.metalearning.html" class="btn btn-neutral" title="automl.metalearning package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Achmea.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0-beta',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>automl.datahandler package &mdash; auto-ml 1.0-beta documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="automl.discovery package" href="automl.discovery.html" />
+    <link rel="prev" title="automl.createconfigspacepipeline package" href="automl.createconfigspacepipeline.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> auto-ml
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="nutshell.html">AutoML in a nutshell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto.html">Using the tool</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="automl.html">automl package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="automl.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="automl.bayesianoptimizationpiepeline.html">automl.bayesianoptimizationpiepeline package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.createconfigspacepipeline.html">automl.createconfigspacepipeline package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">automl.datahandler package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.discovery.html">automl.discovery package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.errors.html">automl.errors package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.metalearning.html">automl.metalearning package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="automl.utl.html">automl.utl package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#module-automl.globalvars">automl.globalvars module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="automl.html#module-automl">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python basics to understand the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">auto-ml</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">automl</a> &raquo;</li>
+        
+          <li><a href="automl.html">automl package</a> &raquo;</li>
+        
+      <li>automl.datahandler package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/automl.datahandler.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="automl-datahandler-package">
+<h1>automl.datahandler package<a class="headerlink" href="#automl-datahandler-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-automl.datahandler.dataloader">
+<span id="automl-datahandler-dataloader-module"></span><h2>automl.datahandler.dataloader module<a class="headerlink" href="#module-automl.datahandler.dataloader" title="Permalink to this headline">¶</a></h2>
+<p>Module to expose classes to interact with a given dataset.</p>
+<p>Here we abstract any dataset as a class to ease the interaction within the
+package’s modules. Additionally, we provide a class to load datasets in this
+new format.</p>
+<dl class="class">
+<dt id="automl.datahandler.dataloader.DataLoader">
+<em class="property">class </em><code class="descclassname">automl.datahandler.dataloader.</code><code class="descname">DataLoader</code><a class="headerlink" href="#automl.datahandler.dataloader.DataLoader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to load dataset as a Dataset class from different sources.</p>
+<p>It exposes static methods only.</p>
+<dl class="staticmethod">
+<dt id="automl.datahandler.dataloader.DataLoader.get_openml_dataset">
+<em class="property">static </em><code class="descname">get_openml_dataset</code><span class="sig-paren">(</span><em>openml_id</em>, <em>problem_type</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.datahandler.dataloader.DataLoader.get_openml_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch a dataset from OpenML and return a Dataset object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>openml_id</strong> (<em>int</em>) – ID for the dataset, as stored in OpenML.</li>
+<li><strong>problem_type</strong> (<em>int</em>) – Type of problem to solve in the dataset.
+0 for classification, 1 for regression.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>An auto-ml Dataset, as defined in this module.</dt>
+<dd><p class="first last">Its default ID will be the concatenation of the OpenML dataset
+name and ID.</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#automl.datahandler.dataloader.Dataset" title="automl.datahandler.dataloader.Dataset">Dataset</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="automl.datahandler.dataloader.Dataset">
+<em class="property">class </em><code class="descclassname">automl.datahandler.dataloader.</code><code class="descname">Dataset</code><span class="sig-paren">(</span><em>dataset_id=None</em>, <em>X=None</em>, <em>y=None</em>, <em>categorical_indicators=None</em>, <em>problem_type=0</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.datahandler.dataloader.Dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class abstracting a dataset.</p>
+<p>In this class we abstract a dataset as an object composed of a features
+pandas.DataFrame and a target pandas.DataFrame (with the name ‘target’).
+Additionally, a Dataset contains categorical_indicators indicators for each
+of the feature columns, and ID and a problem type to solve (either
+classification or regression).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dataset_id</strong> (<em>str</em>) – An string identifying the dataset. If <cite>None</cite> is
+passed to the constructor, then the default is a string of 6 random
+letters/digits.</li>
+<li><strong>X</strong> (<em>pandas.DataFrame</em>) – The Data Frame containing the features of the
+dataset. Shape is <cite>(n, m)</cite>.</li>
+<li><strong>y</strong> (<em>pandas.DataFrame</em>) – The Data Frame containing the target value (e.g.
+the label for a class). It should be of shape <cite>(n, 1)</cite>.</li>
+<li><strong>categorical_indicators</strong> (<em>list</em>) – A list of <cite>m</cite> booleans following a
+1-to-1 relation with the features’ columns that indicate whether or
+not the feature is categorical_indicators. If <cite>None</cite> is passed to
+the constructor, the default is a list of m <cite>False</cite> values.</li>
+<li><strong>problem_type</strong> (<em>int</em>) – 0 indicates classification, 1 indicates regression.
+Defaults to 0.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If <cite>X</cite> and/or <cite>y</cite> are not pandas Data Frames.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If <cite>X</cite> and <cite>y</cite>  are not of shape <cite>(n, m)</cite>, <cite>(n, 1)</cite>
+respectively.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="automl.datahandler.dataloader.Dataset.X">
+<code class="descname">X</code><a class="headerlink" href="#automl.datahandler.dataloader.Dataset.X" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Data Frame containing the features of the
+dataset. Shape is <cite>(n, m)</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">pandas.DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.datahandler.dataloader.Dataset.y">
+<code class="descname">y</code><a class="headerlink" href="#automl.datahandler.dataloader.Dataset.y" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Data Frame containing the target value (e.g.
+the label for a class). It should be of shape <cite>(n, 1)</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">pandas.DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.datahandler.dataloader.Dataset.categorical_indicators">
+<code class="descname">categorical_indicators</code><a class="headerlink" href="#automl.datahandler.dataloader.Dataset.categorical_indicators" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of <cite>m</cite> booleans following a
+1-to-1 relation with the features’ columns that indicate whether or
+not the feature is categorical_indicators.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.datahandler.dataloader.Dataset.dataset_id">
+<code class="descname">dataset_id</code><a class="headerlink" href="#automl.datahandler.dataloader.Dataset.dataset_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>An string identifying the dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.datahandler.dataloader.Dataset.problem_type">
+<code class="descname">problem_type</code><a class="headerlink" href="#automl.datahandler.dataloader.Dataset.problem_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>0 indicates classification, 1 indicates regression.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.datahandler.dataloader.Dataset.is_classification_problem">
+<code class="descname">is_classification_problem</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.datahandler.dataloader.Dataset.is_classification_problem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether or not the dataset is registered as classification task.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the dataset has been marked a classification problem.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.datahandler.dataloader.Dataset.is_regression_problem">
+<code class="descname">is_regression_problem</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.datahandler.dataloader.Dataset.is_regression_problem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether or not the dataset is registered as regression task.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the dataset has been marked as a regression problem.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.datahandler.dataloader.Dataset.is_sparse">
+<code class="descname">is_sparse</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.datahandler.dataloader.Dataset.is_sparse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether or not the X data is sparse or not.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the X data frame is an sparse representation.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.datahandler.dataloader.Dataset.metafeatures_vector">
+<code class="descname">metafeatures_vector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.datahandler.dataloader.Dataset.metafeatures_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the metafeatures of this dataset as a vector (numpy array).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The metafeatures as a numpy array.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">np.array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.datahandler.dataloader.Dataset.train_test_split">
+<code class="descname">train_test_split</code><span class="sig-paren">(</span><em>random_state=42</em>, <em>test_size=0.33</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.datahandler.dataloader.Dataset.train_test_split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a train-test split as defined in scikit-learn for the dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>random_state</strong> (<em>int</em>) – The random_state to initialize with so that
+the results can be reproduced.</li>
+<li><strong>test_size</strong> (<em>float</em>) – Proportion of split for the test set.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A 4-tuple as train_test_split in scikit-learn.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.datahandler.dataloader.Dataset.n_features">
+<code class="descname">n_features</code><a class="headerlink" href="#automl.datahandler.dataloader.Dataset.n_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of features in the dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The number of features.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="automl.datahandler.dataloader.Dataset.n_labels">
+<code class="descname">n_labels</code><a class="headerlink" href="#automl.datahandler.dataloader.Dataset.n_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide the number of different labels (target) for this dataset.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-automl.datahandler">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-automl.datahandler" title="Permalink to this headline">¶</a></h2>
+<p>Group submodels that abstract and work out data.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="automl.discovery.html" class="btn btn-neutral float-right" title="automl.discovery package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="automl.createconfigspacepipeline.html" class="btn btn-neutral" title="automl.createconfigspacepipeline package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Achmea.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0-beta',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
