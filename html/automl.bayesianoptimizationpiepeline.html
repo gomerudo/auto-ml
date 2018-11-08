@@ -190,33 +190,72 @@
 <p>This class deals with the optimization of the hyperparameter of the pipeline.</p>
 <p>This class makes use of SMAC3 library which uses the bayesian optimization technique to optimize the hyperparameter
 of the input pipeline.</p>
-<dl class="method">
-<dt id="automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.get_optimized_pipeline">
-<code class="descname">get_optimized_pipeline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.get_optimized_pipeline" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.get_optimized_score">
-<code class="descname">get_optimized_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.get_optimized_score" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.optimize_pipeline">
-<code class="descname">optimize_pipeline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.optimize_pipeline" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function is used to initialize the optimization process.</p>
-<p>This function creates a function which consist of the input pipeline which is evaluated based on various
-hyperparameter setting provided by the bayesian optimization technique.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The optimized test score.
-Pipeline: The pipeline with optimized hyperparameter.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dataset</strong> (<a class="reference internal" href="automl.datahandler.html#automl.datahandler.dataloader.Dataset" title="automl.datahandler.dataloader.Dataset"><em>Dataset</em></a>) – A dataset object to work with. Defaults to None.</li>
+<li><strong>pipeline</strong> (<em>Pipeline</em>) – Input pipeline to be optimized. Defaults to None.</li>
+<li><strong>optimize_on</strong> (<em>string</em>) – Optimization parameter that takes input either “quality” or “runtime”. The pipeline
+can either be optimized based on quality (performance metric) or runtime (time required to complete the
+bayesian optimization process). Defaults to “quality”.</li>
+<li><strong>cutoff_time</strong> (<em>int</em>) – This hyperparameter is only used when “optimize_on” hyperparameter is set to “runtime”.
+Maximum time limit in seconds after which the bayesian optimization process stops and best result is
+given as output. Defaults to 600.</li>
+<li><strong>iteration</strong> (<em>int</em>) – Number of iteration the bayesian optimization process will take. More number of iterations
+gives better results but increases the execution time. Defaults to 7</li>
+<li><strong>scoring</strong> (<em>string</em><em> or </em><em>callable</em>) – The performance metric on which the pipeline is supposed to be optimized.
+Defaults to None.</li>
+<li><strong>cv</strong> (<em>int</em>) – Specifies the number of folds in a (Stratified)KFold. Defaults to 5</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.get_optimized_pipeline">
+<code class="descname">get_optimized_pipeline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.get_optimized_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns the optimized pipeline</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If the function returns None, then the pipeline has’nt been optimized.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The optimized pipeline.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Pipeline</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.get_optimized_score">
+<code class="descname">get_optimized_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.get_optimized_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns the optimized score</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If the function returns None, then the pipeline has’nt been optimized.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The optimized score.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.optimize_pipeline">
+<code class="descname">optimize_pipeline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline.optimize_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is used to initiate the optimization process and obtained the optimized score and pipeline.</p>
+<p>This function gets the configuration space from the createconfigspacepipeline subpackage on which the bayesian
+optimization technique is performed. This function creates a function which consist of the input pipeline which
+is evaluated based on various hyperparameter setting provided by the bayesian optimization technique (SMAC).</p>
 </dd></dl>
 
 </dd></dl>
@@ -224,6 +263,7 @@ Pipeline: The pipeline with optimized hyperparameter.</td>
 </div>
 <div class="section" id="module-automl.bayesianoptimizationpiepeline">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-automl.bayesianoptimizationpiepeline" title="Permalink to this headline">¶</a></h2>
+<p>Used to perform Bayesian Optimization technique using the configuration space.</p>
 </div>
 </div>
 

@@ -192,10 +192,22 @@
 of the configuration space depending on the provided input. The upper and lower limit of a hyperparameter in a
 configuration space is also adjusted if the input hyperparameter value is out of range. This class is not supposed
 to be instantiated by the user instead is used by the BayesianOptimizationPipeline class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pipeline</strong> (<em>Pipeline</em>) – The pipeline for which configuration space will be generated.</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="automl.createconfigspacepipeline.base.ConfigSpacePipeline.get_config_space">
 <code class="descname">get_config_space</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#automl.createconfigspacepipeline.base.ConfigSpacePipeline.get_config_space" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is used to get the combined configuration space for the pipeline.</p>
+<p>This function process each component in the pipeline, thereby adding the configuration space with reset
+default of each of the component and obtaining the complete configuration space. It adds configuration space of
+components within ‘FeatureUnion’ and deals with situation such as ‘FeatureUnion’ within ‘FeatureUnion’.
+It also adds the configuration space of estimators of a component but not of the component itself.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -213,7 +225,7 @@ to be instantiated by the user instead is used by the BayesianOptimizationPipeli
 </div>
 <div class="section" id="module-automl.createconfigspacepipeline">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-automl.createconfigspacepipeline" title="Permalink to this headline">¶</a></h2>
-<p>“This package deals with the processing related to Configuration Space of the Pipeline</p>
+<p>This package deals with the processing and building related to Configuration Space of the Pipeline</p>
 </div>
 </div>
 
