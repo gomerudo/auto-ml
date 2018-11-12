@@ -2,6 +2,7 @@
 
 from tpot import TPOTClassifier
 from tpot import TPOTRegressor
+import automl.datahandler.dataloader
 from automl.datahandler.dataloader import Dataset
 
 
@@ -36,20 +37,23 @@ class PipelineDiscovery:
                  tpot_params=None, evaluation_metric='accuracy'):
         """Constructor."""
         self.dataset = dataset
-        self.search_space = search_space
+        self.search_space = search_space if search_space is not None else \
+            'scikit-learn'
         self.validation_score = None
         self._tpot_optimizer = None
         self._passed_tpot_params = tpot_params
         self.evaluation_metric = evaluation_metric
 
-        if not isinstance(dataset, Dataset):
-            raise TypeError("Dataset must be of type AutoML Dataset")
+        if not isinstance(self.dataset, Dataset):
+            raise TypeError("Dataset must be of type {g} (AutoML). Current\
+ is {t}".format(g=Dataset, t=self.dataset.__class__))
 
-        if isinstance(search_space, str):
-            assert search_space in ['scikit-learn']
-
-        elif not isinstance(search_space, dict):
-            raise TypeError("search-space must be an string or dict")
+        if isinstance(self.search_space, str):
+            if self.search_space not in ['scikit-learn']:
+                raise ValueError("If string, search space must be valid.")
+        elif not isinstance(self.search_space, dict):
+            raise TypeError("search-space must be a string or dict. Current \
+is {t}".format(t=self.search_space.__class__))
 
         if self._passed_tpot_params is not None and not \
                 isinstance(self._passed_tpot_params, dict):

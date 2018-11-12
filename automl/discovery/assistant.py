@@ -95,7 +95,7 @@ class Assistant:
         """
         if self._neighbors is None:
             raise AutoMLError("No neighbors available. Call the \
-                               compute_similar_datasets method first")
+compute_similar_datasets method first")
 
         return self._neighbors, self._neighbors_metrics
 
@@ -112,7 +112,7 @@ class Assistant:
         """
         if self._neighbors is None:
             raise AutoMLError("No neighbors available. Call the \
-                               compute_similar_datasets method first")
+compute_similar_datasets method first")
 
         mk_dc = MKDatabaseClient()
         return mk_dc.meta_suggestions(
@@ -139,19 +139,18 @@ class Assistant:
                 dataset.
 
         """
-        # Call TPOT
-        # Returns a pipeline
-        dict_suggestions = self.reduced_search_space.classifiers
-
         try:
             search_space = dict()
-            for classifier in dict_suggestions:
+            for classifier in self.reduced_search_space.classifiers:
                 search_space[classifier] = {}
         except AutoMLError:
             search_space = None
 
         if ignore_similar_datasets:
-            p_disc = PipelineDiscovery(self.dataset)
+            p_disc = PipelineDiscovery(
+                dataset=self.dataset,
+                evaluation_metric=self.evaluation_metric
+            )
         else:
             p_disc = PipelineDiscovery(
                 dataset=self.dataset,
