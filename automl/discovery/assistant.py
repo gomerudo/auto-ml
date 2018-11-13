@@ -28,6 +28,7 @@ class Assistant:
             similar datasets want to be retrieved.
         evaluation_metric (string or callable): A metric to evalate the
             pipeline with.
+
     """
 
     def __init__(self, dataset=None, metalearning_metric='accuracy',
@@ -57,7 +58,6 @@ class Assistant:
         metafeat_manager = MetaFeaturesManager(self.dataset)
         return metafeat_manager.metafeatures_as_numpy_array()
 
-    # TODO: Allow for other metrics for the similarity
     def compute_similar_datasets(self, k=5, similarity_metric='minkowski'):
         """Compute the similar datasets based on the dataset's metafeatures.
 
@@ -121,8 +121,6 @@ compute_similar_datasets method first")
             metric=self.metalearning_metric
         )
 
-    # TODO: This is the method that should call TPOT using the search space
-    # We should consider parameters to force and also to handle TPOTs features
     def generate_pipeline(self, ignore_similar_datasets=False):
         """Automatically generate a pipeline using the dataset and metric.
 
