@@ -21,13 +21,13 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 
 project = 'auto-ml'
-copyright = '2018, Achmea'
-author = 'Achmea'
+copyright = '2018, Eindhoven University of Technology'
+author = 'J. Gomez Robles ; F. Ansari'
 
 # The short X.Y version
-version = '1.0'
+version = '0.1.0'
 # The full version, including alpha/beta/rc tags
-release = '1.0-beta'
+release = '0.1.0-alpha'
 
 
 # -- General configuration ---------------------------------------------------

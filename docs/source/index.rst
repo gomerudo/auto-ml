@@ -36,6 +36,7 @@ Authors:
    :caption: Contents:
 
    AutoML in a nutshell <nutshell>
+   Overview of our solution <solution>
    Installing the tool <install>
    Using the tool <howto>
    API <modules>
