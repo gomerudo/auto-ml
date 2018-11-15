@@ -6,7 +6,30 @@
 Welcome to auto-ml's documentation!
 ===================================
 
-This is the official documentation for the Achmea's auto-ml solution.
+This is the official documentation for the auto-ml solution an Automated
+Machine Learning solution in Python.
+
+This package has been developed by students of the Eindhoven University of
+Technology (TU/e) for `Achmea <https://www.achmea.nl>`_’s internal use as part
+of our internship program, but it is also shared Open Source
+`via github <https://github.com/gomerudo/auto-ml>`_ as agreed for all parts.
+
+The package is intended to assist the Data Scientists to solve classification
+(and possibly regression) problems by automatically finding pipelines that
+include pre-processing, feature engineering and classification/regression
+models for a given dataset.
+
+In more detail, our solution makes use of the pre-learned meta-knowledge
+acquired by `auto-sklearn <https://github.com/automl/auto-sklearn>`_ to find
+candidate models for a given dataset,
+`TPOT <https://github.com/EpistasisLab/tpot>`_'s Genetic Programming approach
+to find pipelines in an automated way and the Bayesian Optimization implemeted
+in `SMAC <https://github.com/automl/SMAC3>`_ to fine-tune a given pipeline.
+
+Authors:
+
+- j.gomez.robles@student.tue.nl
+- f.a.a.ansari@student.tue.nl
 
 .. toctree::
    :maxdepth: 2

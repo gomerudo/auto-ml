@@ -746,6 +746,31 @@ TODO // To consider (future implementation):
 - Ability to add observations into the database at running time, e.g.
 MKDatabase().add_dataset_metaknowledge()</p>
 <dl class="method">
+<dt id="automl.metalearning.database.load_db.MKDatabaseClient.get_metaknowledge_space">
+<code class="descname">get_metaknowledge_space</code><span class="sig-paren">(</span><em>weighted=False</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.MKDatabaseClient.get_metaknowledge_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the metaknowledge space.</p>
+<p>Retrieving the metaknowledge space may be useful for plotting purposes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>weighted</strong> (<em>bool</em>) – Whether to retrieve the weighted version. Defaults
+to False.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>2-tuple where the first element is a list of ids and the</dt>
+<dd>second is the matrix representing the metafeatures of each
+of the ids.</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="automl.metalearning.database.load_db.MKDatabaseClient.meta_suggestions">
 <code class="descname">meta_suggestions</code><span class="sig-paren">(</span><em>dataset=None</em>, <em>ids_list=None</em>, <em>metric='accuracy'</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.metalearning.database.load_db.MKDatabaseClient.meta_suggestions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve the Model Suggestions for a set of ids, based on a dataset.</p>
