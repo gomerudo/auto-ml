@@ -10,6 +10,7 @@ software engineering area or in its data science components, please contact any
 of the persons listed below:
 
 Points of contact at TU/e:
+
 - j.gomez.robles@student.tue.nl (Jorge Gómez)
 - f.a.a.ansari@student.tue.nl (Firoz Ansari)
 - j.vanschoren@tue.nl (Joaquin Vanschoren)

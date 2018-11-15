@@ -27,6 +27,7 @@ to find pipelines in an automated way and the Bayesian Optimization implemeted
 in `SMAC <https://github.com/automl/SMAC3>`_ to fine-tune a given pipeline.
 
 Authors:
+
 - j.gomez.robles@student.tue.nl
 - f.a.a.ansari@student.tue.nl
 
