@@ -166,8 +166,8 @@ class Assistant:
         self._pipeline_discovery = p_disc
         return p_disc
 
-    def optimize(self, pipeline=None, optimize_on="quality", iteration=20,
-                 cutoff_time=600, scoring=None, cv=5):
+    def bayesian_optimize(self, pipeline=None, optimize_on="quality", cutoff_time=600,
+                          iteration=15, scoring=None, cv=5):
         """Optimize a pipeline using Bayesian optimization.
 
         Args:
@@ -184,9 +184,10 @@ class Assistant:
                 stops and best result is given as output. Defaults to 600.
             iteration (int): Number of iteration the bayesian optimization
                 process will take. More number of iterations gives better
-                results but increases the execution time. Defaults to 7.
+                results but increases the execution time. Defaults to 15.
             scoring (string or callable): The performance metric on which the
-                pipeline is supposed to be optimized. Defaults to None.
+                pipeline is supposed to be optimized. Example : 'auc_roc',
+                'accuracy', 'precision', 'recall', 'f1', etc. Defaults to None.
             cv (int): Specifies the number of folds in a (Stratified)KFold.
                 Defaults to 5.
         Raises:
@@ -198,7 +199,7 @@ class Assistant:
         """
         if pipeline is None and self._pipeline_discovery is None:
             raise ValueError("No pipeline available. Either use \
-generate_pipeline() method or pass a pipelineas an argument to the function.")
+generate_pipeline() method or pass a pipeline as an argument to the function.")
 
         pipeline_ = pipeline if pipeline is not None else \
             self._pipeline_discovery.pipeline
