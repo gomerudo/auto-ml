@@ -16,10 +16,15 @@ class AutoMLError(Exception):
 
     """
 
-    def __init__(self, msg="Unexplained AutoMLError"):
+    def __init__(self, msg=None):
         """Constructor."""
         self.msg = msg
-        super().__init__(self)
+        super().__init__(msg)
+    # def __init__(self, msg="Unexplained AutoMLError"):
+    #     """Constructor."""
+    #     Exception.__init__(self, msg)
+    #     # self.msg = msg
+    #     # super().__init__(self)
 
 
 class AutoMLTestError(Exception):
@@ -43,8 +48,7 @@ class AutoMLTestError(Exception):
     def __init__(self, test_name=None, msg="Unexplained AutoMLTestError"):
         """Constructor."""
         self.test_name = test_name
-        self.msg = msg
-        super().__init__(self.msg)
+        super().__init__(msg)
 
 
 class CurrentlyNonSupportedError(Exception):
@@ -61,5 +65,5 @@ class CurrentlyNonSupportedError(Exception):
 
     def __init__(self, msg="Unexplained CurrentlyNonSupportedError"):
         """Constructor."""
-        self.msg = msg
-        super().__init__(self.msg)
+        super().__init__(msg)
+        # super().__init__(self.msg)
