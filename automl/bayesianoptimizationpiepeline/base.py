@@ -65,14 +65,16 @@ class BayesianOptimizationPipeline:
                 component = self._process_component(self.pipeline.steps[i][1], config_dict)
                 pipeline_list.append(component)
             self.opt_pipeline = make_pipeline(*pipeline_list)
-            score_array = cross_val_score(self.opt_pipeline, X, y, cv=5, scoring=self.scoring)
+            score_array = cross_val_score(self.opt_pipeline, X, y, cv=self.cv, scoring=self.scoring)
             return 1-np.mean(score_array)
 
         cs = ConfigSpacePipeline(self.pipeline).get_config_space()
         cs_as_json = json_utils._convert_cs_to_json(cs)
         if not cs_as_json['hyperparameters']:
-            scores = cross_val_score(self.pipeline, X, y, cv=5, scoring=self.scoring)
-            return np.mean(scores), self.pipeline
+            scores = cross_val_score(self.pipeline, X, y, cv=self.cv, scoring=self.scoring)
+            self.score = np.mean(scores)
+            self.opt_pipeline = self.pipeline
+            return self
         scenario = self._create_scenario(cs, self.optimize_on, self.iteration, self.cutoff_time)
         smac = SMAC(scenario=scenario, rng=np.random.RandomState(42),
                     tae_runner=_optimization_algorithm)
