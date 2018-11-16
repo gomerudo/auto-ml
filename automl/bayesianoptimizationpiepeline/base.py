@@ -23,10 +23,10 @@ class BayesianOptimizationPipeline:
                 Maximum time limit in seconds after which the bayesian optimization process stops and best result is
                 given as output. Defaults to 600.
             iteration (int): Number of iteration the bayesian optimization process will take. More number of iterations
-                gives better results but increases the execution time. Defaults to 7
+                gives better results but increases the execution time. Defaults to 15.
             scoring (string or callable): The performance metric on which the pipeline is supposed to be optimized.
-                Defaults to None.
-            cv (int): Specifies the number of folds in a (Stratified)KFold. Defaults to 5
+                Example : 'auc_roc', 'accuracy', 'precision', 'recall', 'f1', etc. Defaults to None.
+            cv (int): Specifies the number of folds in a (Stratified)KFold. Defaults to 5.
 
     """
     def __init__(self, dataset=None, pipeline=None, optimize_on="quality", cutoff_time=600, iteration=15, scoring=None,
@@ -65,14 +65,16 @@ class BayesianOptimizationPipeline:
                 component = self._process_component(self.pipeline.steps[i][1], config_dict)
                 pipeline_list.append(component)
             self.opt_pipeline = make_pipeline(*pipeline_list)
-            score_array = cross_val_score(self.opt_pipeline, X, y, cv=5, scoring=self.scoring)
+            score_array = cross_val_score(self.opt_pipeline, X, y, cv=self.cv, scoring=self.scoring)
             return 1-np.mean(score_array)
 
         cs = ConfigSpacePipeline(self.pipeline).get_config_space()
         cs_as_json = json_utils._convert_cs_to_json(cs)
         if not cs_as_json['hyperparameters']:
-            scores = cross_val_score(self.pipeline, X, y, cv=5, scoring=self.scoring)
-            return np.mean(scores), self.pipeline
+            scores = cross_val_score(self.pipeline, X, y, cv=self.cv, scoring=self.scoring)
+            self.score = np.mean(scores)
+            self.opt_pipeline = self.pipeline
+            return self
         scenario = self._create_scenario(cs, self.optimize_on, self.iteration, self.cutoff_time)
         smac = SMAC(scenario=scenario, rng=np.random.RandomState(42),
                     tae_runner=_optimization_algorithm)

@@ -42,6 +42,23 @@ def _read_json_file_to_json_obj(json_name):
     return json_obj
 
 
+def get_individual_cs(component_name):
+    """This function returns the configuration space of the component
+
+    Args:
+        component_name: Name of the component (Should be exactly same as the name of the class of the component)
+
+    Returns:
+        ConfigurationSpace: returns the configuration space of the component
+    """
+    if _check_existence(component_name):
+        json_obj = _read_json_file_to_json_obj(component_name)
+        cs = _convert_json_to_cs(json_obj)
+        return cs
+    else:
+        raise FileNotFoundError("The requested configuration space '{}' does not exists".format(component_name))
+
+
 def _check_existence(json_name):
     dir_path = ROOT_DIR+"/automl/createconfigspacepipeline/json_files_for_all_components/"
     file_name = json_name+".json"

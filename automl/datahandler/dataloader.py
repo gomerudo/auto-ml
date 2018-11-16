@@ -123,9 +123,23 @@ missing values. Please not that with missing data, results can be innacurate. \
 Fix the missing values yourself.".format(d_id=self.dataset_id,
                                          n_na=nan_sum_y),
                        'WARNING')
+
         # Check for inifinite values
-        inf_sum_x = np.isinf(self.X.values).ravel().sum()
-        inf_sum_y = np.isinf(self.y.values).ravel().sum()
+        inf_sum_x = 0
+        inf_sum_y = 0
+
+        for column in self.X.columns:
+            try:
+                inf_sum_x = np.isinf(self.X.values).ravel().sum()
+            except TypeError:
+                automl_log("Column '{col}' is not a numeric type, ignoring it \
+for verification of infinite values".format(col=column))
+
+        try:
+            inf_sum_y = np.isinf(self.y.values).ravel().sum()
+        except TypeError:
+            automl_log("Target is not a numeric type, skipping verification \
+of infinite values")
 
         # Log infinite values messages
         if inf_sum_x > 0:

@@ -129,6 +129,26 @@ invterval ({lower}, {upper}]".format(lower=0, upper=max_neighbours))
         res = mix_suggestions(configs)
         return res
 
+    def get_metaknowledge_space(self, weighted=False):
+        """Get the metaknowledge space.
+
+        Retrieving the metaknowledge space may be useful for plotting purposes.
+
+        Args:
+            weighted (bool): Whether to retrieve the weighted version. Defaults
+                to False.
+
+        Returns:
+            tuple: 2-tuple where the first element is a list of ids and the
+                second is the matrix representing the metafeatures of each
+                of the ids.
+
+        """
+        if weighted:
+            return self.metaknwoledge.weighted_matrix()
+
+        return self.metaknwoledge.simple_matrix()
+
 
 class MetaKnowledge:
     """This class is a representation of the feature's costs/values.
@@ -278,8 +298,6 @@ class MetaKnowledge:
             corresponds to the id in the first return value.
 
         """
-        # TODO: Check None values, sizes and so and throw exceptions.
-
         # Get the instance's ids
         f_instid = self.features.values_by_attribute('instance_id')
 

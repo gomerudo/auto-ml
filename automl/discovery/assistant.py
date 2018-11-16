@@ -28,6 +28,7 @@ class Assistant:
             similar datasets want to be retrieved.
         evaluation_metric (string or callable): A metric to evalate the
             pipeline with.
+
     """
 
     def __init__(self, dataset=None, metalearning_metric='accuracy',
@@ -57,7 +58,6 @@ class Assistant:
         metafeat_manager = MetaFeaturesManager(self.dataset)
         return metafeat_manager.metafeatures_as_numpy_array()
 
-    # TODO: Allow for other metrics for the similarity
     def compute_similar_datasets(self, k=5, similarity_metric='minkowski'):
         """Compute the similar datasets based on the dataset's metafeatures.
 
@@ -95,7 +95,7 @@ class Assistant:
         """
         if self._neighbors is None:
             raise AutoMLError("No neighbors available. Call the \
-                               compute_similar_datasets method first")
+compute_similar_datasets method first")
 
         return self._neighbors, self._neighbors_metrics
 
@@ -112,7 +112,7 @@ class Assistant:
         """
         if self._neighbors is None:
             raise AutoMLError("No neighbors available. Call the \
-                               compute_similar_datasets method first")
+compute_similar_datasets method first")
 
         mk_dc = MKDatabaseClient()
         return mk_dc.meta_suggestions(
@@ -121,8 +121,6 @@ class Assistant:
             metric=self.metalearning_metric
         )
 
-    # TODO: This is the method that should call TPOT using the search space
-    # We should consider parameters to force and also to handle TPOTs features
     def generate_pipeline(self, ignore_similar_datasets=False):
         """Automatically generate a pipeline using the dataset and metric.
 
@@ -139,19 +137,18 @@ class Assistant:
                 dataset.
 
         """
-        # Call TPOT
-        # Returns a pipeline
-        dict_suggestions = self.reduced_search_space.classifiers
-
         try:
             search_space = dict()
-            for classifier in dict_suggestions:
+            for classifier in self.reduced_search_space.classifiers:
                 search_space[classifier] = {}
         except AutoMLError:
             search_space = None
 
         if ignore_similar_datasets:
-            p_disc = PipelineDiscovery(self.dataset)
+            p_disc = PipelineDiscovery(
+                dataset=self.dataset,
+                evaluation_metric=self.evaluation_metric
+            )
         else:
             p_disc = PipelineDiscovery(
                 dataset=self.dataset,
@@ -166,8 +163,8 @@ class Assistant:
         self._pipeline_discovery = p_disc
         return p_disc
 
-    def optimize(self, pipeline=None, optimize_on="quality", iteration=20,
-                 cutoff_time=600, scoring=None, cv=5):
+    def bayesian_optimize(self, pipeline=None, optimize_on="quality", cutoff_time=600,
+                          iteration=15, scoring=None, cv=5):
         """Optimize a pipeline using Bayesian optimization.
 
         Args:
@@ -184,9 +181,10 @@ class Assistant:
                 stops and best result is given as output. Defaults to 600.
             iteration (int): Number of iteration the bayesian optimization
                 process will take. More number of iterations gives better
-                results but increases the execution time. Defaults to 7.
+                results but increases the execution time. Defaults to 15.
             scoring (string or callable): The performance metric on which the
-                pipeline is supposed to be optimized. Defaults to None.
+                pipeline is supposed to be optimized. Example : 'auc_roc',
+                'accuracy', 'precision', 'recall', 'f1', etc. Defaults to None.
             cv (int): Specifies the number of folds in a (Stratified)KFold.
                 Defaults to 5.
         Raises:
@@ -198,7 +196,7 @@ class Assistant:
         """
         if pipeline is None and self._pipeline_discovery is None:
             raise ValueError("No pipeline available. Either use \
-generate_pipeline() method or pass a pipelineas an argument to the function.")
+generate_pipeline() method or pass a pipeline as an argument to the function.")
 
         pipeline_ = pipeline if pipeline is not None else \
             self._pipeline_discovery.pipeline
