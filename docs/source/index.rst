@@ -6,18 +6,21 @@
 Welcome to auto-ml's documentation!
 ===================================
 
-This is the official documentation for the auto-ml solution an Automated
-Machine Learning solution in Python.
+This is the official documentation for our Automated Machine Learning solution
+in Python.
 
 This package has been developed by students of the Eindhoven University of
 Technology (TU/e) for `Achmea <https://www.achmea.nl>`_’s internal use as part
-of our internship program, but it is also shared Open Source
-`via github <https://github.com/gomerudo/auto-ml>`_ as agreed for all parts.
+of an internship program, but it is also shared Open Source
+`via github <https://github.com/gomerudo/auto-ml>`_ as agreed by all parts.
 
 The package is intended to assist the Data Scientists to solve classification
 (and possibly regression) problems by automatically finding pipelines that
 include pre-processing, feature engineering and classification/regression
-models for a given dataset.
+models for a given dataset. This tool does not implement a new algorithm from
+scratch to come up with a solution, but instead it tries to gather the most
+relevant features from well known approaches that have proved efficient so that
+a usable framework can assist Data Scientsts.
 
 In more detail, our solution makes use of the pre-learned meta-knowledge
 acquired by `auto-sklearn <https://github.com/automl/auto-sklearn>`_ to find
