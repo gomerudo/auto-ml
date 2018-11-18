@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>automl.discovery package &mdash; auto-ml 1.0-beta documentation</title>
+  <title>automl.discovery package &mdash; auto-ml 0.1.0-alpha documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0
+                0.1.0
               </div>
             
           
@@ -85,6 +85,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="nutshell.html">AutoML in a nutshell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solution.html">Overview of our solution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installing the tool</a></li>
 <li class="toctree-l1"><a class="reference internal" href="howto.html">Using the tool</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
@@ -243,6 +244,50 @@ pipeline with.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="automl.discovery.assistant.Assistant.bayesian_optimize">
+<code class="descname">bayesian_optimize</code><span class="sig-paren">(</span><em>pipeline=None</em>, <em>optimize_on='quality'</em>, <em>cutoff_time=600</em>, <em>iteration=15</em>, <em>scoring=None</em>, <em>cv=5</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.discovery.assistant.Assistant.bayesian_optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optimize a pipeline using Bayesian optimization.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pipeline</strong> (<em>Pipeline</em>) – A pipeline to use. If None, we try to use the
+last auto generated pipeline.</li>
+<li><strong>optimize_on</strong> (<em>string</em>) – Optimization parameter that takes input
+either “quality” or “runtime”. The pipeline
+can either be optimized based on quality (performance metric)
+or runtime (time required to complete the bayesian optimization
+process). Defaults to “quality”.</li>
+<li><strong>cutoff_time</strong> (<em>int</em>) – This hyperparameter is only used when
+“optimize_on” hyperparameter is set to “runtime”. Maximum time
+limit in seconds after which the bayesian optimization process
+stops and best result is given as output. Defaults to 600.</li>
+<li><strong>iteration</strong> (<em>int</em>) – Number of iteration the bayesian optimization
+process will take. More number of iterations gives better
+results but increases the execution time. Defaults to 15.</li>
+<li><strong>scoring</strong> (<em>string</em><em> or </em><em>callable</em>) – The performance metric on which the
+pipeline is supposed to be optimized. Example : ‘auc_roc’,
+‘accuracy’, ‘precision’, ‘recall’, ‘f1’, etc. Defaults to None.</li>
+<li><strong>cv</strong> (<em>int</em>) – Specifies the number of folds in a (Stratified)KFold.
+Defaults to 5.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if no pipeline has been specified nor found.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the object used for optimization.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="automl.bayesianoptimizationpiepeline.html#automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline" title="automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline">BayesianOptimizationPipeline</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="automl.discovery.assistant.Assistant.compute_similar_datasets">
 <code class="descname">compute_similar_datasets</code><span class="sig-paren">(</span><em>k=5</em>, <em>similarity_metric='minkowski'</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.discovery.assistant.Assistant.compute_similar_datasets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the similar datasets based on the dataset’s metafeatures.</p>
@@ -282,49 +327,6 @@ models for the similar datasets or not. Defaults to False.</td>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#automl.discovery.pipeline_generation.PipelineDiscovery" title="automl.discovery.pipeline_generation.PipelineDiscovery">PipelineDiscovery</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="automl.discovery.assistant.Assistant.optimize">
-<code class="descname">optimize</code><span class="sig-paren">(</span><em>pipeline=None</em>, <em>optimize_on='quality'</em>, <em>iteration=20</em>, <em>cutoff_time=600</em>, <em>scoring=None</em>, <em>cv=5</em><span class="sig-paren">)</span><a class="headerlink" href="#automl.discovery.assistant.Assistant.optimize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Optimize a pipeline using Bayesian optimization.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pipeline</strong> (<em>Pipeline</em>) – A pipeline to use. If None, we try to use the
-last auto generated pipeline.</li>
-<li><strong>optimize_on</strong> (<em>string</em>) – Optimization parameter that takes input
-either “quality” or “runtime”. The pipeline
-can either be optimized based on quality (performance metric)
-or runtime (time required to complete the bayesian optimization
-process). Defaults to “quality”.</li>
-<li><strong>cutoff_time</strong> (<em>int</em>) – This hyperparameter is only used when
-“optimize_on” hyperparameter is set to “runtime”. Maximum time
-limit in seconds after which the bayesian optimization process
-stops and best result is given as output. Defaults to 600.</li>
-<li><strong>iteration</strong> (<em>int</em>) – Number of iteration the bayesian optimization
-process will take. More number of iterations gives better
-results but increases the execution time. Defaults to 7.</li>
-<li><strong>scoring</strong> (<em>string</em><em> or </em><em>callable</em>) – The performance metric on which the
-pipeline is supposed to be optimized. Defaults to None.</li>
-<li><strong>cv</strong> (<em>int</em>) – Specifies the number of folds in a (Stratified)KFold.
-Defaults to 5.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if no pipeline has been specified nor found.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the object used for optimization.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="automl.bayesianoptimizationpiepeline.html#automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline" title="automl.bayesianoptimizationpiepeline.base.BayesianOptimizationPipeline">BayesianOptimizationPipeline</a></p>
-</td>
 </tr>
 </tbody>
 </table>
@@ -596,7 +598,7 @@ similar datasets to a given one.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Achmea.
+        &copy; Copyright 2018, Eindhoven University of Technology.
 
     </p>
   </div>
@@ -618,7 +620,7 @@ similar datasets to a given one.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0-beta',
+            VERSION:'0.1.0-alpha',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

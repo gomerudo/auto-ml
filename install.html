@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installing the tool &mdash; auto-ml 1.0-beta documentation</title>
+  <title>Installing the tool &mdash; auto-ml 0.1.0-alpha documentation</title>
   
 
   
@@ -29,7 +29,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="How to use the tool" href="howto.html" />
-    <link rel="prev" title="AutoML in a nutshell" href="nutshell.html" /> 
+    <link rel="prev" title="Overview of our solution" href="solution.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0
+                0.1.0
               </div>
             
           
@@ -85,7 +85,12 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="nutshell.html">AutoML in a nutshell</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Installing the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solution.html">Overview of our solution</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installing the tool</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="howto.html">Using the tool</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Python basics to understand the tool</a></li>
@@ -156,6 +161,24 @@
             
   <div class="section" id="installing-the-tool">
 <h1>Installing the tool<a class="headerlink" href="#installing-the-tool" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>In order to work, you need to verify the next requirements are satisfied</p>
+<ul class="simple">
+<li>Work in a UNIX system: SMAC3 is one of our core dependencies and has no official support for windows.</li>
+<li>Install SWIG&gt;=3.0 for your unix system</li>
+<li>In general, make sure to satisfy any dependency descriped in <a class="reference external" href="https://epistasislab.github.io/tpot/installing/">TPOT’s</a> and <a class="reference external" href="https://github.com/automl/SMAC3">SMAC3’s</a> official docs</li>
+</ul>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>As of today, this tool is not available in the PyPi repository because of its
+immature state. However, it is possible to install it by running the command
+below.</p>
+<div class="highlight-bash notranslate" id="install"><div class="highlight"><pre><span></span> pip install git+https://github.com/gomerudo/auto-ml.git
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -169,7 +192,7 @@
         <a href="howto.html" class="btn btn-neutral float-right" title="How to use the tool" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="nutshell.html" class="btn btn-neutral" title="AutoML in a nutshell" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="solution.html" class="btn btn-neutral" title="Overview of our solution" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -178,7 +201,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Achmea.
+        &copy; Copyright 2018, Eindhoven University of Technology.
 
     </p>
   </div>
@@ -200,7 +223,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0-beta',
+            VERSION:'0.1.0-alpha',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

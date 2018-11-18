@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Overview of our solution &mdash; auto-ml 0.1.0-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installing the tool" href="install.html" />
+    <link rel="prev" title="AutoML in a nutshell" href="nutshell.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> auto-ml
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="nutshell.html">AutoML in a nutshell</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview of our solution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#technologies">Technologies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#state-of-art-tools">State-of-art tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#use-cases">Use cases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#proposed-architecture">Proposed architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#current-limitations">Current limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#future-extension">Future extension</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto.html">Using the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python basics to understand the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">auto-ml</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Overview of our solution</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/solution.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="overview-of-our-solution">
+<h1>Overview of our solution<a class="headerlink" href="#overview-of-our-solution" title="Permalink to this headline">¶</a></h1>
+<p>As of today, many techniques to automate machine learning pipelinens - or parts
+of it - have been researched as listed in the official
+<a class="reference external" href="https://www.ml4aad.org/automl/">AutoML site</a>. However, there are few usable
+results available and moreover, they present technological limitations that make
+them hard to use and even harder to combine their strengths into one single
+solution. These technological limitations include platoforms incompatibility
+(programming languages, versions, operating systems, etc.), insufficient sofware
+engineering design that does not allow for extension and insufficient maintenance
+by their developers. Hence, the intention of our solution is to gather the
+state-of-art technologies together and solve some specifc Data Science use cases.
+These two aspects are detailed below.</p>
+<div class="section" id="technologies">
+<h2>Technologies<a class="headerlink" href="#technologies" title="Permalink to this headline">¶</a></h2>
+<p><strong>Python</strong> has been chosen as the programming language for our solution. This
+decision has been motivated by analyzing the robustness of the two most used
+languanges in Data Science (R and Python) and the number of state-of-art
+solutions already developed in each of them. Python counts with an strong ML
+framework: scikit-learn. This has been used by solutions such as TPOT and
+auto-sklearn to explore AutoML.</p>
+<p>Additionally to Python, we have restricted the OS to <strong>Unix</strong> architectures,
+since optimization binaries are better supported for these platforms.</p>
+</div>
+<div class="section" id="state-of-art-tools">
+<h2>State-of-art tools<a class="headerlink" href="#state-of-art-tools" title="Permalink to this headline">¶</a></h2>
+<p>Our solution makes use of the pre-learned meta-knowledge
+acquired by <a class="reference external" href="https://github.com/automl/auto-sklearn">auto-sklearn</a> to find
+candidate models for a given dataset,
+<a class="reference external" href="https://github.com/EpistasisLab/tpot">TPOT</a>’s Genetic Programming approach
+to find pipelines in an automated way and the Bayesian Optimization implemeted
+in <a class="reference external" href="https://github.com/automl/SMAC3">SMAC</a> to fine-tune a given pipeline.</p>
+</div>
+<div class="section" id="use-cases">
+<h2>Use cases<a class="headerlink" href="#use-cases" title="Permalink to this headline">¶</a></h2>
+<p>This tool has first been developed at Achmea, where a list of basic use cases
+was identified as the starting point of the project. This list is as follows:</p>
+<ul class="simple">
+<li><strong>UC1</strong>: Data scientist does not have any clue on what pipeline to apply on the dataset he/she is working on and would like to automatically find one.</li>
+<li><strong>UC2</strong>: Data scientist knows exactly the pipeline he is going to apply to the dataset he/she is working on. Hence, optimizing this pipeline’s hyperparameters is required.</li>
+<li><strong>UC3</strong>: Data scientist would like to explore possible solutions for the dataset he/she is working on.</li>
+<li><strong>UC4</strong>: Data scientist knows a set of possible pipeline components that may work well on the dataset he/she is working on and wants to come up with the best possible solution among them.</li>
+</ul>
+</div>
+<div class="section" id="proposed-architecture">
+<h2>Proposed architecture<a class="headerlink" href="#proposed-architecture" title="Permalink to this headline">¶</a></h2>
+<p>As shown in the image below, our architecture comprises three main components:
+the <em>Models Recommender</em>, the <em>Pipeline Generator</em> and the <em>Pipeline Optimizer</em>.
+Additionally, two <em>spaces</em> are defined. All these components are explained next.</p>
+<a class="reference internal image-reference" href="_images/architecture.001.jpeg"><img alt="ML workflow" class="align-center" src="_images/architecture.001.jpeg" style="width: 512.0px; height: 384.0px;" /></a>
+<p><strong>Search Space</strong></p>
+<p>The search space is the set of algorithms used to solve a machine learning
+problem. These algorithms include: pre-processors (e.g. scalers), feature
+engineering methods (e.g. polynomial features) and models (e.g. Random Forest).</p>
+<p><strong>Configuration Space</strong></p>
+<p>To understand the configuration space we first need to think of the hyperparameters
+for a given algorithm. If for example, a Random Forest is used, the <em>number of trees</em>
+is a parameter of this algorithm. In Machine Learning this is known as an hyperparameter.
+Extrapolating this idea to a pipeline, we may end up with a bigger list of hyperparameters.</p>
+<p>The configuration space is the set of all the hyperparameters in a pipeline,
+following the next format: <cite>&lt;name, lower limit, upper limit, default value&gt;</cite>.
+This configuration space is used by the Pipeline Optimizer and can be better
+understood by thinking of bayesian optimization. However that explanation is out
+of the scope of this documentation.</p>
+<p><strong>Models Recommender</strong></p>
+<p>This component is in charge of solving use UC3. By using the meta knowledge
+acquired by auto-sklearn, it can suggest a list of possible algorithms that may
+work for our dataset. This works under the assumption that the meta-features
+proposed by auto-sklearn are correctly characterizing datasets.</p>
+<p><strong>Pipeline Generator</strong></p>
+<p>Pipeline Generator is only an upper level of abstraction for TPOT, for which we
+can reduce the search space by using the Model Recommender’s output (or not).</p>
+<p><strong>Pipeline Optimizer</strong></p>
+<p>It runs Bayesian Optimization on any given pipeline.</p>
+<p>All our solutions work by using the default scikit-learn’s stack but can be extended
+to use custom python objects following scikit-learn standards.</p>
+</div>
+<div class="section" id="current-limitations">
+<h2>Current limitations<a class="headerlink" href="#current-limitations" title="Permalink to this headline">¶</a></h2>
+<p>In the current version, the next major limitations are found:</p>
+<ul class="simple">
+<li>For the Models Recommender, no support for regression is available.</li>
+<li>The tool has no support for sparse matrices.</li>
+</ul>
+</div>
+<div class="section" id="future-extension">
+<h2>Future extension<a class="headerlink" href="#future-extension" title="Permalink to this headline">¶</a></h2>
+<p>As a continuation of this work we would like to upgrade our code into a higher
+level of abstraction where all the possible focuses in a pipeline can be separated
+as interfaces that anyone can extend to generate one or more parts of a pipeline.
+This development could help the Machine Learning community to work on specific
+parts of the AutoML research and combine/share results easier.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="install.html" class="btn btn-neutral float-right" title="Installing the tool" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="nutshell.html" class="btn btn-neutral" title="AutoML in a nutshell" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Eindhoven University of Technology.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0-alpha',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

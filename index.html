@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to auto-ml’s documentation! &mdash; auto-ml 1.0-beta documentation</title>
+  <title>Welcome to auto-ml’s documentation! &mdash; auto-ml 0.1.0-alpha documentation</title>
   
 
   
@@ -57,7 +57,7 @@
             
             
               <div class="version">
-                1.0
+                0.1.0
               </div>
             
           
@@ -84,6 +84,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="nutshell.html">AutoML in a nutshell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solution.html">Overview of our solution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installing the tool</a></li>
 <li class="toctree-l1"><a class="reference internal" href="howto.html">Using the tool</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">API</a></li>
@@ -155,16 +156,19 @@
             
   <div class="section" id="welcome-to-auto-ml-s-documentation">
 <h1>Welcome to auto-ml’s documentation!<a class="headerlink" href="#welcome-to-auto-ml-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>This is the official documentation for the auto-ml solution an Automated
-Machine Learning solution in Python.</p>
+<p>This is the official documentation for our Automated Machine Learning solution
+in Python.</p>
 <p>This package has been developed by students of the Eindhoven University of
 Technology (TU/e) for <a class="reference external" href="https://www.achmea.nl">Achmea</a>’s internal use as part
-of our internship program, but it is also shared Open Source
-<a class="reference external" href="https://github.com/gomerudo/auto-ml">via github</a> as agreed for all parts.</p>
+of an internship program, but it is also shared Open Source
+<a class="reference external" href="https://github.com/gomerudo/auto-ml">via github</a> as agreed by all parts.</p>
 <p>The package is intended to assist the Data Scientists to solve classification
 (and possibly regression) problems by automatically finding pipelines that
 include pre-processing, feature engineering and classification/regression
-models for a given dataset.</p>
+models for a given dataset. This tool does not implement a new algorithm from
+scratch to come up with a solution, but instead it tries to gather the most
+relevant features from well known approaches that have proved efficient so that
+a usable framework can assist Data Scientsts.</p>
 <p>In more detail, our solution makes use of the pre-learned meta-knowledge
 acquired by <a class="reference external" href="https://github.com/automl/auto-sklearn">auto-sklearn</a> to find
 candidate models for a given dataset,
@@ -179,8 +183,25 @@ in <a class="reference external" href="https://github.com/automl/SMAC3">SMAC</a>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="nutshell.html">AutoML in a nutshell</a></li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Installing the tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nutshell.html">AutoML in a nutshell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nutshell.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nutshell.html#note-automl-for-deep-learning">Note: AutoML for Deep Learning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="solution.html">Overview of our solution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="solution.html#technologies">Technologies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solution.html#state-of-art-tools">State-of-art tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solution.html#use-cases">Use cases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solution.html#proposed-architecture">Proposed architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solution.html#current-limitations">Current limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solution.html#future-extension">Future extension</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing the tool</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#installation">Installation</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="howto.html">Using the tool</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howto.html#build-a-dataset-object-from-an-openml-dataset">Build a Dataset object from an OpenML dataset</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howto.html#build-a-dataset-object-from-a-pandas-data-frame">Build a Dataset object from a pandas data frame</a></li>
@@ -230,7 +251,7 @@ in <a class="reference external" href="https://github.com/automl/SMAC3">SMAC</a>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Achmea.
+        &copy; Copyright 2018, Eindhoven University of Technology.
 
     </p>
   </div>
@@ -252,7 +273,7 @@ in <a class="reference external" href="https://github.com/automl/SMAC3">SMAC</a>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0-beta',
+            VERSION:'0.1.0-alpha',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

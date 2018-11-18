@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>AutoML in a nutshell &mdash; auto-ml 1.0-beta documentation</title>
+  <title>AutoML in a nutshell &mdash; auto-ml 0.1.0-alpha documentation</title>
   
 
   
@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installing the tool" href="install.html" />
+    <link rel="next" title="Overview of our solution" href="solution.html" />
     <link rel="prev" title="Welcome to auto-ml’s documentation!" href="index.html" /> 
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0
+                0.1.0
               </div>
             
           
@@ -84,7 +84,12 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">AutoML in a nutshell</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">AutoML in a nutshell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#note-automl-for-deep-learning">Note: AutoML for Deep Learning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="solution.html">Overview of our solution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installing the tool</a></li>
 <li class="toctree-l1"><a class="reference internal" href="howto.html">Using the tool</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">API</a></li>
@@ -156,7 +161,47 @@
             
   <div class="section" id="automl-in-a-nutshell">
 <h1>AutoML in a nutshell<a class="headerlink" href="#automl-in-a-nutshell" title="Permalink to this headline">¶</a></h1>
-<p>[In progress…]</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>In Machine Learning (ML) different approaches can be followed to solve a given
+problem, such as classification, regression, clustering, etc. Despite of the
+nature of this problem, a recurrent question when working on it is:
+<em>which algorithm (or set of algorithms) should I use to come up with the best possible solution?</em>
+The answer to this question is not always immediate and for non-experts or
+non-experienced machine learning practicioners it may become a cumbersome and
+exhausting task. In essence, Automated Machine Lerning (AutoML) tries to execute
+this task, without the need of an expert.</p>
+<p>Particularly, when working with traditional ML such as classification,
+the problem can be understood as depicted in the image below. This is, given a
+datset and a metric to optimize on (e.g. accuracy, roc_auc, etc.) we would like
+to find a so called <em>pipeline</em> that may include data pre-processors, feature
+engineering algorithms and the best possible models (note the plural) that can
+work all together to provide a good as possible for the input.</p>
+<a class="reference internal image-reference" href="_images/ml-view.png"><img alt="ML workflow" class="align-center" src="_images/ml-view.png" style="width: 478.79999999999995px; height: 321.29999999999995px;" /></a>
+<p>Of course, the problem can be understood as an optimization problem and can be
+addressed in many different ways such as Random Search or Grid Search - perhaps
+the most popular techniques due to their simplicity. These, however, are naive
+and expensive and more advanced techniques have been implemented with acceptable
+results. More  resources on these techniques can be found
+<a class="reference external" href="https://www.ml4aad.org/automl/">here</a>.</p>
+<p>Given this overview, some natural questions that could come up are:</p>
+<ul class="simple">
+<li>Is it really possible to automate the selection of a “good” Machine Learning pipeline for any given problem?</li>
+<li>What if we just want to focus on a portion of the pipeline (e.g., just the model’s hyperparameters optimization)? Are there any alternatives?</li>
+<li>How can we help data scientists to learn from this automated selection?</li>
+</ul>
+<p>These questions are the main focus of our work that is described in more detail
+in section <a class="reference internal" href="solution.html"><span class="doc">Overview of our solution</span></a>.</p>
+</div>
+<div class="section" id="note-automl-for-deep-learning">
+<h2>Note: AutoML for Deep Learning<a class="headerlink" href="#note-automl-for-deep-learning" title="Permalink to this headline">¶</a></h2>
+<p>Because of the different nature of Deep Learning (DL) - where hyper-parameters are
+continously recomputed during training - with respect to traditional ML - where
+parameters are static during all the training phase - one cannot generalize the
+problem up to this level of abstraction. Hence, different techniques are used
+such as the ones proposed in <a class="reference external" href="https://www.ml4aad.org/automl/literature-on-neural-architecture-search/">this</a> page.
+However, this is out of the scope of our work.</p>
+</div>
 </div>
 
 
@@ -167,7 +212,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="install.html" class="btn btn-neutral float-right" title="Installing the tool" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="solution.html" class="btn btn-neutral float-right" title="Overview of our solution" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="Welcome to auto-ml’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -179,7 +224,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Achmea.
+        &copy; Copyright 2018, Eindhoven University of Technology.
 
     </p>
   </div>
@@ -201,7 +246,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0-beta',
+            VERSION:'0.1.0-alpha',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
