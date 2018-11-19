@@ -51,7 +51,6 @@ Configuration space object:
     XGBClassifier-1:scale_pos_weight, Type: Constant, Value: 1
     XGBClassifier-1:subsample, Type: UniformFloat, Range: [0.01, 1.0], Default: 1.0
   Conditions:
-    FastICA-1:n_components | FastICA-1:whiten == 'True'
 ```
 
 Note : The class ConfigSpacePipeline is not supposed to be instantiated but is used by the class 
