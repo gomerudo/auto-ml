@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="automl" href="modules.html" />
+    <link rel="next" title="Results" href="results.html" />
     <link rel="prev" title="Installing the tool" href="install.html" /> 
 
   
@@ -98,6 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#optimize-any-pipeline-using-bayesian-optimization">Optimize any pipeline using Bayesian Optimization</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Python basics to understand the tool</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a></li>
@@ -299,7 +300,7 @@ Scientist.</p>
  <span class="n">sklearn_pipeline</span> <span class="o">=</span> <span class="n">pipeline_obj</span><span class="o">.</span><span class="n">pipeline</span>
 
  <span class="c1"># Run the optimizer</span>
- <span class="n">assistant</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span>
+ <span class="n">assistant</span><span class="o">.</span><span class="n">bayesian_optimize</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -317,7 +318,7 @@ Scientist.</p>
  <span class="n">my_pipeline</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># A pipeline</span>
 
  <span class="c1"># Run the optimizer</span>
- <span class="n">assistant</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">my_pipeline</span><span class="p">)</span>
+ <span class="n">assistant</span><span class="o">.</span><span class="n">bayesian_optimize</span><span class="p">(</span><span class="n">my_pipeline</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -331,7 +332,7 @@ Scientist.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="modules.html" class="btn btn-neutral float-right" title="automl" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="results.html" class="btn btn-neutral float-right" title="Results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="install.html" class="btn btn-neutral" title="Installing the tool" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

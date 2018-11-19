@@ -143,7 +143,7 @@ Optimize a pipeline with Bayesian Optimization
     sklearn_pipeline = pipeline_obj.pipeline
 
     # Run the optimizer
-    assistant.optimize()
+    assistant.bayesian_optimize()
 
 Optimize any pipeline using Bayesian Optimization
 -------------------------------------------------
@@ -162,5 +162,5 @@ Optimize any pipeline using Bayesian Optimization
     my_pipeline = ... # A pipeline
 
     # Run the optimizer
-    assistant.optimize(my_pipeline)
+    assistant.bayesian_optimize(my_pipeline)
 
