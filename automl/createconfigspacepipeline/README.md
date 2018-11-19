@@ -13,8 +13,6 @@ from xgboost import XGBClassifier
 
 # Build the Pipeline
 pipe = Pipeline([('normalize', Normalizer(norm="max")),
-                 ('fast_ica', FastICA()),
-                 ('stacking_estimator', StackingEstimator(estimator=ExtraTreesClassifier())),
                  ('Xgboost', XGBClassifier(base_score=0.9,
                                            booster="dart",
                                            min_child_weight=21,
@@ -37,20 +35,6 @@ Output :
 ```
 Configuration space object:
   Hyperparameters:
-    ExtraTreesClassifier-1:bootstrap, Type: Categorical, Choices: {True, False}, Default: False
-    ExtraTreesClassifier-1:criterion, Type: Categorical, Choices: {gini, entropy}, Default: gini
-    ExtraTreesClassifier-1:max_depth, Type: Constant, Value: None
-    ExtraTreesClassifier-1:max_features, Type: UniformFloat, Range: [0.0, 1.0], Default: 0.5
-    ExtraTreesClassifier-1:max_leaf_nodes, Type: Constant, Value: None
-    ExtraTreesClassifier-1:min_impurity_decrease, Type: Constant, Value: 0.0
-    ExtraTreesClassifier-1:min_samples_leaf, Type: UniformFloat, Range: [0.0, 0.5], Default: 0.0001
-    ExtraTreesClassifier-1:min_samples_split, Type: UniformFloat, Range: [0.0, 1.0], Default: 0.5
-    ExtraTreesClassifier-1:min_weight_fraction_leaf, Type: Constant, Value: 0.0
-    ExtraTreesClassifier-1:n_estimators, Type: UniformInteger, Range: [10, 500], Default: 10
-    FastICA-1:algorithm, Type: Categorical, Choices: {parallel, deflation}, Default: parallel
-    FastICA-1:fun, Type: Categorical, Choices: {logcosh, exp, cube}, Default: logcosh
-    FastICA-1:n_components, Type: Constant, Value: None
-    FastICA-1:whiten, Type: Categorical, Choices: {False, True}, Default: True
     Normalizer-1:norm, Type: Categorical, Choices: {l1, l2, max}, Default: max
     XGBClassifier-1:base_score, Type: Constant, Value: 0.5
     XGBClassifier-1:booster, Type: Categorical, Choices: {gbtree, dart}, Default: dart
@@ -67,7 +51,6 @@ Configuration space object:
     XGBClassifier-1:scale_pos_weight, Type: Constant, Value: 1
     XGBClassifier-1:subsample, Type: UniformFloat, Range: [0.01, 1.0], Default: 1.0
   Conditions:
-    FastICA-1:n_components | FastICA-1:whiten == 'True'
 ```
 
 Note : The class ConfigSpacePipeline is not supposed to be instantiated but is used by the class 
