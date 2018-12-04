@@ -31,3 +31,6 @@
 
 # pycharm
 **/.idea/**
+
+# fraud
+**/Fraud_Analysis/**
