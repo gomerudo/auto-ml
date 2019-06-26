@@ -6,7 +6,7 @@ setup(
     # For installation
     name='automl',
     version='0.0.1',
-    install_requires=['tpot', 'auto-sklearn'],
+    install_requires=['openml', 'tpot', 'auto-sklearn'],
     packages=find_packages(exclude=["*.test", "*.test.*", "test.*", "test"]),
 
     # Metadata to display on PyPI
