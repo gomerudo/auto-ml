@@ -117,7 +117,7 @@ sqlalchemy==1.2.0
 statsmodels==0.8.0
 tempora==1.10
 tensorflow-tensorboard==0.4.0rc3
-tensorflow==1.4.1
+tensorflow==1.15.4
 termcolor==1.1.0
 terminado==0.8.1
 testpath==0.3.1
