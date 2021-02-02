@@ -3,7 +3,7 @@ attrs==17.4.0
 automat==0.6.0
 backports-abc==0.5
 beautifulsoup4==4.6.0
-bleach==1.5.0
+bleach==3.3.0
 boto3==1.5.12
 boto==2.48.0
 botocore==1.8.26
