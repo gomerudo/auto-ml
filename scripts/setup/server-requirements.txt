@@ -96,7 +96,7 @@ python-dateutil==2.6.1
 python-gflags==3.1.2
 pytz==2017.3
 pywavelets==0.5.2
-pyyaml==3.12
+pyyaml==5.4
 pyzmq==16.0.3
 qtconsole==4.3.1
 queuelib==1.4.2
