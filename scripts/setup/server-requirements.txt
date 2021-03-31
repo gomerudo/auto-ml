@@ -50,7 +50,7 @@ jupyter-core==4.4.0
 jupyter==1.0.0
 keras==2.1.2
 leveldb==0.194
-lxml==4.1.1
+lxml==4.6.3
 markdown==2.6.11
 markupsafe==1.0
 matplotlib==2.1.1
