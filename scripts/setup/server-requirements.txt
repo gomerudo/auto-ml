@@ -135,7 +135,7 @@ w3lib==1.18.0
 wand==0.4.4
 wcwidth==0.1.7
 werkzeug==0.14.1
-wheel==0.30.0
+wheel==0.38.1
 widgetsnbextension==3.1.0
 wrapt==1.10.11
 xlrd==1.1.0
